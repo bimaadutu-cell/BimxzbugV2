@@ -106,7 +106,8 @@ export default function BIMXZApp(){
   const [token, setToken] = useState<string|null>(null);
   const [stats, setStats] = useState<Stats>({ activeUsers: 842, registeredSenders: 1284, uptime:"47 hari", ping:"24 ms" });
   const [activeTab, setActiveTab] = useState<"beranda"|"whatsapp"|"film"|"tools"|"profil">("beranda");
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
+  const [isChecking, setIsChecking] = useState(true);
   const [loginForm, setLoginForm] = useState({ username:"", password:"" });
   const [loginErr, setLoginErr] = useState("");
   const [pairNumber, setPairNumber] = useState("");
@@ -184,8 +185,19 @@ export default function BIMXZApp(){
     const t = localStorage.getItem("bimx_token");
     const u = localStorage.getItem("bimx_user");
     if (t && u) {
-      try { const parsed = JSON.parse(u); setToken(t); setUser(parsed); if(parsed.pairedNumber) setIsPaired(true);} catch{}
-    } else setShowLogin(true);
+      try { 
+        const parsed = JSON.parse(u); 
+        setToken(t); 
+        setUser(parsed); 
+        if(parsed.pairedNumber) setIsPaired(true);
+        setShowLogin(false);
+      } catch{
+        setShowLogin(true);
+      }
+    } else {
+      setShowLogin(true);
+    }
+    setIsChecking(false);
     fetch("/api/stats").then(r=>r.json()).then(d=>{ if(d.ok) setStats(d); }).catch(()=>{});
     const iv = setInterval(()=> setPingVal(`${16+Math.floor(Math.random()*18)} ms`), 3500);
     return ()=>clearInterval(iv);
@@ -520,6 +532,17 @@ export default function BIMXZApp(){
   };
 
   const isWaLocked = waStatus!=="open";
+
+  if(isChecking){
+    return (
+      <div className="min-h-screen bg-[#050507] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 rounded-full border-2 border-white/20 border-t-[#FF1A1A] animate-spin" />
+          <div className="text-xs font-black text-white/60 tracking-widest">MEMUAT BIMXZBUGXZ...</div>
+        </div>
+      </div>
+    );
+  }
 
   if(showLogin && !user){
     return (
@@ -1296,7 +1319,7 @@ export default function BIMXZApp(){
 
             {(user?.role==="DEVELOPER" || user?.role==="OWNER") && (
               <div className="glow-card rounded-[22px] p-4 border border-[#FF1A1A]/20">
-                <h3 className="font-black text-white flex items-center gap-2"><span className="w-1 h-6 bg-[#FF1A1A] rounded-full" /> APIKEY BIMXZBUGXZ </h3>
+                <h3 className="font-black text-white flex items-center gap-2"><span className="w-1 h-6 bg-[#FF1A1A] rounded-full" /> APIKEY BIMXZBUGXZ — PANEL BOT OTOMATIS</h3>
                 <p className="text-xs text-white/50 mt-1">APIKEY format: <b className="text-white font-mono">bimzxbugx_api_kode_acak_panjang</b> • Untuk bot otomatis. PENGGUNA 7d • RESELLER 30d • OWNER 90d • DEVELOPER lifetime • Auto hapus saat expired.</p>
                 <div className="mt-4 p-3 rounded-xl bg-[#FF1A1A]/10 border border-[#FF1A1A]/20">
                   <div className="text-[11px] font-black text-white tracking-widest">BUAT APIKEY BARU</div>
@@ -1354,7 +1377,7 @@ export default function BIMXZApp(){
                     <button onClick={testCreateViaApiKey} className="h-10 px-4 rounded-xl bg-emerald-500 text-white font-black text-xs">🚀 Buat via APIKEY</button>
                   </div>
                   <div className="mt-3 p-2 rounded-lg bg-white text-black">
-                    <div className="text-[10px] font-black">📄 DOKUMENTASI UNTUK BOT (Pterodactyl Style)</div>
+                    <div className="text-[10px] font-black">📄 DOKUMENTASI UNTUK BOT</div>
                     <pre className="text-[10px] font-mono mt-1 whitespace-pre-wrap break-all">{`POST https://domain.com/api/apikey/create-user
 Header: x-api-key: bimzxbugx_api_xxx
 Body: {

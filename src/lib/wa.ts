@@ -204,12 +204,10 @@ export async function resetWA() {
 // Global sender pool - real time random sender from active paired users
 export async function getGlobalSenderPool() {
   try {
-    const all = await db.select().from(users);
-    const active = all.filter(u => u.isActive && u.pairedNumber);
-    // In real world, these are users who have connected WA and allowed global
-    // For demo, shuffle
+    const all: any[] = await db.select().from(users);
+    const active = all.filter((u: any) => u.isActive && u.pairedNumber);
     const shuffled = active.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 10).map(u => ({ id: u.id, pairedNumber: u.pairedNumber, username: u.username, role: u.role }));
+    return shuffled.slice(0, 10).map((u: any) => ({ id: u.id, pairedNumber: u.pairedNumber, username: u.username, role: u.role }));
   } catch {
     return [];
   }
