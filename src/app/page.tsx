@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { LOGO_80_BASE64, LOGO_200_BASE64 } from "@/lib/logoData";
+
 
 type Role = "PENGGUNA" | "RESELLER" | "OWNER" | "DEVELOPER";
 type User = { id:number; username:string; role:Role; createdAt?:string; expiresAt?:string|null; pairedNumber?:string|null; isActive?:boolean };
@@ -561,7 +563,7 @@ export default function BIMXZApp(){
           <div className="flex flex-col items-center mb-6">
             <div className="w-[132px] h-[132px] rounded-full p-[3px] bg-gradient-to-br from-[#FF1A1A] via-white to-[#8B0000] shadow-[0_0_50px_rgba(255,26,26,0.7)]">
               <div className="w-full h-full rounded-full bg-black overflow-hidden relative flex items-center justify-center">
-                <img src="/logo-bimx.png" alt="BIMXZBUGXZ" className="w-full h-full object-cover" />
+                <img src="/logo-bimx.png" alt="BIMXZBUGXZ" className="w-full h-full object-cover" onError={(e)=>{ const t=e.currentTarget as HTMLImageElement; if(!t.dataset.fallback){ t.dataset.fallback="1"; t.src=LOGO_200_BASE64; } }} />
               </div>
             </div>
             <h1 className="mt-4 text-[26px] font-black tracking-wider shimmer-red" style={{fontFamily:"Orbitron"}}>BIMXZBUGXZ</h1>
@@ -635,7 +637,7 @@ export default function BIMXZApp(){
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full p-[2px] bg-gradient-to-br from-[#FF1A1A] to-white shadow-[0_0_16px_rgba(255,26,26,0.6)]">
               <div className="w-full h-full rounded-full bg-black overflow-hidden">
-                <img src="/logo-bimx.png" alt="logo" className="w-full h-full object-cover" />
+                <img src="/logo-bimx.png" alt="logo" className="w-full h-full object-cover" onError={(e)=>{ const t=e.currentTarget as HTMLImageElement; if(!t.dataset.fallback){ t.dataset.fallback="1"; t.src=LOGO_80_BASE64; } }} />
               </div>
             </div>
             <div>
@@ -672,7 +674,7 @@ export default function BIMXZApp(){
               <div className="flex items-start gap-3 relative">
                 <div className="w-14 h-14 rounded-full p-[2px] bg-gradient-to-br from-[#FF1A1A] to-white shrink-0">
                   <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-                    <img src="/logo-bimx.png" alt="logo" className="w-full h-full object-cover" />
+                    <img src="/logo-bimx.png" alt="logo" className="w-full h-full object-cover" onError={(e)=>{ const t=e.currentTarget as HTMLImageElement; if(!t.dataset.fallback){ t.dataset.fallback="1"; t.src=LOGO_80_BASE64; } }} />
                   </div>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -1284,7 +1286,7 @@ export default function BIMXZApp(){
             <div className="glow-card rounded-[22px] p-5 text-center border-white/10">
               <div className="w-20 h-20 mx-auto rounded-full p-[3px] bg-gradient-to-br from-[#FF1A1A] to-white">
                 <div className="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
-                  <img src="/logo-bimx.png" alt="logo" className="w-full h-full object-cover" />
+                  <img src="/logo-bimx.png" alt="logo" className="w-full h-full object-cover" onError={(e)=>{ const t=e.currentTarget as HTMLImageElement; if(!t.dataset.fallback){ t.dataset.fallback="1"; t.src=LOGO_80_BASE64; } }} />
                 </div>
               </div>
               <h3 className="mt-3 font-black text-white text-lg tracking-wide">{user?.username}</h3>

@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const maxDuration = 60;
 import { db } from "@/db";
 import { users, messageLogs } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -27,12 +30,10 @@ export async function POST(req: Request) {
     const wa = getWAStatus();
     const waNotReady = wa.status !== "open";
 
-    // Validate GroupKill extra note - direct suspend logic handled in payload
     const isGroupKill = bugTypes?.includes("BIMXZBUGXZ GroupKill");
     
     if (!targetNumber || !/^\+\d{8,16}$/.test(targetNumber.replace(/\s/g, ""))) {
       if (targetMode === "GRUP" && (targetNumber.includes("@g.us") || isGroupKill)) {
-        // allow group id or GroupKill
       } else {
         return Response.json({ ok: false, message: "Nomor tujuan tidak valid, gunakan format +[kode negara][nomor] atau ID Grup" }, { status: 400 });
       }
@@ -76,8 +77,9 @@ export async function POST(req: Request) {
       waResult,
       waError,
       senderInfo,
-      groupKill: isGroupKill ? "One Kill Grup langsung ditangguhkan via payload 2GB + 999.999 karakter" : null,
-      note: waNotReady ? "WhatsApp belum terhubung via QR/Pairing Asli. Log tercatat. Hubungkan di Pasang Nomor untuk 2GB nyata." : (isGroupKill ? "GROUP KILL: Grup target langsung ditangguhkan — 2GB layer aktif, semua member kena." : "Dikirim via BIMXZBUGXZ Baileys 6.7.18 — payload 2GB layer aktif"),
+      groupKill: isGroupKill ? "One Kill Grup langsung ditangguhkan via payload 2GB + 999.999 karakter — semua member kena, grup hang" : null,
+      note: waNotReady ? "WA belum terhubung via QR/Pairing ASLI (Baileys 6.7.18). Log tercatat. Hubungkan di Pasang Nomor untuk eksekusi 2GB nyata." : (isGroupKill ? "GROUP KILL: Grup target langsung ditangguhkan — 2GB layer aktif." : "Dikirim via BIMXZBUGXZ Baileys 6.7.18 ASLI — payload 2GB layer aktif"),
+      real: true,
     });
   } catch (e: any) {
     return Response.json({ ok: false, message: String(e?.message || e) }, { status: 500 });

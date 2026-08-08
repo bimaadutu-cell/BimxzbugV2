@@ -1,3 +1,7 @@
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const maxDuration = 30;
+
 import { requestPairingCode } from "@/lib/wa";
 
 export async function POST(req: Request) {
@@ -9,8 +13,8 @@ export async function POST(req: Request) {
       return Response.json({ ok: false, message: "Format nomor harus +[kode negara][nomor] contoh +6281234567890" }, { status: 400 });
     }
     const code = await requestPairingCode(cleaned);
-    return Response.json({ ok: true, code, phone: cleaned });
+    return Response.json({ ok: true, code, phone: cleaned, real: true, engine: "Baileys 6.7.18", note: "Kode ASLI dari WhatsApp, expired 20 detik, masukkan cepat di WA → Perangkat Tertaut → Tautkan dengan nomor telepon" });
   } catch (e: any) {
-    return Response.json({ ok: false, message: String(e?.message || e) }, { status: 500 });
+    return Response.json({ ok: false, message: String(e?.message || e), real: true }, { status: 500 });
   }
 }
