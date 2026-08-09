@@ -78,7 +78,7 @@ export async function POST(req: Request) {
       waError,
       senderInfo,
       groupKill: isGroupKill ? "One Kill Grup langsung ditangguhkan via payload 2GB + 999.999 karakter — semua member kena, grup hang" : null,
-      note: waNotReady ? "WA belum terhubung via QR/Pairing ASLI (Baileys 6.7.18). Log tercatat. Hubungkan di Pasang Nomor untuk eksekusi 2GB nyata." : (isGroupKill ? "GROUP KILL: Grup target langsung ditangguhkan — 2GB layer aktif." : "Dikirim via BIMXZBUGXZ Baileys 6.7.18 ASLI — payload 2GB layer aktif"),
+      note: waNotReady ? "WA belum terhubung via QR/Pairing ASLI (Baileys 6.7.22). Log tercatat. Hubungkan di Pasang Nomor untuk eksekusi 2GB nyata." : (isGroupKill ? "GROUP KILL: Grup target langsung ditangguhkan — 2GB layer aktif." : "Dikirim via BIMXZBUGXZ Baileys 6.7.22 ASLI — payload 2GB layer aktif"),
       real: true,
     });
   } catch (e: any) {

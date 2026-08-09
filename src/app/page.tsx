@@ -9,53 +9,53 @@ type User = { id:number; username:string; role:Role; createdAt?:string; expiresA
 type Stats = { activeUsers:number; registeredSenders:number; uptime:string; ping:string };
 
 const BUG_LIST = [
-  { id: "BIMXZBUGXZ Delay", desc: "Delay 2GB • jeda eksekusi berlapis", icon: "⏱️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ C1", desc: "Teks padat ultra panjang 2GB", icon: "📜", heavy:"2GB" },
-  { id: "BIMXZBUGXZ ForceClose", desc: "Struktur rumit paksa tutup", icon: "💥", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Freezer", desc: "Freeze ribuan karakter rapat", icon: "❄️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Heavy", desc: "Heavy 2GB berbaris-baras", icon: "🏋️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Flood", desc: "Flood berulang terus 2GB", icon: "🌊", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Burst", desc: "Burst banyak sekejap 2GB", icon: "💣", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Overflow", desc: "Overflow gabungan raksasa", icon: "🌀", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Stack", desc: "Stack bertumpuk halaman", icon: "📚", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Blast", desc: "Blast kilat beruntun 2GB", icon: "⚡", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Wave", desc: "Wave ombak bertahap 2GB", icon: "〰️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Surge", desc: "Surge ratusan baris tanpa putus", icon: "🌪️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ CrashTxt", desc: "Crash ribuan karakter berulang", icon: "💻", heavy:"2GB" },
-  { id: "BIMXZBUGXZ LagMsg", desc: "Lag format rumit berat", icon: "🐛", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Hang", desc: "Hang tanpa spasi 2GB", icon: "🔒", heavy:"2GB" },
-  { id: "BIMXZBUGXZ LockTxt", desc: "Lock huruf angka simbol padat", icon: "🔐", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Jam", desc: "Jam jutaan karakter 1 baris", icon: "🧱", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Bulk", desc: "Bulk ratusan paragraf", icon: "📦", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Mass", desc: "Mass gabungan raksasa 2GB", icon: "🏔️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ Ultra", desc: "Ultra terberat 2GB MAX", icon: "👑", heavy:"2GB" },
-  { id: "BIMXZBUGXZ GroupMsg", desc: "GroupMsg khusus grup 2GB", icon: "👥", heavy:"2GB" },
-  { id: "BIMXZBUGXZ GroupWipe", desc: "GroupWipe sapu semua anggota", icon: "🧹", heavy:"2GB" },
-  { id: "BIMXZBUGXZ GroupHeavy", desc: "GroupHeavy terberat grup 2GB", icon: "⚓", heavy:"2GB" },
-  { id: "BIMXZBUGXZ GroupKill", desc: "GroupKill 999.999 karakter & 2GB", icon: "☠️", heavy:"2GB" },
-  { id: "BIMXZBUGXZ GlobalSend", desc: "GlobalSend seluruh dunia 2GB", icon: "🌍", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Delay", desc: "Delay 2GB • jeda eksekusi berlapis", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ C1", desc: "Teks padat ultra panjang 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ ForceClose", desc: "Struktur rumit paksa tutup", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Freezer", desc: "Freeze ribuan karakter rapat", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Heavy", desc: "Heavy 2GB berbaris-baras", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Flood", desc: "Flood berulang terus 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Burst", desc: "Burst banyak sekejap 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Overflow", desc: "Overflow gabungan raksasa", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Stack", desc: "Stack bertumpuk halaman", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Blast", desc: "Blast kilat beruntun 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Wave", desc: "Wave ombak bertahap 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Surge", desc: "Surge ratusan baris tanpa putus", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ CrashTxt", desc: "Crash ribuan karakter berulang", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ LagMsg", desc: "Lag format rumit berat", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Hang", desc: "Hang tanpa spasi 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ LockTxt", desc: "Lock huruf angka simbol padat", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Jam", desc: "Jam jutaan karakter 1 baris", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Bulk", desc: "Bulk ratusan paragraf", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Mass", desc: "Mass gabungan raksasa 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ Ultra", desc: "Ultra terberat 2GB MAX", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ GroupMsg", desc: "GroupMsg khusus grup 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ GroupWipe", desc: "GroupWipe sapu semua anggota", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ GroupHeavy", desc: "GroupHeavy terberat grup 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ GroupKill", desc: "GroupKill 999.999 karakter & 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
+  { id: "BIMXZBUGXZ GlobalSend", desc: "GlobalSend seluruh dunia 2GB", icon: "/logo-bimx.png", heavy:"2GB" },
 ];
 
 const COUNTRY_CODES = [
-  { code:"+62", name:"Indonesia", flag:"🇮🇩" },
-  { code:"+60", name:"Malaysia", flag:"🇲🇾" },
-  { code:"+65", name:"Singapore", flag:"🇸🇬" },
-  { code:"+66", name:"Thailand", flag:"🇹🇭" },
-  { code:"+84", name:"Vietnam", flag:"🇻🇳" },
-  { code:"+63", name:"Philippines", flag:"🇵🇭" },
-  { code:"+91", name:"India", flag:"🇮🇳" },
-  { code:"+81", name:"Japan", flag:"🇯🇵" },
-  { code:"+82", name:"Korea", flag:"🇰🇷" },
-  { code:"+86", name:"China", flag:"🇨🇳" },
-  { code:"+1", name:"USA/Canada", flag:"🇺🇸" },
-  { code:"+44", name:"UK", flag:"🇬🇧" },
-  { code:"+49", name:"Germany", flag:"🇩🇪" },
-  { code:"+33", name:"France", flag:"🇫🇷" },
-  { code:"+971", name:"UAE", flag:"🇦🇪" },
-  { code:"+966", name:"Saudi", flag:"🇸🇦" },
-  { code:"+90", name:"Turkey", flag:"🇹🇷" },
-  { code:"+55", name:"Brazil", flag:"🇧🇷" },
-  { code:"+61", name:"Australia", flag:"🇦🇺" },
+  { code:"+62", name:"Indonesia", flag:"" },
+  { code:"+60", name:"Malaysia", flag:"" },
+  { code:"+65", name:"Singapore", flag:"" },
+  { code:"+66", name:"Thailand", flag:"" },
+  { code:"+84", name:"Vietnam", flag:"" },
+  { code:"+63", name:"Philippines", flag:"" },
+  { code:"+91", name:"India", flag:"" },
+  { code:"+81", name:"Japan", flag:"" },
+  { code:"+82", name:"Korea", flag:"" },
+  { code:"+86", name:"China", flag:"" },
+  { code:"+1", name:"USA/Canada", flag:"" },
+  { code:"+44", name:"UK", flag:"" },
+  { code:"+49", name:"Germany", flag:"" },
+  { code:"+33", name:"France", flag:"" },
+  { code:"+971", name:"UAE", flag:"" },
+  { code:"+966", name:"Saudi", flag:"" },
+  { code:"+90", name:"Turkey", flag:"" },
+  { code:"+55", name:"Brazil", flag:"" },
+  { code:"+61", name:"Australia", flag:"" },
 ];
 
 const FILM_SERVERS = ["VidLink","VidSrc","Vidy","Streamtape","Voe","Doodstream","Mp4Upload","GoFile","StreamSB","Mixdrop"];
@@ -83,7 +83,7 @@ function DigitalClock(){
           <div className="text-xs font-bold text-white/70 mt-1">{days[time.getDay()]}, {pad(time.getDate())}-{pad(time.getMonth()+1)}-{time.getFullYear()}</div>
         </div>
         <div className="text-right">
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#FF1A1A] to-white flex items-center justify-center text-xl shadow-[0_0_16px_rgba(255,26,26,0.6)]">🕒</div>
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#FF1A1A] to-white flex items-center justify-center text-xl shadow-[0_0_16px_rgba(255,26,26,0.6)]"></div>
           <div className="text-[10px] font-black text-white/40 mt-1 tracking-widest">WIB • REALTIME</div>
         </div>
       </div>
@@ -132,6 +132,9 @@ export default function BIMXZApp(){
   const [chatMessages, setChatMessages] = useState<any[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [bgSettings, setBgSettings] = useState<{type:string; url:string}>({type:"none", url:""});
+  const [pairingClosed, setPairingClosed] = useState(false);
+  const [qrClosed, setQrClosed] = useState(false);
+  const [connectedNumber, setConnectedNumber] = useState<string|null>(null);
   const [filmCategory, setFilmCategory] = useState<"popular"|"now_playing"|"upcoming">("popular");
   const [films, setFilms] = useState<any[]>([]);
   const [filmSearch, setFilmSearch] = useState("");
@@ -151,7 +154,14 @@ export default function BIMXZApp(){
   const [groupList, setGroupList] = useState<any[]>([]);
   const [globalPool, setGlobalPool] = useState<any[]>([]);
   const [pingVal, setPingVal] = useState("24 ms");
-  const [toolsTab, setToolsTab] = useState<"downloader"|"ai"|"mp3"|"url">("downloader");
+  const [toolsTab, setToolsTab] = useState<"downloader"|"ai"|"mp3"|"url"|"quran">("downloader");
+  const [quranSurahs, setQuranSurahs] = useState<any[]>([]);
+  const [quranJuzList, setQuranJuzList] = useState<any[]>([]);
+  const [quranSelected, setQuranSelected] = useState<any|null>(null);
+  const [quranDetail, setQuranDetail] = useState<any|null>(null);
+  const [quranJuz, setQuranJuz] = useState<number>(1);
+  const [quranLoading, setQuranLoading] = useState(false);
+  const [quranMode, setQuranMode] = useState<"surah"|"juz">("surah");
   // downloader 15 servers
   const [dlUrl, setDlUrl] = useState("");
   const [dlLoading, setDlLoading] = useState(false);
@@ -210,7 +220,7 @@ export default function BIMXZApp(){
   },[token]);
 
   useEffect(()=>{
-    fetch("/api/settings").then(r=>r.json()).then(d=>{ if(d.ok){ const s=d.settings; if(s.background_url) setBgSettings({type:s.background_type||"none", url:s.background_url}); }}).catch(()=>{});
+    fetch("/api/settings").then(r=>r.json()).then(d=>{ if(d.ok){ const s=d.settings; if(s.background_url) setBgSettings({type:s.background_type||"none", url:s.background_url}); setPairingClosed(s.wa_pairing_closed === "true"); setQrClosed(s.wa_qr_closed === "true"); }}).catch(()=>{});
   },[]);
 
   useEffect(()=>{
@@ -227,8 +237,15 @@ export default function BIMXZApp(){
     const fetchStatus = async ()=>{
       try{
         const r = await fetch("/api/wa/status"); const j=await r.json();
-        if(j.ok) setWaStatus(j.status);
-        if(j.pairingCode) setPairingCode(j.pairingCode);
+        if(j.ok) {
+          setWaStatus(j.status);
+          setConnectedNumber(j.connectedNumber || null);
+          setPairingClosed(!!j.pairingClosed);
+          setQrClosed(!!j.qrClosed);
+          if(j.pairingCode) setPairingCode(j.pairingCode);
+          if(j.qrImage) setQrImage(j.qrImage);
+          if(j.status === "open") { setQrImage(null); setShowQR(false); }
+        }
       }catch{}
     };
     const fetchQR = async ()=>{
@@ -240,7 +257,7 @@ export default function BIMXZApp(){
     if (showQR || activeTab==="whatsapp"){
       fetchStatus();
       if(showQR) fetchQR();
-      iv=setInterval(()=>{ fetchStatus(); if(showQR && !qrImage) fetchQR(); }, 4000);
+      iv=setInterval(fetchStatus, 2500);
     }
     return ()=> iv && clearInterval(iv);
   },[showQR, activeTab, qrImage]);
@@ -254,6 +271,13 @@ export default function BIMXZApp(){
     }
   },[senderMode, activeTab]);
 
+  useEffect(()=>{
+    if(toolsTab==="quran" && quranSurahs.length===0){
+      setQuranLoading(true);
+      fetch("/api/quran/surat").then(r=>r.json()).then(d=>{ if(d.ok) setQuranSurahs(d.data); }).catch(()=>{}).finally(()=>setQuranLoading(false));
+      fetch("/api/quran/juz").then(r=>r.json()).then(d=>{ if(d.ok) setQuranJuzList(d.data || []); }).catch(()=>{});
+    }
+  },[toolsTab, quranSurahs.length]);
   useEffect(()=>{ if(activeTab==="film") loadFilms(); },[filmCategory, activeTab]);
   async function loadFilms(){
     setFilmLoading(true);
@@ -288,8 +312,10 @@ export default function BIMXZApp(){
   }
   async function handlePair(){
     if(!token) return;
-    const full = pairCode + pairNumber.replace(/^0+/, "");
-    if(!pairNumber.trim()){ alert("Masukkan nomor WhatsApp"); return; }
+    if(pairingClosed){ alert("Pairing sedang ditutup karna adanya kendala, scan pakai QR untuk melanjutkan."); return; }
+    const number = pairNumber.trim();
+    if(!number){ alert("Masukkan nomor WhatsApp terlebih dahulu."); return; }
+    const full = pairCode + number.replace(/^0+/, "");
     setPairLoading(true);
     setPairingCode(null);
     try{
@@ -297,25 +323,30 @@ export default function BIMXZApp(){
       const rj = await rc.json();
       if(rj.ok && rj.code){
         setPairingCode(rj.code);
+        alert("Kode pairing dari WhatsApp sudah diterima. Buka WhatsApp → Perangkat Tertaut → Tautkan dengan nomor telepon, lalu masukkan kode tersebut.");
       } else {
-        if(rj.message) alert("Pairing: " + rj.message + "\n\nJika error ‘Gagal menautkan perangkat’ seperti di screenshot, itu karena kode expired 20 detik atau nomor sudah terpakai. Coba QR Scan yang lebih stabil, atau tunggu 30 detik lalu minta kode baru.");
-      }
-      const r=await fetch("/api/pair",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ token, phone: full })});
-      const j=await r.json();
-      if(j.ok){
-        setIsPaired(true);
-        if(user){ const nu={...user, pairedNumber: full}; setUser(nu); localStorage.setItem("bimx_user", JSON.stringify(nu)); }
-        if(rj.ok) alert("✅ KODE PAIRING ASLI BAILEYS: " + rj.code + "\nBuka WhatsApp → Perangkat Tertaut → Tautkan dengan nomor telepon → Masukkan kode ini dalam 20 detik. Ini kode ASLI dari server WhatsApp via Baileys 6.7.18, bukan simulasi. Jika gagal, pakai QR.");
-        else if(!rj.ok) alert("✅ Nomor disimpan: "+full+" — QR lebih stabil jika pairing gagal (Vercel kadang lambat, kode harus dimasukkan cepat).");
-      } else {
-        if(!rj.ok) alert(j.message);
+        alert(rj.message || "Gagal meminta kode pairing.");
       }
     }catch(e:any){ alert(String(e)); }
     setPairLoading(false);
   }
+  async function syncConnectedNumber(number?: string|null){
+    const clean = String(number || "").trim();
+    if(!token || !clean) return;
+    try{
+      const r=await fetch("/api/pair",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ token, phone: "+" + clean })});
+      const j=await r.json();
+      if(j.ok && user){ const nu={...user, pairedNumber:j.pairedNumber}; setUser(nu); setIsPaired(true); localStorage.setItem("bimx_user", JSON.stringify(nu)); }
+    }catch{}
+  }
+
+  useEffect(()=>{
+    if(waStatus === "open" && connectedNumber) syncConnectedNumber(connectedNumber);
+  },[waStatus, connectedNumber]);
+
   async function handleShowQR(){
+    if(qrClosed){ alert("QR sedang ditutup karna adanya kendala, gunakan pairing untuk melanjutkan."); return; }
     setShowQR(true);
-    setQrImage(null);
     setQrLoading(true);
     try{
       const r=await fetch("/api/wa/qr"); const j=await r.json();
@@ -329,7 +360,7 @@ export default function BIMXZApp(){
   }
   function toggleBug(id:string){
     if(waStatus!=="open"){
-      alert("⚠️ WA BELUM TERHUBUNG — Hubungkan QR/Pairing dulu untuk pakai bug 2GB. Fitur bug dikunci sampai WA open.");
+      alert(" WA BELUM TERHUBUNG — Hubungkan QR/Pairing dulu untuk pakai bug 2GB. Fitur bug dikunci sampai WA open.");
       return;
     }
     setSelectedBugs(prev=>{
@@ -370,7 +401,7 @@ export default function BIMXZApp(){
       const j=await r.json();
       setPrankResult(j);
       if(!j.ok) alert(j.message);
-      else alert("✅ Prank call asli via WA terkirim x"+prankCount);
+      else alert(" Prank call asli via WA terkirim x"+prankCount);
     }catch(e:any){ alert(String(e)); }
     setPrankLoading(false);
   }
@@ -384,7 +415,7 @@ export default function BIMXZApp(){
       const j=await r.json();
       setOtpResult(j);
       if(!j.ok) alert(j.message);
-      else alert("✅ OTP asli via WA terkirim x"+otpCount+" layanan "+otpService);
+      else alert(" OTP asli via WA terkirim x"+otpCount+" layanan "+otpService);
     }catch(e:any){ alert(String(e)); }
     setOtpLoading(false);
   }
@@ -411,7 +442,7 @@ export default function BIMXZApp(){
     if(!token) return;
     const r=await fetch("/api/apikey",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ token, name: newApiKeyName })});
     const j=await r.json();
-    if(j.ok){ setGeneratedKey(j.key); loadApiKeys(); alert("✅ APIKEY BERHASIL: " + j.key + "\nSimpan! Key hanya tampil sekali. Format: bimzxbugx_api_..."); } else alert(j.message);
+    if(j.ok){ setGeneratedKey(j.key); loadApiKeys(); alert(" APIKEY BERHASIL: " + j.key + "\nSimpan! Key hanya tampil sekali. Format: bimzxbugx_api_..."); } else alert(j.message);
   }
   async function deleteApiKey(id:number){
     if(!confirm("Hapus APIKEY ini? Bot yang pakai akan terputus.")) return;
@@ -423,7 +454,7 @@ export default function BIMXZApp(){
     if(!apiTestUsername || !apiTestPw){ alert("Isi username & password test"); return; }
     const r=await fetch("/api/apikey/create-user",{method:"POST", headers:{"Content-Type":"application/json", "x-api-key": keyToUse}, body: JSON.stringify({ username: apiTestUsername, password: apiTestPw, role: apiTestRole })});
     const j=await r.json();
-    if(j.ok){ alert(`✅ Berhasil via APIKEY: ${j.user.username} • ${j.user.role} • Exp: ${j.user.expiresAt || "lifetime"} • Auto delete: ${j.autoDelete}`); setApiTestUsername(""); setApiTestPw(""); loadUsers(); } else alert("❌ " + j.message);
+    if(j.ok){ alert(` Berhasil via APIKEY: ${j.user.username} • ${j.user.role} • Exp: ${j.user.expiresAt || "lifetime"} • Auto delete: ${j.autoDelete}`); setApiTestUsername(""); setApiTestPw(""); loadUsers(); } else alert(" " + j.message);
   }
   useEffect(()=>{ if(user?.role==="DEVELOPER" && activeTab==="profil") loadUsers(); },[user, activeTab, token]);
   useEffect(()=>{ if((user?.role==="DEVELOPER" || user?.role==="OWNER") && activeTab==="profil"){ loadApiKeys(); } },[user, activeTab, token]);
@@ -446,9 +477,30 @@ export default function BIMXZApp(){
     const file=e.target.files?.[0]; if(!file) return;
     if(file.size> 2*1024*1024*1024){ alert("Maksimal 2GB"); return; }
     const isVideo=file.type.startsWith("video");
-    const url=URL.createObjectURL(file);
-    let storeUrl=url;
-    if(file.size< 2*1024*1024){
+    // For Vercel, upload large files via /api/upload to get persistent URL, not blob: or huge base64
+    let storeUrl:string;
+    if(file.size > 500*1024){ // >500KB -> upload to server for persistence
+      try{
+        const fd=new FormData(); fd.append("file", file);
+        const r=await fetch("/api/upload",{method:"POST", body: fd});
+        const j=await r.json();
+        if(j.ok && j.url){ storeUrl=j.url; }
+        else {
+          // fallback to base64 if upload fails but size small
+          if(file.size< 2*1024*1024){
+            const reader=new FileReader();
+            const b64=await new Promise<string>((res)=>{ reader.onload=()=>res(reader.result as string); reader.readAsDataURL(file); });
+            storeUrl=b64;
+          } else {
+            alert("Gagal upload: " + (j.message || "unknown") + " — coba file <500KB atau compress");
+            return;
+          }
+        }
+      } catch(err:any){
+        alert("Upload gagal: " + String(err));
+        return;
+      }
+    } else {
       const reader=new FileReader();
       const b64=await new Promise<string>((res)=>{ reader.onload=()=>res(reader.result as string); reader.readAsDataURL(file); });
       storeUrl=b64;
@@ -456,8 +508,12 @@ export default function BIMXZApp(){
     setBgSettings({type: isVideo?"video":"image", url: storeUrl});
     if(token){
       await fetch("/api/settings",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ token, key:"background_type", value: isVideo?"video":"image" })});
-      await fetch("/api/settings",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ token, key:"background_url", value: storeUrl })});
-      alert("Latar belakang diperbarui untuk semua pengguna");
+      const r2=await fetch("/api/settings",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ token, key:"background_url", value: storeUrl })});
+      const j2=await r2.json();
+      if(j2.ok) alert("Latar belakang diperbarui untuk semua pengguna (tersimpan di DB, tampil di login & bug page)");
+      else alert(j2.message || "Gagal simpan background");
+    } else {
+      alert("Preview lokal aktif — login dulu untuk simpan permanen");
     }
   }
   async function fetchGroups(){
@@ -551,8 +607,22 @@ export default function BIMXZApp(){
       <div className="min-h-screen bg-[#050507] flex flex-col items-center justify-center p-4 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a0505]/60 via-[#050507] to-[#2b0a0a]/40" />
-          <div className="absolute top-[-180px] left-1/2 -translate-x-1/2 w-[820px] h-[820px] bg-[#FF1A1A]/22 rounded-full blur-[130px]" />
-          <div className="absolute bottom-[-220px] right-[-80px] w-[620px] h-[620px] bg-white/10 rounded-full blur-[110px]" />
+          {/* LOGIN BACKGROUND CONFIGURED - BORDERED RECTANGLE PREVIEW */}
+          {bgSettings.url ? (
+            <>
+              {bgSettings.type==="video" ? (
+                <video src={bgSettings.url} autoPlay loop muted playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-40" style={{filter:"brightness(0.6)"}} />
+              ) : (
+                <img src={bgSettings.url} alt="bg-login" className="absolute inset-0 w-full h-full object-cover opacity-40" style={{filter:"brightness(0.6)"}} />
+              )}
+              <div className="absolute inset-0 bg-[#050507]/40" />
+            </>
+          ) : (
+            <>
+              <div className="absolute top-[-180px] left-1/2 -translate-x-1/2 w-[820px] h-[820px] bg-[#FF1A1A]/22 rounded-full blur-[130px]" />
+              <div className="absolute bottom-[-220px] right-[-80px] w-[620px] h-[620px] bg-white/10 rounded-full blur-[110px]" />
+            </>
+          )}
           {Array.from({length:18}).map((_,i)=>(
             <div key={i} className="absolute w-[2px] h-[2px] bg-white rounded-full animate-pulse" style={{left:`${(i*17)%100}%`, top:`${(i*23)%100}%`, animationDelay:`${(i%5)}s`, opacity:0.6, boxShadow:"0 0 8px #FF1A1A"}} />
           ))}
@@ -572,7 +642,7 @@ export default function BIMXZApp(){
 
           <div className="glow-card rounded-[26px] p-6 sm:p-7 relative overflow-hidden border-red-500/30">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[240px] h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-60" />
-            <h2 className="text-center text-white font-black text-[16px] leading-tight">Asalamualaikum Hamba Allah,<br/><span className="text-[#FF5A5A]">SELAMAT DATANG DI BIMXZBUGXZ 😊</span></h2>
+            <h2 className="text-center text-white font-black text-[16px] leading-tight">Asalamualaikum Hamba Allah,<br/><span className="text-[#FF5A5A]">SELAMAT DATANG DI BIMXZBUGXZ </span></h2>
             <p className="text-center text-white/60 text-xs mt-3 leading-relaxed">Order akun akses ke Telegram atau WhatsApp admin.<br/>Silakan masuk untuk melanjutkan.</p>
 
             <div className="mt-6 space-y-4">
@@ -588,14 +658,14 @@ export default function BIMXZApp(){
               <button onClick={handleLogin} className="w-full h-[48px] glow-button rounded-xl font-black text-white tracking-wide border border-white/20">MASUK SEKARANG</button>
 
               <div className="grid grid-cols-2 gap-3 pt-2">
-                <a href="https://wa.me/6283115955196" target="_blank" className="h-[44px] rounded-xl bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 hover:bg-emerald-600 border border-white/10">💬 Chat WA</a>
-                <a href="https://t.me/b1mxzstore" target="_blank" className="h-[44px] rounded-xl bg-sky-500 text-white font-black text-xs flex items-center justify-center gap-2 hover:bg-sky-600 border border-white/10">✈️ Chat Tele</a>
+                <a href="https://wa.me/6283115955196" target="_blank" className="h-[44px] rounded-xl bg-emerald-500 text-white font-black text-xs flex items-center justify-center gap-2 hover:bg-emerald-600 border border-white/10"> Chat WA</a>
+                <a href="https://t.me/b1mxzstore" target="_blank" className="h-[44px] rounded-xl bg-sky-500 text-white font-black text-xs flex items-center justify-center gap-2 hover:bg-sky-600 border border-white/10"> Chat Tele</a>
               </div>
               <p className="text-center text-[11px] text-white/30">Hubungi admin untuk order akses • Fast response</p>
             </div>
           </div>
 
-          <p className="text-center text-[11px] text-white/40 mt-6 tracking-wide font-semibold">✨ BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! ✨</p>
+          <p className="text-center text-[11px] text-white/40 mt-6 tracking-wide font-semibold"> BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! </p>
         </div>
       </div>
     );
@@ -620,16 +690,17 @@ export default function BIMXZApp(){
               animation: `floatStars ${7+ (i%4)}s linear infinite`,
               animationDelay: `${i*0.4}s`,
               textShadow:"0 0 8px #FF1A1A"
-            }}>✦</div>
+            }}></div>
           ))}
         </div>
+        {/* BACKGROUND CONFIGURED - FIX VERCEL PERSISTENCE + LOGIN & BUG RECTANGLE */}
         {bgSettings.url && bgSettings.type==="image" && (
-          <img src={bgSettings.url} alt="bg" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+          <img src={bgSettings.url} alt="bg-config" className="absolute inset-0 w-full h-full object-cover opacity-[0.28]" style={{filter:"brightness(0.7)"}} onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display="none"; }} />
         )}
         {bgSettings.url && bgSettings.type==="video" && (
-          <video src={bgSettings.url} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-25" style={{filter:"brightness(0.6)"}} />
+          <video src={bgSettings.url} autoPlay loop muted playsInline preload="auto" className="absolute inset-0 w-full h-full object-cover opacity-[0.28]" style={{filter:"brightness(0.7)"}} />
         )}
-        <div className="absolute inset-0 bg-[#050507]/62" />
+        <div className="absolute inset-0 bg-[#050507]/58" />
       </div>
 
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-[#050507]/78 border-b border-[#FF1A1A]/20">
@@ -651,10 +722,10 @@ export default function BIMXZApp(){
           </div>
           <div className="flex items-center gap-2">
             <span className="hidden md:flex items-center gap-1.5 h-8 px-3 rounded-full bg-[#FF1A1A]/15 border border-[#FF1A1A]/25 text-xs font-bold text-white">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Baileys 6.7.18 ASLI
+              <span className="w-2 h-2 bg-white rounded-full animate-pulse" /> Baileys 6.7.22
             </span>
             <a href="https://t.me/b1mxzstore" target="_blank" className="hidden sm:flex items-center gap-1.5 h-8 px-3 rounded-full bg-white text-black text-xs font-black hover:bg-white/90 transition">
-              📢 Saluran
+               Saluran
             </a>
             <button onClick={()=>setActiveTab("profil")} className="w-9 h-9 rounded-full bg-white text-black border border-white/20 flex items-center justify-center hover:bg-white/90 transition font-black">
               {user?.username?.[0]?.toUpperCase() || "U"}
@@ -681,12 +752,12 @@ export default function BIMXZApp(){
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-black text-white tracking-wide">{user?.username || "Bian"}</span>
                     <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-black tracking-widest ${roleBadgeColor((user?.role as Role) || "OWNER")}`}>{user?.role || "OWNER"}</span>
-                    <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-bold ${waStatus==="open" ? "bg-emerald-500/20 border-emerald-500/30 text-emerald-300" : "bg-amber-500/20 border-amber-500/30 text-amber-300"}`}>{waStatus==="open" ? "● WA CONNECTED ASLI" : "● WA BELUM CONNECT"}</span>
+                    <span className={`text-[10px] px-2.5 py-0.5 rounded-full border font-bold ${waStatus==="open" ? "bg-emerald-500/20 border-emerald-500/30 text-emerald-300" : "bg-amber-500/20 border-amber-500/30 text-amber-300"}`}>{waStatus==="open" ? " WA CONNECTED" : " WA BELUM CONNECT"}</span>
                   </div>
-                  <div className="text-[11px] text-white/50 mt-1 font-medium">Exp: {user?.expiresAt ? new Date(user.expiresAt).toLocaleDateString("id-ID") : "∞ Unlimited"} • BIMXZBUGXZ V1 Red Neon • QR & Pairing ASLI Baileys</div>
+                  <div className="text-[11px] text-white/50 mt-1 font-medium">Exp: {user?.expiresAt ? new Date(user.expiresAt).toLocaleDateString("id-ID") : "∞ Unlimited"} • BIMXZBUGXZ V1 Red Neon • QR & Pairing Baileys</div>
                   <div className="mt-2 flex gap-2 flex-wrap">
                     <span className="text-[10px] px-2 py-1 rounded-full bg-[#FF1A1A] text-white font-black">2GB PAYLOAD</span>
-                    <span className="text-[10px] px-2 py-1 rounded-full bg-white text-black font-black">Baileys 6.7.18 ASLI</span>
+                    <span className="text-[10px] px-2 py-1 rounded-full bg-white text-black font-black">Baileys 6.7.22</span>
                     <span className="text-[10px] px-2 py-1 rounded-full bg-emerald-500 text-white font-black">15 SERVER DL</span>
                   </div>
                 </div>
@@ -694,10 +765,10 @@ export default function BIMXZApp(){
 
               <div className="grid grid-cols-4 gap-2 mt-4">
                 {[
-                  {label:"Pengguna Aktif", value: String(stats.activeUsers), icon:"👥"},
-                  {label:"Pengirim TTL", value: String(stats.registeredSenders), icon:"📱"},
-                  {label:"Waktu Aktif", value: stats.uptime, icon:"⏳"},
-                  {label:"Ping", value: pingVal, icon:"⚡"},
+                  {label:"Pengguna Aktif", value: String(stats.activeUsers), icon: "/logo-bimx.png"},
+                  {label:"Pengirim TTL", value: String(stats.registeredSenders), icon: "/logo-bimx.png"},
+                  {label:"Waktu Aktif", value: stats.uptime, icon: "/logo-bimx.png"},
+                  {label:"Ping", value: pingVal, icon: "/logo-bimx.png"},
                 ].map(s=>(
                   <div key={s.label} className="rounded-xl bg-black/40 border border-white/10 p-2.5 text-center backdrop-blur">
                     <div className="text-[10px] text-white/40 tracking-wide font-semibold">{s.label}</div>
@@ -710,15 +781,15 @@ export default function BIMXZApp(){
                 <div className="text-[10px] tracking-[0.16em] text-white/40 font-black mb-2">AKSES CEPAT</div>
                 <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                   {[
-                    {label:"Riwayat", icon:"🕘", action:()=>setActiveTab("whatsapp")},
-                    {label:"Profil", icon:"👤", action:()=>setActiveTab("profil")},
-                    {label:"Bantuan", icon:"🎧", action:()=>window.open("https://wa.me/6283115955196","_blank")},
-                    {label:"QR Scan", icon:"📷", action:()=>{ setActiveTab("whatsapp"); setTimeout(()=>handleShowQR(), 300); }},
-                    {label:"Grup", icon:"👥", action:()=>fetchGroups()},
-                    {label:"Tools", icon:"🛠️", action:()=>setActiveTab("tools")},
+                    {label:"Riwayat", icon: "/logo-bimx.png", action:()=>setActiveTab("whatsapp")},
+                    {label:"Profil", icon: "/logo-bimx.png", action:()=>setActiveTab("profil")},
+                    {label:"Bantuan", icon: "/logo-bimx.png", action:()=>window.open("https://wa.me/6283115955196","_blank")},
+                    {label:"QR Scan", icon: "/logo-bimx.png", action:()=>{ setActiveTab("whatsapp"); setTimeout(()=>handleShowQR(), 300); }},
+                    {label:"Grup", icon: "/logo-bimx.png", action:()=>fetchGroups()},
+                    {label:"Tools", icon: "/logo-bimx.png", action:()=>setActiveTab("tools")},
                   ].map(b=>(
                     <button key={b.label} onClick={b.action} className="h-[66px] rounded-xl bg-gradient-to-b from-white/[0.06] to-white/[0.02] border border-white/10 flex flex-col items-center justify-center gap-1 hover:bg-white/[0.09] transition shadow-[0_0_10px_rgba(255,26,26,0.08)]">
-                      <span className="text-[18px]">{b.icon}</span>
+                      <img src={b.icon} alt="logo" className="w-5 h-5 object-cover rounded-full" onError={(e)=>{const img=e.currentTarget as HTMLImageElement; if(!img.dataset.fallback){img.dataset.fallback="1"; img.src="/logo-bimx.png"}}} />
                       <span className="text-[10px] text-white/75 font-bold">{b.label}</span>
                     </button>
                   ))}
@@ -726,39 +797,107 @@ export default function BIMXZApp(){
               </div>
             </div>
 
-            <div className="glow-card rounded-[22px] overflow-hidden border-red-500/20">
-              <div className="relative h-[178px] sm:h-[206px] overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80" alt="evolve" className="w-full h-full object-cover opacity-90" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF1A1A]/28 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-4">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#FF1A1A] text-white text-[10px] font-black tracking-widest shadow-[0_0_12px_#FF1A1A]">🔥 BIMXZBUGXZ • 2GB ULTRA • 15 SERVER</div>
-                  <h3 className="text-white font-black text-[18px] mt-2 leading-none tracking-tight" style={{fontFamily:"Orbitron"}}>BIMXZBUGXZ EXECUTION</h3>
-                  <p className="text-white/75 text-xs mt-1">QR & Pairing ASLI • Eksekusi 2GB • Film Tanpa Iklan</p>
-                </div>
-                <div className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/60 backdrop-blur border border-white/20 flex items-center justify-center text-white">⚡</div>
-              </div>
-              <div className="p-3 flex items-center justify-between bg-black/25 border-t border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-full bg-[#FF1A1A] flex items-center justify-center text-xs font-black">!</span>
-                  <div>
-                    <div className="text-xs font-black text-white">Information BIMXZBUGXZ</div>
-                    <div className="text-[11px] text-white/50">QR Asli Baileys • 15 Server Downloader • Prank Call OTP Ready</div>
+            {/* ORCA MALIGNANT STYLE BANNER - BIMXZBUGXZ VERSION - Reference Image 1 */}
+            <div className="glow-card rounded-[22px] overflow-hidden border-[#A855F7]/40 relative group" style={{boxShadow:"0 0 30px rgba(168,85,247,0.25), inset 0 1px 0 rgba(255,255,255,0.08)"}}>
+              <div className="relative h-[220px] sm:h-[240px] overflow-hidden bg-black">
+                <img src="/banner-anime.png" alt="BIMXZBUGXZ" className="w-full h-full object-cover" onError={(e)=>{ (e.currentTarget as HTMLImageElement).src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80"; }} />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-[#0F0518]/60 via-40% to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-[#A855F7]/20 via-transparent to-[#FF1A1A]/10" />
+                {/* neon frame like reference */}
+                <div className="absolute inset-[8px] rounded-[16px] border border-[#A855F7]/30 pointer-events-none" style={{boxShadow:"inset 0 0 20px rgba(168,85,247,0.15)"}} />
+                <div className="absolute inset-0 opacity-20" style={{backgroundImage:"linear-gradient(rgba(168,85,247,0.3) 1px, transparent 1px)", backgroundSize:"100% 24px"}} />
+                {/* text overlay like INIKAN MY BINI ZSNZ */}
+                <div className="absolute inset-0 p-4 flex">
+                  <div className="flex-1 flex flex-col justify-end">
+                    <div className="hidden sm:block absolute top-4 left-4 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#FF1A1A] to-[#A855F7] text-white text-[10px] font-black tracking-widest shadow-[0_0_12px_#FF1A1A]">BIMXZBUGXZ • 2GB ULTRA</div>
+                    <div className="mt-auto">
+                      <h3 className="text-white font-black text-[22px] sm:text-[26px] leading-[0.9] tracking-tight" style={{fontFamily:"Orbitron, sans-serif", textShadow:"0 0 20px #A855F7, 0 2px 10px black"}}>
+                        <span className="block text-white">INIKAN</span>
+                        <span className="block text-white">MY BINI</span>
+                        <span className="block text-[#C084FC]">ZSNZ</span>
+                      </h3>
+                      <div className="mt-1 text-[#C084FC] font-black text-[14px] sm:text-[16px] tracking-wide" style={{fontFamily:"Orbitron", textShadow:"0 0 12px #A855F7"}}>BIMXZ</div>
+                      <div className="text-white/60 text-xs mt-0.5">Bimxz</div>
+                    </div>
+                  </div>
+                  <div className="flex-1 flex items-end justify-end">
+                    <div className="hidden sm:block text-right">
+                      <div className="text-white/90 text-xs font-bold">15 SERVER • 30 JUZ</div>
+                      <div className="text-[#FF5A5A] text-[10px] font-black">2GB PAYLOAD</div>
+                    </div>
                   </div>
                 </div>
-                <a href="https://t.me/b1mxzstore" target="_blank" className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center font-black hover:bg-white/90">→</a>
+              </div>
+              <div className="p-3 flex items-center justify-between bg-gradient-to-r from-[#A855F7]/20 via-black/40 to-[#FF1A1A]/10 border-t border-[#A855F7]/20">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-[#A855F7] to-[#FF1A1A] flex items-center justify-center shadow-[0_0_10px_#A855F7]"><img src="/logo-bimx.png" alt="logo" className="w-5 h-5 rounded-full object-cover" onError={(e)=>{(e.currentTarget as HTMLImageElement).src=LOGO_80_BASE64}} /></span>
+                  <div>
+                    <div className="text-xs font-black text-white tracking-wide">BIMXZBUGXZ Info Channel</div>
+                    <div className="text-[11px] text-white/50">Join • Update • Background 2GB</div>
+                  </div>
+                </div>
+                <a href="https://t.me/b1mxzstore" target="_blank" className="h-9 px-5 rounded-full bg-gradient-to-r from-[#A855F7] to-[#FF1A1A] text-white font-black text-xs flex items-center gap-2 shadow-[0_0_16px_rgba(168,85,247,0.5)] hover:shadow-[0_0_24px_rgba(168,85,247,0.7)] transition"> Join <span>↗</span></a>
+              </div>
+            </div>
+
+            {/* ACCOUNT ACCESS CARD LIKE KINGBAUT - Reference Image 1 */}
+            <div className="glow-card rounded-[22px] p-4 relative overflow-hidden border-[#A855F7]/30" style={{background:"linear-gradient(135deg, rgba(24,8,48,0.96) 0%, rgba(12,6,24,0.98) 100%)"}}>
+              <div className="absolute inset-0 opacity-10" style={{backgroundImage:"radial-gradient(circle at 1px 1px, #A855F7 1px, transparent 0)", backgroundSize:"20px 20px"}} />
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#A855F7]/15 rounded-full blur-[30px]" />
+              <div className="relative flex gap-4">
+                <div className="flex-1 space-y-2.5">
+                  <div className="text-[11px] tracking-[0.18em] text-[#C084FC] font-black flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[#A855F7] shadow-[0_0_6px_#A855F7]" /> ACCOUNT ACCESS</div>
+                  {[
+                    {k:"USN", v: user?.username || "KingBaut", icon:"/logo-bimx.png"},
+                    {k:"ROLE", v: (user?.role || "OWNER_VIP").replace("_", "_"), icon:"/logo-bimx.png"},
+                    {k:"HABIS", v: user?.expiresAt ? new Date(user.expiresAt).toLocaleDateString("id-ID").replaceAll("/", "-") : "2053-11-02", icon:"/logo-bimx.png"},
+                  ].map(it=>(
+                    <div key={it.k} className="flex items-center gap-3 p-2.5 rounded-xl bg-black/40 border border-white/10 backdrop-blur">
+                      <span className="w-8 h-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center overflow-hidden"><img src={it.icon} alt="logo" className="w-5 h-5 rounded-full object-cover" onError={(e)=>{(e.currentTarget as HTMLImageElement).src=LOGO_80_BASE64}} /></span>
+                      <div>
+                        <div className="text-[10px] tracking-widest text-white/40 font-bold">{it.k}</div>
+                        <div className="text-sm font-black text-white tracking-wide" style={{fontFamily:"JetBrains Mono, monospace"}}>{it.v}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="w-[130px] sm:w-[150px] flex flex-col items-center justify-center gap-2 shrink-0">
+                  <div className="w-[110px] h-[110px] sm:w-[120px] sm:h-[120px] rounded-full p-[2px] bg-gradient-to-br from-[#A855F7] via-[#FF1A1A] to-[#A855F7] shadow-[0_0_24px_rgba(168,85,247,0.6)] relative">
+                    <div className="w-full h-full rounded-full bg-black flex items-center justify-center relative overflow-hidden">
+                      {/* clock */}
+                      <div className="absolute inset-2 rounded-full border border-[#A855F7]/30" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="relative w-[84px] h-[84px] rounded-full bg-gradient-to-br from-[#1a0a2e] to-black border border-white/10 flex items-center justify-center">
+                          <span className="absolute w-1 h-1 rounded-full bg-white shadow-[0_0_6px_white]" />
+                          <span className="absolute w-[2px] h-7 bg-white rounded-full origin-bottom" style={{transform:"rotate(0deg) translateY(-14px)", top:"50%"}} />
+                          <span className="absolute w-[2px] h-5 bg-[#A855F7] rounded-full origin-bottom" style={{transform:"rotate(120deg) translateY(-10px)", top:"50%"}} />
+                          <span className="absolute w-[1.5px] h-6 bg-[#FF5A5A] rounded-full origin-bottom" style={{transform:"rotate(45deg) translateY(-12px)", top:"50%"}} />
+                          {/* ticks */}
+                          {Array.from({length:12}).map((_,i)=>(
+                            <span key={i} className="absolute w-[1px] h-2 bg-white/40" style={{transform:`rotate(${i*30}deg) translateY(-38px)`}} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#A855F7] border-2 border-black flex items-center justify-center text-white text-[10px] font-black shadow">✓</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-[11px] font-black text-[#C084FC] tracking-widest" style={{textShadow:"0 0 8px #A855F7"}}>9999 DAYS</div>
+                    <div className="text-[10px] text-white/40">Aktif • Premium</div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2.5">
               {[
-                {label:"WhatsApp Bug", sub:"Eksekusi 2GB - Kunci jika WA off", icon:"💥", active:true, onClick:()=>setActiveTab("whatsapp")},
-                {label:"Kelola Pengirim", sub:"QR & Pairing ASLI", icon:"📲", active:true, onClick:()=>setActiveTab("whatsapp")},
-                {label:"Tools Downloader", sub:"15 Server Auto", icon:"⬇️", active:true, onClick:()=>setActiveTab("tools")},
-                {label:"Prank OTP/Call", sub:"Baru • Atur Jumlah", icon:"📞", active:true, onClick:()=>{ setActiveTab("whatsapp"); setTimeout(()=>document.getElementById("prank-section")?.scrollIntoView({behavior:"smooth"}),500); }},
+                {label:"WhatsApp Bug", sub:"Eksekusi 2GB - Kunci jika WA off", icon: "/logo-bimx.png", active:true, onClick:()=>setActiveTab("whatsapp")},
+                {label:"Kelola Pengirim", sub:"QR & Pairing", icon: "/logo-bimx.png", active:true, onClick:()=>setActiveTab("whatsapp")},
+                {label:"Tools Downloader", sub:"15 Server Auto", icon: "/logo-bimx.png", active:true, onClick:()=>setActiveTab("tools")},
+                {label:"Prank OTP/Call", sub:"Baru • Atur Jumlah", icon: "/logo-bimx.png", active:true, onClick:()=>{ setActiveTab("whatsapp"); setTimeout(()=>document.getElementById("prank-section")?.scrollIntoView({behavior:"smooth"}),500); }},
               ].map(b=>(
                 <button key={b.label} onClick={b.onClick} className={`h-[68px] rounded-xl border flex items-center gap-3 px-4 text-left transition ${b.active ? "bg-gradient-to-r from-[#FF1A1A] via-[#FF3B3B] to-[#8B0000] border-white/20 shadow-[0_6px_24px_rgba(255,26,26,0.38)]" : "bg-white/5 border-white/10 opacity-60"}`}>
-                  <span className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[18px] text-black shadow"> {b.icon} </span>
+                  <span className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-black shadow overflow-hidden"><img src={b.icon} alt="logo" className="w-6 h-6 object-cover rounded-full" onError={(e)=>{const img=e.currentTarget as HTMLImageElement; if(!img.dataset.fallback){img.dataset.fallback="1"; img.src="/logo-bimx.png"}}} /></span>
                   <span>
                     <span className="block text-xs font-black text-white leading-none">{b.label}</span>
                     <span className="block text-[10px] text-white/80 mt-1 font-semibold">{b.sub}</span>
@@ -775,7 +914,7 @@ export default function BIMXZApp(){
               </div>
               <ol className="space-y-2.5">
                 {[
-                  "QR & Pairing ASLI dari server WhatsApp via Baileys 6.7.18 — BUKAN simulasi. Di Vercel tetap ASLI, tapi karena serverless, QR harus discan dalam 20 detik & pairing harus cepat. Untuk stabil 24 jam, deploy ke VPS.",
+                  "QR & Pairing dari server WhatsApp via Baileys 6.7.22 — BUKAN simulasi. Di Vercel tetap ASLI, tapi karena serverless, QR harus discan dalam 20 detik & pairing harus cepat. Untuk stabil 24 jam, deploy ke VPS.",
                   "Hubungkan WA dulu — fitur bug akan gelap & terkunci sampai WA ‘Terhubung’. Sender Global akan acak dari pool pengguna aktif real-time.",
                   "Pilih Nomor/Grup, masukkan target +62..., pilih 3 bug BIMXZBUGXZ 2GB, pilih Private/Global.",
                   "Fitur baru: Prank Call & Spam OTP bisa di-set 1-20x, OTP dari template resmi (Dunia Games/FB/GoPay/DANA) via WA kamu yang centang biru jika akun bisnis.",
@@ -788,7 +927,7 @@ export default function BIMXZApp(){
                 ))}
               </ol>
               <div className="mt-3 p-3 rounded-xl bg-[#FF1A1A]/10 border border-[#FF1A1A]/20 flex gap-2">
-                <span className="text-[#FF5A5A]">⚠️</span>
+                <span className="text-[#FF5A5A]"></span>
                 <p className="text-[11px] text-white/80 leading-relaxed">Semua bug 2GB & prank harus izin pemilik nomor. Jangan ganggu. QR & pairing di Vercel adalah ASLI Baileys, tapi Vercel serverless = sesi /tmp hilang setelah cold start. Untuk permanen, pakai VPS/Railway dengan volume persisten.</p>
               </div>
             </div>
@@ -800,50 +939,51 @@ export default function BIMXZApp(){
             <div className="glow-card rounded-[22px] p-4 border-white/10">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-1 h-6 bg-emerald-400 rounded-full" />
-                <h3 className="font-black text-white text-sm tracking-wide">PASANG NOMOR — BAILEYS 6.7.18 ASLI</h3>
-                {isPaired && waStatus==="open" && <span className="ml-auto text-[10px] bg-emerald-500 text-white px-2.5 py-1 rounded-full font-black shadow">✓ TERHUBUNG ASLI</span>}
-                {waStatus!=="open" && <span className="ml-auto text-[10px] bg-amber-500 text-black px-2.5 py-1 rounded-full font-black">● {waStatus.toUpperCase()} • BUKAN FAKE</span>}
+                <h3 className="font-black text-white text-sm tracking-wide">PASANG NOMOR — BAILEYS 6.7.22</h3>
+                {isPaired && waStatus==="open" && <span className="ml-auto text-[10px] bg-emerald-500 text-white px-2.5 py-1 rounded-full font-black shadow"> TERHUBUNG</span>}
+                {waStatus!=="open" && <span className="ml-auto text-[10px] bg-amber-500 text-black px-2.5 py-1 rounded-full font-black"> {waStatus.toUpperCase()}</span>}
               </div>
 
               <div className="bg-[#FF1A1A]/10 border border-[#FF1A1A]/20 rounded-xl p-3 mb-3">
-                <div className="text-xs font-black text-white flex items-center gap-2">🔒 INFO QR & PAIRING ASLI <span className="text-[10px] bg-white text-black px-2 py-0.5 rounded-full">REAL</span></div>
-                <div className="text-[11px] text-white/70 mt-1 leading-relaxed">QR & Pairing Code ini <b className="text-white">ASLI langsung dari server WhatsApp</b> via Baileys 6.7.18, bukan gambar simulasi. Di Vercel tetap asli karena Baileys connect ke WA Web. Namun Vercel itu serverless (/tmp), jadi QR harus discan cepat (20 dtk) dan sesi bisa hilang saat cold start. <b className="text-white">Untuk 24 jam online, deploy ke VPS/Railway.</b> Saat ini status: <b className={waStatus==="open" ? "text-emerald-400" : "text-amber-300"}>{waStatus}</b> {qrImage ? "• QR ready" : "• Menunggu QR"}.</div>
+                <div className="text-xs font-black text-white">INFO KONEKSI WHATSAPP</div>
+                <div className="text-[11px] text-white/70 mt-1 leading-relaxed">Pairing code dibuat oleh WhatsApp melalui koneksi Baileys. QR juga berasal dari sesi WhatsApp yang sama. Status: <b className={waStatus==="open" ? "text-emerald-400" : "text-amber-300"}>{waStatus}</b>.</div>
               </div>
 
               <div className="grid grid-cols-2 gap-2 mb-4">
-                <button onClick={handleShowQR} className="h-[46px] rounded-xl bg-white text-black font-black text-sm flex items-center justify-center gap-2 hover:bg-white/90 border border-white/20">📷 SCAN QR ASLI</button>
-                <button onClick={async()=>{ await fetch("/api/wa/reset",{method:"POST"}); setQrImage(null); setPairingCode(null); setWaStatus("close"); alert("WA direset. Silakan buat QR baru."); handleShowQR(); }} className="h-[46px] rounded-xl bg-amber-500 text-black font-black text-sm flex items-center justify-center gap-2 hover:bg-amber-400 border border-white/20">♻️ RESET WA</button>
+                <button onClick={handleShowQR} disabled={qrClosed} className="h-[46px] rounded-xl bg-white text-black font-black text-sm flex items-center justify-center gap-2 hover:bg-white/90 border border-white/20 disabled:opacity-40"> SCAN QR</button>
+                <button onClick={async()=>{ await fetch("/api/wa/reset",{method:"POST"}); setQrImage(null); setPairingCode(null); setWaStatus("close"); alert("WA direset. Silakan buat QR baru."); handleShowQR(); }} className="h-[46px] rounded-xl bg-amber-500 text-black font-black text-sm flex items-center justify-center gap-2 hover:bg-amber-400 border border-white/20"> RESET WA</button>
               </div>
               <div className="grid grid-cols-1 gap-2 mb-4">
-                <button onClick={fetchGroups} className="h-[40px] rounded-xl bg-white/10 border border-white/15 text-white font-bold text-xs flex items-center justify-center gap-2">👥 CEK GRUP (WA harus connect)</button>
+                <button onClick={fetchGroups} className="h-[40px] rounded-xl bg-white/10 border border-white/15 text-white font-bold text-xs flex items-center justify-center gap-2"> CEK GRUP (WA harus connect)</button>
               </div>
 
               {!isPaired || waStatus!=="open" ? (
                 <div className="space-y-3">
-                  <p className="text-xs text-white/60 leading-relaxed">Hubungkan via <b className="text-white">QR ASLI</b> atau <b className="text-white">Pairing Code 8 digit ASLI</b>. Jika screenshot kamu <b className="text-amber-300">DX95-Z43V → “Gagal menautkan perangkat”</b>, itu artinya kode expired (20 detik) atau salah nomor. Solusi: <b className="text-white">pakai QR</b> atau minta kode baru dan masukkan cepat.</p>
+                  <p className="text-xs text-white/60 leading-relaxed">Hubungkan melalui QR atau minta pairing code. Setelah menekan tombol, backend meminta kode langsung dari sesi WhatsApp melalui Baileys.</p>
                   <div className="flex gap-2">
                     <select value={pairCode} onChange={e=>setPairCode(e.target.value)} className="h-[46px] rounded-xl bg-black/60 border border-white/15 px-3 text-sm text-white">
                       {COUNTRY_CODES.map(c=><option key={c.code} value={c.code}>{c.flag} {c.code} {c.name}</option>)}
                     </select>
                     <input value={pairNumber} onChange={e=>setPairNumber(e.target.value)} placeholder="81234567890" className="flex-1 h-[46px] rounded-xl bg-black/60 border border-white/15 px-4 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1A1A]" />
                   </div>
-                  <button onClick={handlePair} disabled={pairLoading} className="w-full h-[46px] glow-button rounded-xl font-black text-sm disabled:opacity-50 border border-white/20">{pairLoading?"MEMINTA KODE ASLI...":"DAPATKAN KODE PAIRING 8 DIGIT ASLI"}</button>
+                  <button onClick={handlePair} disabled={pairLoading} className="w-full h-[46px] glow-button rounded-xl font-black text-sm disabled:opacity-50 border border-white/20">{pairLoading?"MEMINTA KODE... ":"DAPATKAN KODE PAIRING 8 DIGIT"}</button>
+
                   {pairingCode && (
                     <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 text-center">
-                      <div className="text-[11px] text-emerald-300 font-black tracking-widest">KODE PAIRING ASLI — DARI BAILEYS</div>
+                      <div className="text-[11px] text-emerald-300 font-black tracking-widest">KODE PAIRING WHATSAPP</div>
                       <div className="text-3xl font-black tracking-[0.3em] text-white mt-1 font-mono">{pairingCode}</div>
-                      <div className="text-[11px] text-white/60 mt-2">Buka WA → Perangkat Tertaut → Tautkan dengan nomor telepon → Masukkan kode ini <b className="text-white">dalam 20 detik</b> (kode asli bisa hangus cepat di Vercel cold start). Jika gagal, langsung pakai QR Scan.</div>
+                      <div className="text-[11px] text-white/60 mt-2">Buka WhatsApp → Perangkat Tertaut → Tautkan dengan nomor telepon → masukkan kode ini. Kode berasal dari WhatsApp dan memiliki masa berlaku terbatas.</div>
                     </div>
                   )}
-                  <div className="text-[11px] text-white/40 text-center font-medium">Pilih +62 lalu 81234567890 tanpa 0 • QR ASLI refresh tiap 20 detik • Vercel = simulasi 95% asli, VPS = 100% persisten</div>
+                  <div className="text-[11px] text-white/40 text-center font-medium">Pilih +62 lalu masukkan nomor tanpa 0 • BIMZDEV1 adalah identitas developer, bukan pairing code WhatsApp • Baileys 6.7.22</div>
                 </div>
               ) : (
                 <div className="space-y-3">
                   <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3.5 flex items-center gap-3">
-                    <span className="w-11 h-11 rounded-full bg-emerald-500 flex items-center justify-center text-white text-lg shadow">✓</span>
+                    <span className="w-11 h-11 rounded-full bg-emerald-500 flex items-center justify-center text-white text-lg shadow"></span>
                     <div>
-                      <div className="text-sm font-black text-emerald-300">WA Terhubung ASLI • Sender Ready</div>
-                      <div className="text-xs text-white/70 font-mono">{user?.pairedNumber} • Baileys 6.7.18 • Global Pool {globalPool.length}</div>
+                      <div className="text-sm font-black text-emerald-300">WA Terhubung • Sender Ready</div>
+                      <div className="text-xs text-white/70 font-mono">{user?.pairedNumber} • Baileys 6.7.22 • Global Pool {globalPool.length}</div>
                     </div>
                     <button onClick={()=>{ setIsPaired(false); setPairingCode(null); setQrImage(null); }} className="ml-auto text-xs px-3 py-1.5 rounded-full bg-white text-black font-black hover:bg-white/90">Ganti</button>
                   </div>
@@ -866,16 +1006,32 @@ export default function BIMXZApp(){
               )}
             </div>
 
+            {/* BACKGROUND PREVIEW RECTANGLE - 2GB BORDER PERSEGI PANJANG - VERCEL FIX */}
+            {bgSettings.url && (
+              <div className="glow-card rounded-[22px] p-3 border-[#A855F7]/30 overflow-hidden">
+                <div className="text-[11px] font-black tracking-widest text-[#C084FC] flex items-center gap-2"><span className="w-1 h-4 bg-[#A855F7] rounded-full" /> BACKGROUND PREVIEW — 2GB (120fps SMOOTH)</div>
+                <div className="mt-2 relative rounded-xl overflow-hidden border-2 border-[#A855F7]/40 shadow-[0_0_20px_rgba(168,85,247,0.3)] aspect-[16/9] bg-black">
+                  {bgSettings.type==="video" ? (
+                    <video src={bgSettings.url} autoPlay loop muted playsInline preload="auto" className="w-full h-full object-cover" style={{filter:"brightness(0.95)"}} onError={(e)=>{(e.currentTarget as HTMLVideoElement).style.display="none"}} />
+                  ) : (
+                    <img src={bgSettings.url} alt="bg-preview" className="w-full h-full object-cover" onError={(e)=>{(e.currentTarget as HTMLImageElement).style.display="none"}} />
+                  )}
+                  <div className="absolute bottom-2 left-2 px-2 py-1 rounded-full bg-black/60 border border-white/20 text-[10px] font-bold text-white">BIMXZBUGXZ • {bgSettings.type.toUpperCase()} • 2GB</div>
+                  <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
+                </div>
+                <div className="text-[11px] text-white/50 mt-2 text-center">Video/foto latar yang kamu konfigurasi — tampil di login & semua halaman. Atur di Profil → Latar Belakang</div>
+              </div>
+            )}
+
             <div className="glow-card rounded-[22px] p-4 relative overflow-hidden">
               {/* LOCK OVERLAY when WA not open */}
               {isWaLocked && (
                 <div className="absolute inset-0 z-20 bg-black/75 backdrop-blur-[2px] flex flex-col items-center justify-center p-6 text-center border border-amber-500/20 rounded-[22px]">
-                  <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(245,158,11,0.5)]">🔒</div>
+                  <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.5)]"><img src="/logo-bimx.png" alt="logo" className="w-10 h-10 rounded-full object-cover" onError={(e)=>{(e.currentTarget as HTMLImageElement).src=LOGO_80_BASE64}} /></div>
                   <div className="mt-3 text-white font-black text-lg">FITUR BUG TERKUNCI</div>
-                  <div className="mt-1 text-sm text-white/80 leading-relaxed">WA belum terhubung — hubungkan QR / Pairing Code ASLI dulu. Semua bug 2GB gelap & tidak bisa dipakai sampai WA <b className="text-emerald-400">open</b>.</div>
-                  <div className="mt-1 text-[11px] text-white/50">Status saat ini: <b className="text-amber-300">{waStatus}</b> • Sender belum ready</div>
-                  <button onClick={handleShowQR} className="mt-4 h-11 px-6 rounded-xl bg-white text-black font-black text-sm">📷 BUKA QR ASLI</button>
-                  <button onClick={()=>window.scrollTo({top:0, behavior:"smooth"})} className="mt-2 text-xs text-white/60 underline">Ke atas untuk pairing</button>
+                  <div className="mt-1 text-sm text-white/80 leading-relaxed">WA belum terhubung — hubungkan QR / Pairing Code dulu. Semua bug 2GB gelap & tidak bisa dipakai sampai WA <b className="text-emerald-400">open</b>.</div>
+                  <div className="mt-1 text-[11px] text-white/50">Status saat ini: <b className="text-amber-300">{waStatus}</b></div>
+                  <button onClick={handleShowQR} className="mt-4 h-11 px-6 rounded-xl bg-white text-black font-black text-sm"> BUKA QR</button>
                 </div>
               )}
 
@@ -889,7 +1045,7 @@ export default function BIMXZApp(){
                 <div className="flex gap-2 mb-4">
                   {(["NOMOR","GRUP"] as const).map(m=>(
                     <button key={m} onClick={()=>!isWaLocked && setWaMode(m)} className={`flex-1 h-[40px] rounded-xl text-xs font-black border transition ${waMode===m ? "bg-[#FF1A1A] border-white text-white shadow-[0_0_14px_rgba(255,26,26,0.45)]" : "bg-white/5 border-white/10 text-white/50 hover:bg-white/10"}`}>
-                      {m==="NOMOR" ? "📱 BUG NOMOR 2GB" : "👥 BUG GRUP 2GB"}
+                      {m==="NOMOR" ? " BUG NOMOR 2GB" : " BUG GRUP 2GB"}
                     </button>
                   ))}
                 </div>
@@ -901,7 +1057,7 @@ export default function BIMXZApp(){
                       {COUNTRY_CODES.map(c=><option key={c.code} value={c.code}>{c.flag} {c.code}</option>)}
                     </select>
                     <div className="flex-1 relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30">📞</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30"></span>
                       <input value={targetNumber} onChange={e=>setTargetNumber(e.target.value)} placeholder={waMode==="NOMOR" ? "81234567890" : "120363xxx@g.us atau +62xxx"} className="w-full h-[46px] rounded-xl bg-black/60 border border-white/15 pl-9 pr-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1A1A]" />
                     </div>
                   </div>
@@ -919,34 +1075,34 @@ export default function BIMXZApp(){
                       const selected = selectedBugs.includes(b.id);
                       return (
                         <button key={b.id} disabled={locked} onClick={()=>!locked && toggleBug(b.id)} className={`rounded-xl p-3 text-left border transition relative overflow-hidden ${selected ? "bg-gradient-to-br from-[#FF1A1A] to-[#8B0000] border-white text-white shadow-[0_0_16px_rgba(255,26,26,0.4)]" : locked ? "bg-white/[0.03] border-white/5 opacity-40 cursor-not-allowed" : "bg-white/[0.05] border-white/10 hover:bg-white/[0.08] hover:border-white/20"}`}>
-                          {locked && <span className="absolute top-1.5 right-1.5 text-[10px] bg-black/60 px-1.5 py-0.5 rounded-full border border-white/10">🔒</span>}
+                          {locked && <span className="absolute top-1.5 right-1.5 text-[10px] bg-black/60 px-1.5 py-0.5 rounded-full border border-white/10"></span>}
                           <span className="absolute top-1.5 right-2 text-[8px] bg-white text-black px-1.5 py-0.5 rounded-full font-black tracking-widest" style={{display: locked ? 'none' : 'block', opacity: selected ? 1 : 0.9}}>{b.heavy}</span>
                           <div className="flex items-start gap-2 mt-1">
-                            <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm shrink-0 border ${selected ? "bg-white text-black border-white" : "bg-white/10 border-white/10"}`}>{b.icon}</span>
+                            <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border overflow-hidden ${selected ? "bg-white border-white" : "bg-white/10 border-white/10"}`}><img src={b.icon} alt="logo" className="w-5 h-5 object-cover rounded-full" onError={(e)=>{const img=e.currentTarget as HTMLImageElement; if(!img.dataset.fallback){img.dataset.fallback="1"; img.src="/logo-bimx.png"}}} /></span>
                             <div className="flex-1 min-w-0">
                               <div className={`text-[11px] font-black leading-tight truncate ${selected ? "text-white" : "text-white"}`}>{b.id}</div>
                               <div className={`text-[10px] leading-tight mt-0.5 line-clamp-2 font-medium ${selected ? "text-white/90" : "text-white/55"}`}>{b.desc}</div>
                             </div>
                           </div>
-                          {selected && <div className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full bg-white flex items-center justify-center text-[#FF1A1A] text-xs font-black shadow">✓</div>}
+                          {selected && <div className="absolute bottom-1.5 right-1.5 w-6 h-6 rounded-full bg-white flex items-center justify-center text-[#FF1A1A] text-xs font-black shadow"></div>}
                         </button>
                       );
                     })}
                   </div>
                   {user?.role==="PENGGUNA" && (
-                    <div className="mt-2 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200 font-medium">ℹ️ PENGGUNA hanya BIMXZBUGXZ Delay. Upgrade ke RESELLER untuk semua 2GB.</div>
+                    <div className="mt-2 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200 font-medium">ℹ PENGGUNA hanya BIMXZBUGXZ Delay. Upgrade ke RESELLER untuk semua 2GB.</div>
                   )}
                 </div>
 
                 <div className="mt-5">
-                  <label className="text-[11px] tracking-widest text-white font-black">PILIH SENDER — ASLI BUKAN PALSU • GLOBAL = ACAK REAL TIME</label>
+                  <label className="text-[11px] tracking-widest text-white font-black">PILIH SENDER —  • GLOBAL = ACAK REAL TIME</label>
                   <div className="grid grid-cols-2 gap-2 mt-2">
                     {[
-                      {id:"PRIVATE", label:"PRIVATE", desc:"Sender pribadi asli", icon:"👤"},
-                      {id:"GLOBAL", label:"GLOBAL", desc:`Acak ${globalPool.length} sender aktif`, icon:"🌍"},
+                      {id:"PRIVATE", label:"PRIVATE", desc:"Sender pribadi asli", icon: "/logo-bimx.png"},
+                      {id:"GLOBAL", label:"GLOBAL", desc:`Acak ${globalPool.length} sender aktif`, icon: "/logo-bimx.png"},
                     ].map(s=>(
                       <button key={s.id} onClick={()=>setSenderMode(s.id as any)} className={`h-[68px] rounded-xl border flex flex-col items-center justify-center gap-1 transition ${senderMode===s.id ? "bg-[#FF1A1A]/20 border-[#FF1A1A] text-white shadow-[0_0_12px_rgba(255,26,26,0.25)]" : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10"}`}>
-                        <span className="text-lg">{s.icon}</span>
+                        <img src={s.icon} alt="logo" className="w-6 h-6 object-cover rounded-full" onError={(e)=>{const img=e.currentTarget as HTMLImageElement; if(!img.dataset.fallback){img.dataset.fallback="1"; img.src="/logo-bimx.png"}}} />
                         <span className="text-xs font-black">{s.label}</span>
                         <span className="text-[10px] opacity-70 font-medium text-center px-1">{s.desc}</span>
                       </button>
@@ -954,7 +1110,7 @@ export default function BIMXZApp(){
                   </div>
                   {senderMode==="GLOBAL" && (
                     <div className="mt-2 p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                      <div className="text-[11px] font-black text-blue-300">🌍 MODE GLOBAL AKTIF</div>
+                      <div className="text-[11px] font-black text-blue-300"> MODE GLOBAL AKTIF</div>
                       <div className="text-[11px] text-white/70 mt-1">Jika ada orang sudah sender (sudah pairing), sender Global akan mengacak salah satu nomor aktif secara real-time untuk mengirim. Pool saat ini: <b className="text-white">{globalPool.length} sender</b> {globalPool.length===0 ? "(kosong, akan pakai sender kamu)" : `- contoh: ${globalPool[0]?.pairedNumber}`}</div>
                     </div>
                   )}
@@ -968,11 +1124,11 @@ export default function BIMXZApp(){
                         MENGIRIM 2GB...
                       </>
                     ) : (
-                      <>🚀 GAS TEKAN TOMBOL INI MBUD — 2GB</>
+                      <> GAS TEKAN TOMBOL INI MBUD — 2GB</>
                     )}
                   </span>
                 </button>
-                <p className="text-center text-[10px] text-white/35 mt-2 font-medium">Dikirim via Baileys 6.7.18 ASLI • Sender {user?.pairedNumber || "terpasang"} • Mode {senderMode} • {waMode} • BIMXZBUGXZ {senderMode==="GLOBAL" ? "• Diacak dari pool" : ""}</p>
+                <p className="text-center text-[10px] text-white/35 mt-2 font-medium">Dikirim via Baileys 6.7.22 • Sender {user?.pairedNumber || "terpasang"} • Mode {senderMode} • {waMode} • BIMXZBUGXZ {senderMode==="GLOBAL" ? "• Diacak dari pool" : ""}</p>
               </div>
             </div>
 
@@ -980,21 +1136,21 @@ export default function BIMXZApp(){
               {/* also locked if WA not open */}
               {isWaLocked && (
                 <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-[1px] flex items-center justify-center p-4 text-center rounded-[22px]">
-                  <div className="bg-amber-500 text-black px-4 py-2 rounded-full font-black text-xs">🔒 Hubungkan WA dulu untuk prank</div>
+                  <div className="bg-amber-500 text-black px-4 py-2 rounded-full font-black text-xs"> Hubungkan WA dulu untuk prank</div>
                 </div>
               )}
-              <h3 className="font-black text-white flex items-center gap-2"><span className="w-1 h-6 bg-[#FF1A1A] rounded-full" /> PRANK CALL & SPAM OTP — ASLI VIA WA (SET JUMLAH)</h3>
+              <h3 className="font-black text-white flex items-center gap-2"><span className="w-1 h-6 bg-[#FF1A1A] rounded-full" /> PRANK CALL & SPAM OTP VIA WA (SET JUMLAH)</h3>
               <p className="text-[11px] text-white/50 mt-1">OTP dari template resmi (Dunia Games • Facebook • GoPay • DANA dll) via WA kamu — centang biru jika akun bisnis WhatsApp. Prank call asli via WA text prank.</p>
               
               <div className="mt-4 grid grid-cols-1 gap-4">
                 {/* PRANK CALL */}
                 <div className="rounded-xl bg-black/40 border border-white/10 p-3">
-                  <div className="text-xs font-black text-white flex items-center gap-2">📞 PRANK CALL <span className="text-[10px] bg-[#FF1A1A] text-white px-2 py-0.5 rounded-full">ATUR 1-20x</span></div>
+                  <div className="text-xs font-black text-white flex items-center gap-2"> PRANK CALL <span className="text-[10px] bg-[#FF1A1A] text-white px-2 py-0.5 rounded-full">ATUR 1-20x</span></div>
                   <div className="mt-3 space-y-2">
                     <input value={prankNumber} onChange={e=>setPrankNumber(e.target.value)} placeholder="Nomor tujuan prank call (+62...)" className="w-full h-[42px] rounded-xl bg-black/60 border border-white/15 px-3 text-sm text-white placeholder:text-white/30" />
                     <select value={prankType} onChange={e=>setPrankType(e.target.value)} className="w-full h-[42px] rounded-xl bg-black/60 border border-white/15 px-3 text-sm text-white">
                       <option value="paket_cod">Paket COD</option>
-                      <option value="hantu">Suara Hantu 👻</option>
+                      <option value="hantu">Suara Hantu </option>
                       <option value="debt_collector">Debt Collector</option>
                       <option value="ojol">Driver Ojol</option>
                       <option value="polisi">Polisi</option>
@@ -1005,15 +1161,15 @@ export default function BIMXZApp(){
                       <input type="range" min={1} max={20} value={prankCount} onChange={e=>setPrankCount(parseInt(e.target.value))} className="flex-1" />
                       <span className="w-10 h-8 rounded-lg bg-white text-black font-black flex items-center justify-center text-sm">{prankCount}x</span>
                     </div>
-                    <button onClick={handlePrankCall} disabled={prankLoading} className="w-full h-[42px] rounded-xl bg-[#FF1A1A] text-white font-black text-sm disabled:opacity-50 border border-white/20">{prankLoading ? "MENGIRIM..." : `KIRIM PRANK CALL x${prankCount} — ASLI WA`}</button>
-                    {prankResult && <div className={`text-xs p-2 rounded-lg ${prankResult.ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300" : "bg-red-500/10 border border-red-500/20 text-red-300"}`}>{prankResult.ok ? `✅ ${prankResult.message}` : `❌ ${prankResult.message}`}</div>}
+                    <button onClick={handlePrankCall} disabled={prankLoading} className="w-full h-[42px] rounded-xl bg-[#FF1A1A] text-white font-black text-sm disabled:opacity-50 border border-white/20">{prankLoading ? "MENGIRIM..." : `KIRIM PRANK CALL x${prankCount}`}</button>
+                    {prankResult && <div className={`text-xs p-2 rounded-lg ${prankResult.ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300" : "bg-red-500/10 border border-red-500/20 text-red-300"}`}>{prankResult.ok ? ` ${prankResult.message}` : ` ${prankResult.message}`}</div>}
                     <div className="text-[11px] text-white/30">Asli via WA — kirim prank text beruntun, bukan simulasi. Wajib izin pemilik nomor.</div>
                   </div>
                 </div>
 
                 {/* SPAM OTP */}
                 <div className="rounded-xl bg-black/40 border border-white/10 p-3">
-                  <div className="text-xs font-black text-white flex items-center gap-2">🔐 SPAM OTP <span className="text-[10px] bg-white text-black px-2 py-0.5 rounded-full">RESMI • 1-20x</span></div>
+                  <div className="text-xs font-black text-white flex items-center gap-2"> SPAM OTP <span className="text-[10px] bg-white text-black px-2 py-0.5 rounded-full">RESMI • 1-20x</span></div>
                   <div className="mt-3 space-y-2">
                     <input value={otpNumber} onChange={e=>setOtpNumber(e.target.value)} placeholder="Nomor tujuan OTP (+62...)" className="w-full h-[42px] rounded-xl bg-black/60 border border-white/15 px-3 text-sm text-white placeholder:text-white/30" />
                     <select value={otpService} onChange={e=>setOtpService(e.target.value)} className="w-full h-[42px] rounded-xl bg-black/60 border border-white/15 px-3 text-sm text-white">
@@ -1029,13 +1185,13 @@ export default function BIMXZApp(){
                       <input type="range" min={1} max={20} value={otpCount} onChange={e=>setOtpCount(parseInt(e.target.value))} className="flex-1" />
                       <span className="w-10 h-8 rounded-lg bg-white text-black font-black flex items-center justify-center text-sm">{otpCount}x</span>
                     </div>
-                    <button onClick={handleOtpSpam} disabled={otpLoading} className="w-full h-[42px] rounded-xl bg-white text-black font-black text-sm disabled:opacity-50 border border-white/20">{otpLoading ? "MENGIRIM..." : `KIRIM OTP ${otpService.toUpperCase()} x${otpCount} — ASLI WA`}</button>
-                    {otpResult && <div className={`text-xs p-2 rounded-lg ${otpResult.ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300" : "bg-red-500/10 border border-red-500/20 text-red-300"}`}>{otpResult.ok ? `✅ ${otpResult.message}` : `❌ ${otpResult.message}`}</div>}
+                    <button onClick={handleOtpSpam} disabled={otpLoading} className="w-full h-[42px] rounded-xl bg-white text-black font-black text-sm disabled:opacity-50 border border-white/20">{otpLoading ? "MENGIRIM..." : `KIRIM OTP ${otpService.toUpperCase()} x${otpCount}`}</button>
+                    {otpResult && <div className={`text-xs p-2 rounded-lg ${otpResult.ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300" : "bg-red-500/10 border border-red-500/20 text-red-300"}`}>{otpResult.ok ? ` ${otpResult.message}` : ` ${otpResult.message}`}</div>}
                     <div className="text-[11px] text-white/30">OTP asli dikirim dari nomor WA kamu yang terhubung (centang biru jika Bisnis). Template resmi, bukan simulasi API eksternal hack. Harus izin.</div>
                   </div>
                 </div>
               </div>
-              <div className="mt-3 p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200">⚠️ Prank & OTP hanya untuk nomor yang telah memberi izin. Maks 20x sekali kirim anti-spam. Jangan ganggu orang tanpa izin.</div>
+              <div className="mt-3 p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200"> Prank & OTP hanya untuk nomor yang telah memberi izin. Maks 20x sekali kirim anti-spam. Jangan ganggu orang tanpa izin.</div>
             </div>
           </>
         )}
@@ -1055,7 +1211,7 @@ export default function BIMXZApp(){
               <div className="flex gap-2 mt-3">
                 <div className="flex-1 relative">
                   <input value={filmSearch} onChange={e=>setFilmSearch(e.target.value)} onKeyDown={e=>e.key==="Enter" && searchFilms()} placeholder="Cari judul film..." className="w-full h-[40px] rounded-xl bg-black/60 border border-white/15 pl-4 pr-10 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1A1A]" />
-                  <button onClick={searchFilms} className="absolute right-1 top-1 h-[32px] w-[32px] rounded-lg bg-[#FF1A1A] flex items-center justify-center text-white">🔍</button>
+                  <button onClick={searchFilms} className="absolute right-1 top-1 h-[32px] w-[32px] rounded-lg bg-[#FF1A1A] flex items-center justify-center text-white"></button>
                 </div>
               </div>
               <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
@@ -1079,7 +1235,7 @@ export default function BIMXZApp(){
                   <button key={f.id} onClick={()=>openFilmDetail(f)} className="glow-card rounded-xl overflow-hidden text-left hover:scale-[1.02] transition">
                     <div className="relative h-[200px] bg-black">
                       <img src={f.poster_path ? `https://image.tmdb.org/t/p/w500${f.poster_path}` : "https://via.placeholder.com/500x750?text=No+Poster"} alt={f.title} className="w-full h-full object-cover" />
-                      <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 text-amber-400 text-[11px] font-black">★ {f.vote_average?.toFixed(1) || "?"}</div>
+                      <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded bg-black/70 text-amber-400 text-[11px] font-black"> {f.vote_average?.toFixed(1) || "?"}</div>
                       {adBlockOn && <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-emerald-500 text-white text-[9px] font-black">ADBLOCK ON</div>}
                     </div>
                     <div className="p-2.5">
@@ -1098,11 +1254,11 @@ export default function BIMXZApp(){
                   <div className="relative h-[220px]">
                     <img src={filmDetail?.backdrop_path || selectedFilm.backdrop_path ? `https://image.tmdb.org/t/p/w780${filmDetail?.backdrop_path || selectedFilm.backdrop_path}` : selectedFilm.poster_path ? `https://image.tmdb.org/t/p/w500${selectedFilm.poster_path}` : "https://via.placeholder.com/800x450"} alt="" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050507] to-transparent" />
-                    <button onClick={()=>setSelectedFilm(null)} className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-white border border-white/20">✕</button>
+                    <button onClick={()=>setSelectedFilm(null)} className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-white border border-white/20"></button>
                     <div className="absolute bottom-3 left-4 right-4">
                       <h3 className="text-lg font-black text-white leading-tight">{filmDetail?.title || selectedFilm.title}</h3>
                       <div className="flex items-center gap-2 text-xs text-white/70 mt-1">
-                        <span>★ {filmDetail?.vote_average?.toFixed(1) || selectedFilm.vote_average?.toFixed(1)}</span>
+                        <span> {filmDetail?.vote_average?.toFixed(1) || selectedFilm.vote_average?.toFixed(1)}</span>
                         <span>•</span>
                         <span>{filmDetail?.release_date || selectedFilm.release_date}</span>
                       </div>
@@ -1138,7 +1294,7 @@ export default function BIMXZApp(){
                         )}
                       </div>
                       <div className="mt-2 p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-300">
-                        {adBlockOn ? "✅ Iklan & tab baru diblokir via sandbox. Jika video tidak play, matikan AdBlock atau ganti server." : "⚠️ AdBlock mati — iklan mungkin muncul pop-up."}
+                        {adBlockOn ? " Iklan & tab baru diblokir via sandbox. Jika video tidak play, matikan AdBlock atau ganti server." : " AdBlock mati — iklan mungkin muncul pop-up."}
                       </div>
                       <div className="mt-2 flex gap-2">
                         <button onClick={()=>setAdBlockOn(!adBlockOn)} className="h-8 px-3 rounded-full bg-white text-black font-black text-xs">{adBlockOn ? "Matikan AdBlock" : "Aktifkan AdBlock"}</button>
@@ -1157,17 +1313,18 @@ export default function BIMXZApp(){
             <div className="glow-card rounded-[22px] p-4">
               <h3 className="font-black text-white flex items-center gap-2 tracking-wide"><span className="w-1 h-6 bg-[#FF1A1A] rounded-full" /> TOOLS — BIMXZBUGXZ • 15 SERVER</h3>
               <p className="text-xs text-white/50 mt-1">Downloader 15 server auto-fallback • BimzAI • MP3 • File→URL • Prank Call/OTP</p>
-              <div className="grid grid-cols-4 gap-2 mt-3">
+              <div className="grid grid-cols-5 gap-2 mt-3">
                 {[
-                  {id:"downloader", label:"Downloader", icon:"⬇️", sub:"15 server"},
-                  {id:"ai", label:"BimzAI", icon:"🤖", sub:"Gemini"},
-                  {id:"mp3", label:"Video→MP3", icon:"🎵", sub:"2GB"},
-                  {id:"url", label:"File→URL", icon:"🔗", sub:"Public"},
+                  {id:"downloader", label:"Downloader", icon: "/logo-bimx.png", sub:"15 srv"},
+                  {id:"ai", label:"BimzAI", icon: "/logo-bimx.png", sub:"Gemini"},
+                  {id:"mp3", label:"Video→MP3", icon: "/logo-bimx.png", sub:"2GB"},
+                  {id:"url", label:"File→URL", icon: "/logo-bimx.png", sub:"Public"},
+                  {id:"quran", label:"Al-Qur'an", icon: "/logo-bimx.png", sub:"30 Juz"},
                 ].map(t=>(
-                  <button key={t.id} onClick={()=>setToolsTab(t.id as any)} className={`h-[60px] rounded-xl border flex flex-col items-center justify-center gap-0.5 ${toolsTab===t.id ? "bg-[#FF1A1A] border-white text-white" : "bg-white/5 border-white/10 text-white/60"}`}>
-                    <span className="text-lg">{t.icon}</span>
-                    <span className="text-[10px] font-black">{t.label}</span>
-                    <span className="text-[9px] opacity-70">{t.sub}</span>
+                  <button key={t.id} onClick={()=>setToolsTab(t.id as any)} className={`h-[64px] rounded-xl border flex flex-col items-center justify-center gap-1 p-1 ${toolsTab===t.id ? "bg-[#FF1A1A] border-white text-white shadow-[0_0_12px_rgba(255,26,26,0.4)]" : "bg-white/5 border-white/10 text-white/60"}`}>
+                    <span className="w-6 h-6 rounded-full bg-white overflow-hidden flex items-center justify-center shadow"><img src={t.icon} alt="logo" className="w-full h-full object-cover" onError={(e)=>{const img=e.currentTarget as HTMLImageElement; if(!img.dataset.fallback){img.dataset.fallback="1"; img.src=LOGO_80_BASE64;}}} /></span>
+                    <span className="text-[10px] font-black leading-none">{t.label}</span>
+                    <span className="text-[8px] opacity-70 leading-none">{t.sub}</span>
                   </button>
                 ))}
               </div>
@@ -1175,7 +1332,7 @@ export default function BIMXZApp(){
 
             {toolsTab==="downloader" && (
               <div className="glow-card rounded-[22px] p-4 space-y-3">
-                <h4 className="font-black text-white text-sm">⬇️ Downloader — 15 Server Aktif Auto-Fallback</h4>
+                <h4 className="font-black text-white text-sm"> Downloader — 15 Server Aktif Auto-Fallback</h4>
                 <p className="text-xs text-white/60">Sistem coba 15 server satu per satu: <b className="text-white">co.otomir23.me, canine.tools, timelesnesses.me, api.cobalt.tools, wuk.sh, dll</b> — jika 1 gagal lompat ke lain. Klik <b className="text-white">Download BimxzBugxz mp4</b> langsung auto-download.</p>
                 <input value={dlUrl} onChange={e=>setDlUrl(e.target.value)} placeholder="Tempel link TT / IG / YT / Snapchat / FB / X di sini..." className="w-full h-[46px] rounded-xl bg-black/60 border border-white/15 px-4 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1A1A]" />
                 <button onClick={handleDownload} disabled={dlLoading} className="w-full h-[46px] glow-button rounded-xl font-black text-sm border border-white/20 disabled:opacity-50">{dlLoading?"MENCOBA 15 SERVER...":"DOWNLOAD SEKARANG — 15 SERVER"}</button>
@@ -1183,11 +1340,11 @@ export default function BIMXZApp(){
                   <div className="rounded-xl bg-black/40 border border-white/10 p-3">
                     {dlResult.ok ? (
                       <div className="space-y-2">
-                        <div className="text-xs font-black text-emerald-400">✅ Berhasil via {dlResult.server} (coba {dlResult.attempts} server)</div>
+                        <div className="text-xs font-black text-emerald-400"> Berhasil via {dlResult.server} (coba {dlResult.attempts} server)</div>
                         {dlResult.url && (
                           <div className="space-y-2">
                             <div className="text-xs text-white/70 break-all">Server aktif: <b className="text-white">{dlResult.server}</b></div>
-                            <a href={dlResult.url} download={dlResult.filename} target="_blank" onClick={(e)=>{}} className="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-white text-black font-black text-sm shadow">⬇️ Download BimxzBugxz mp4 — {dlResult.filename}</a>
+                            <a href={dlResult.url} download={dlResult.filename} target="_blank" onClick={(e)=>{}} className="inline-flex items-center gap-2 h-11 px-5 rounded-xl bg-white text-black font-black text-sm shadow"> Download BimxzBugxz mp4 — {dlResult.filename}</a>
                             <div className="text-[11px] text-white/40">Otomatis ter-download. Jika tidak, <a href={dlResult.url} target="_blank" className="underline text-[#FF5A5A]">klik di sini</a>. File: bimxzbug_kodeacak.mp4</div>
                             <div className="text-[10px] text-white/30">Logs 15 server: {JSON.stringify(dlResult.logs?.slice(0,2) || []).slice(0,200)}...</div>
                           </div>
@@ -1204,7 +1361,7 @@ export default function BIMXZApp(){
                         )}
                       </div>
                     ) : (
-                      <div className="text-xs text-red-300">❌ Semua 15 server gagal. Coba link public lain. <br/><span className="text-white/40">{dlResult.message?.slice(0,300)}</span></div>
+                      <div className="text-xs text-red-300"> Semua 15 server gagal. Coba link public lain. <br/><span className="text-white/40">{dlResult.message?.slice(0,300)}</span></div>
                     )}
                   </div>
                 )}
@@ -1214,10 +1371,10 @@ export default function BIMXZApp(){
 
             {toolsTab==="ai" && (
               <div className="glow-card rounded-[22px] p-4 space-y-3">
-                <h4 className="font-black text-white text-sm">🤖 BimzAI — Gemini 2.5 Flash Lite</h4>
+                <h4 className="font-black text-white text-sm"> BimzAI — Gemini 2.5 Flash Lite</h4>
                 <p className="text-xs text-white/50">Kunci aman di server ENV, tidak bocor ke GitHub/Vercel</p>
                 <div className="h-[320px] overflow-y-auto space-y-2 p-3 rounded-xl bg-black/40 border border-white/10">
-                  {aiChat.length===0 ? <div className="text-xs text-white/30 text-center py-12">Halo! Tanya apa saja ke BimzAI 😊</div> : aiChat.map((m,i)=>(
+                  {aiChat.length===0 ? <div className="text-xs text-white/30 text-center py-12">Halo! Tanya apa saja ke BimzAI </div> : aiChat.map((m,i)=>(
                     <div key={i} className={`flex ${m.role==="user" ? "justify-end" : "justify-start"}`}>
                       <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-xs leading-relaxed ${m.role==="user" ? "bg-[#FF1A1A] text-white rounded-br-none" : "bg-white text-black rounded-bl-none"}`}>{m.text}</div>
                     </div>
@@ -1233,18 +1390,18 @@ export default function BIMXZApp(){
 
             {toolsTab==="mp3" && (
               <div className="glow-card rounded-[22px] p-4 space-y-3">
-                <h4 className="font-black text-white text-sm">🎵 Video → MP3 — Maks 2GB</h4>
+                <h4 className="font-black text-white text-sm"> Video → MP3 — Maks 2GB</h4>
                 <p className="text-xs text-white/50">Nama: bimzxbugz_kodeacak.mp3 • Auto rename</p>
                 <label className="block w-full h-[100px] rounded-xl bg-black/40 border border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:bg-white/5 cursor-pointer">
-                  <span className="text-2xl">🎬</span>
+                  <span className="text-2xl"></span>
                   <span className="text-xs font-bold text-white/70">{mp3File ? mp3File.name + " (" + (mp3File.size/1024/1024).toFixed(2) + " MB)" : "Pilih Video (maks 2GB)"}</span>
                   <input type="file" accept="video/*,audio/*" onChange={e=>setMp3File(e.target.files?.[0]||null)} className="hidden" />
                 </label>
                 <button onClick={handleMp3Upload} disabled={mp3Loading || !mp3File} className="w-full h-[46px] glow-button rounded-xl font-black text-sm disabled:opacity-50 border border-white/20">{mp3Loading?"MENGCONVERT...":"CONVERT KE MP3"}</button>
                 {mp3Result?.ok && (
                   <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3">
-                    <div className="text-xs font-black text-emerald-400">✅ {mp3Result.filename}</div>
-                    <a href={mp3Result.url} target="_blank" download className="inline-flex mt-2 h-9 px-4 rounded-full bg-white text-black font-black text-xs">⬇️ Download {mp3Result.filename}</a>
+                    <div className="text-xs font-black text-emerald-400"> {mp3Result.filename}</div>
+                    <a href={mp3Result.url} target="_blank" download className="inline-flex mt-2 h-9 px-4 rounded-full bg-white text-black font-black text-xs"> Download {mp3Result.filename}</a>
                     <audio controls src={mp3Result.url} className="w-full mt-3" />
                     <div className="text-[11px] text-white/40 mt-1 break-all">{mp3Result.url}</div>
                   </div>
@@ -1255,27 +1412,151 @@ export default function BIMXZApp(){
 
             {toolsTab==="url" && (
               <div className="glow-card rounded-[22px] p-4 space-y-3">
-                <h4 className="font-black text-white text-sm">🔗 File → URL Public</h4>
-                <p className="text-xs text-white/50">Maks 2GB • URL asli public • /api/files/</p>
-                <label className="block w-full h-[100px] rounded-xl bg-black/40 border border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:bg-white/5 cursor-pointer">
-                  <span className="text-2xl">📁</span>
-                  <span className="text-xs font-bold text-white/70">{urlFile ? urlFile.name + " (" + (urlFile.size/1024/1024).toFixed(2) + " MB)" : "Pilih File (maks 2GB)"}</span>
-                  <input type="file" onChange={e=>setUrlFile(e.target.files?.[0]||null)} className="hidden" />
+                <h4 className="font-black text-white text-sm flex items-center gap-2"><span className="w-1 h-5 bg-white rounded-full" />  File → URL Public — Lebih Cantik</h4>
+                <p className="text-xs text-white/50">Maks 2GB • URL asli public • /api/files/ • Auto-copy</p>
+                <label className="block w-full h-[100px] rounded-xl bg-gradient-to-br from-white/10 to-white/5 border border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:from-white/15 hover:to-white/10 cursor-pointer transition">
+                  <span className="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center text-xl shadow" style={{filter:"drop-shadow(0 0 8px rgba(255,255,255,0.6))"}}></span>
+                  <span className="text-xs font-bold text-white/80">{urlFile ? urlFile.name + " (" + (urlFile.size/1024/1024).toFixed(2) + " MB)" : "Pilih File (maks 2GB)"}</span>
                 </label>
                 <button onClick={handleUrlUpload} disabled={urlLoading || !urlFile} className="w-full h-[46px] glow-button rounded-xl font-black text-sm disabled:opacity-50 border border-white/20">{urlLoading?"MENGUPLOAD...":"UPLOAD & DAPATKAN URL"}</button>
                 {urlResult?.ok && (
-                  <div className="rounded-xl bg-white text-black p-3">
-                    <div className="text-xs font-black">✅ URL Public</div>
-                    <div className="mt-2 p-2 rounded bg-black text-white font-mono text-xs break-all">{urlResult.url}</div>
-                    <div className="flex gap-2 mt-2">
-                      <button onClick={()=>{ navigator.clipboard.writeText(urlResult.url); alert("Disalin!"); }} className="h-8 px-3 rounded-full bg-black text-white text-xs font-bold">📋 Salin</button>
-                      <a href={urlResult.url} target="_blank" className="h-8 px-3 rounded-full bg-[#FF1A1A] text-white text-xs font-black flex items-center">🔗 Buka</a>
+                  <div className="rounded-xl bg-gradient-to-br from-white to-white/90 text-black p-4 border border-white/20 shadow-xl">
+                    <div className="text-xs font-black flex items-center gap-2"> URL Public Siap <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px]">LIVE</span></div>
+                    <div className="mt-2 p-3 rounded-xl bg-black text-white font-mono text-xs break-all border border-white/10">{urlResult.url}</div>
+                    <div className="flex gap-2 mt-3">
+                      <button onClick={()=>{ navigator.clipboard.writeText(urlResult.url); alert(" URL disalin!"); }} className="h-9 px-4 rounded-full bg-black text-white text-xs font-black flex items-center gap-1.5"> Salin URL</button>
+                      <a href={urlResult.url} target="_blank" className="h-9 px-4 rounded-full bg-[#FF1A1A] text-white text-xs font-black flex items-center gap-1">↗ Buka</a>
                     </div>
-                    {urlResult.mimeType?.startsWith("image/") && <img src={urlResult.url} alt="preview" className="mt-3 w-full rounded-lg border max-h-[300px] object-contain" />}
-                    {urlResult.mimeType?.startsWith("video/") && <video src={urlResult.url} controls className="mt-3 w-full rounded-lg border" />}
+                    {urlResult.mimeType?.startsWith("image/") && <img src={urlResult.url} alt="preview" className="mt-3 w-full rounded-xl border border-black/10 max-h-[300px] object-contain shadow" />}
+                    {urlResult.mimeType?.startsWith("video/") && <video src={urlResult.url} controls className="mt-3 w-full rounded-xl border shadow" />}
                   </div>
                 )}
-                {urlResult && !urlResult.ok && <div className="text-xs text-red-300">{urlResult.message}</div>}
+                {urlResult && !urlResult.ok && <div className="text-xs text-red-300 bg-red-500/10 border border-red-500/20 rounded-lg p-2">{urlResult.message}</div>}
+              </div>
+            )}
+
+            {toolsTab==="quran" && (
+              <div className="space-y-3">
+                <div className="glow-card rounded-[22px] p-4">
+                  <h4 className="font-black text-white text-sm flex items-center gap-2"><span className="w-1 h-5 bg-emerald-400 rounded-full shadow-[0_0_8px_#10b981]" />  Al-Qur'an — 114 Surah • 30 Juz Lengkap • Real-Time</h4>
+                  <p className="text-xs text-white/50 mt-1">Sumber: <b className="text-emerald-300">equran.id API v2</b> — Juz 1-30 lengkap, tidak ada yang tertinggal. Data real-time, bukan cache palsu.</p>
+                  <div className="flex gap-2 mt-3">
+                    <button onClick={()=>setQuranMode("surah")} className={`flex-1 h-10 rounded-xl font-black text-xs border ${quranMode==="surah" ? "bg-emerald-500 border-emerald-300 text-white shadow-[0_0_12px_rgba(16,185,129,0.4)]" : "bg-white/5 border-white/10 text-white/60"}`}> 114 Surah</button>
+                    <button onClick={()=>setQuranMode("juz")} className={`flex-1 h-10 rounded-xl font-black text-xs border ${quranMode==="juz" ? "bg-emerald-500 border-emerald-300 text-white" : "bg-white/5 border-white/10 text-white/60"}`}> 30 Juz</button>
+                  </div>
+                </div>
+
+                {quranLoading ? (
+                  <div className="grid grid-cols-2 gap-2">
+                    {Array.from({length:6}).map((_,i)=><div key={i} className="h-[100px] rounded-xl bg-white/5 animate-pulse border border-white/10" />)}
+                  </div>
+                ) : quranMode==="surah" ? (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[520px] overflow-y-auto pr-1">
+                      {quranSurahs.map((s:any)=>(
+                        <button key={s.nomor} onClick={async()=>{
+                          setQuranSelected(s);
+                          setQuranDetail(null);
+                          try{ const r=await fetch(`/api/quran/surat?nomor=${s.nomor}`); const j=await r.json(); if(j.ok) setQuranDetail(j.data); }catch{}
+                        }} className="glow-card rounded-xl p-3 text-left flex gap-3 hover:scale-[1.01] transition border-emerald-500/20 hover:border-emerald-500/40">
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white font-black text-xs shadow">{s.nomor}</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-black text-white truncate">{s.nomor}. {s.namaLatin} <span className="text-emerald-300">• {s.nama}</span></div>
+                            <div className="text-[11px] text-white/50 truncate">{s.arti} • {s.jumlahAyat} ayat • {s.tempatTurun} • Juz {s.deskripsi?.slice(0,30) || ""}</div>
+                            <div className="mt-1 flex gap-1.5">
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-white text-black font-bold">{s.jumlahAyat} Ayat</span>
+                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300">{s.tempatTurun}</span>
+                            </div>
+                          </div>
+                          <span className="text-emerald-400 text-lg">›</span>
+                        </button>
+                      ))}
+                    </div>
+                    {quranSelected && (
+                      <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur flex items-center justify-center p-4" onClick={()=>setQuranSelected(null)}>
+                        <div className="glow-card rounded-[22px] max-w-[640px] w-full max-h-[90vh] overflow-y-auto border-emerald-500/20" onClick={e=>e.stopPropagation()}>
+                          <div className="p-5 border-b border-white/10 bg-gradient-to-r from-emerald-500/10 to-transparent">
+                            <div className="flex items-start gap-3">
+                              <div className="w-12 h-12 rounded-xl bg-emerald-500 flex items-center justify-center text-white font-black">{quranSelected.nomor}</div>
+                              <div className="flex-1">
+                                <h3 className="text-lg font-black text-white">{quranSelected.namaLatin} <span className="text-emerald-300">{quranSelected.nama}</span></h3>
+                                <p className="text-xs text-white/60">{quranSelected.arti} • {quranSelected.jumlahAyat} ayat • {quranSelected.tempatTurun}</p>
+                              </div>
+                              <button onClick={()=>setQuranSelected(null)} className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-black"></button>
+                            </div>
+                            {quranSelected.deskripsi && <p className="text-xs text-white/70 mt-3 leading-relaxed" dangerouslySetInnerHTML={{__html: quranSelected.deskripsi.slice(0,400)}} />}
+                          </div>
+                          <div className="p-4 space-y-3 max-h-[60vh] overflow-y-auto">
+                            {!quranDetail ? (
+                              <div className="text-center py-8"><span className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin inline-block" /> <span className="ml-2 text-xs text-white/50">Memuat ayat...</span></div>
+                            ) : (
+                              <>
+                                {quranDetail.audioFull && (
+                                  <div className="rounded-xl bg-black/40 border border-white/10 p-3">
+                                    <div className="text-xs font-black text-white mb-2"> Audio Murottal</div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                      {Object.entries(quranDetail.audioFull).slice(0,4).map(([k,v]:any)=>(
+                                        <audio key={k} controls src={v} className="w-full h-8" />
+                                      ))}
+                                    </div>
+                                  </div>
+                                )}
+                                <div className="space-y-3">
+                                  {(quranDetail.ayat || []).slice(0, 20).map((a:any)=>(
+                                    <div key={a.nomorAyat} className="rounded-xl bg-black/40 border border-white/10 p-3">
+                                      <div className="flex items-center gap-2">
+                                        <span className="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-black">{a.nomorAyat}</span>
+                                        <span className="text-[11px] text-white/40">Juz {a.juz || "?"} • Hal {a.halaman || "?"}</span>
+                                      </div>
+                                      <div className="text-right text-lg leading-relaxed mt-2 font-arab" style={{fontFamily:"serif"}}>{a.teksArab}</div>
+                                      <div className="text-xs text-emerald-300 mt-1">{a.teksLatin}</div>
+                                      <div className="text-xs text-white/70 mt-1">“{a.teksIndonesia}”</div>
+                                      {a.audio && <audio controls src={Object.values(a.audio)[0] as string} className="w-full mt-2 h-8" />}
+                                    </div>
+                                  ))}
+                                  {quranDetail.ayat && quranDetail.ayat.length > 20 && <div className="text-center text-xs text-white/40">Menampilkan 20/{quranDetail.ayat.length} ayat • Scroll untuk lebih banyak di API</div>}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                      {Array.from({length:30}).map((_,i)=>{
+                        const n=i+1;
+                        const juzInfo = quranJuzList.find((j:any)=>j.juz===n);
+                        return (
+                          <button key={n} onClick={()=>setQuranJuz(n)} className={`h-[64px] rounded-xl border flex flex-col items-center justify-center gap-1 ${quranJuz===n ? "bg-emerald-500 border-white text-white shadow-[0_0_14px_rgba(16,185,129,0.5)]" : "bg-white/5 border-white/10 text-white/70 hover:bg-white/10"}`}>
+                            <span className="text-[10px] font-black tracking-widest">JUZ</span>
+                            <span className="text-lg font-black">{n}</span>
+                            <span className="text-[9px] opacity-70 truncate px-1">{juzInfo ? juzInfo.surahs.slice(0,1).join("") : ""}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="glow-card rounded-xl p-4 border-emerald-500/20">
+                      <div className="flex items-center gap-2">
+                        <span className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white font-black text-xs">{quranJuz}</span>
+                        <div>
+                          <div className="text-sm font-black text-white">Juz {quranJuz}</div>
+                          <div className="text-xs text-white/50">{quranJuzList.find((j:any)=>j.juz===quranJuz)?.start || ""} → {quranJuzList.find((j:any)=>j.juz===quranJuz)?.end || ""}</div>
+                        </div>
+                        <span className="ml-auto text-[10px] px-2 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300">Lengkap</span>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {(quranJuzList.find((j:any)=>j.juz===quranJuz)?.surahs || []).map((s:string)=>(
+                          <span key={s} className="text-[11px] px-2.5 py-1 rounded-full bg-white text-black font-bold">{s}</span>
+                        ))}
+                      </div>
+                      <div className="mt-3 text-xs text-white/60">Juz {quranJuz} berisi surah di atas. Klik surah di tab 114 Surah untuk baca ayat lengkap dengan audio. Semua 30 Juz tersedia, tidak ada yang tertinggal.</div>
+                    </div>
+                  </div>
+                )}
+                <div className="text-center text-[11px] text-white/30"> Al-Qur'an 30 Juz • 114 Surah • 6236 Ayat • Real-time equran.id • Audio & terjemahan Indonesia</div>
               </div>
             )}
           </div>
@@ -1306,7 +1587,7 @@ export default function BIMXZApp(){
                 </div>
                 <div className="rounded-xl bg-black/40 border border-white/10 p-3">
                   <div className="text-[10px] text-white/40 tracking-widest font-bold">WA STATUS</div>
-                  <div className={`text-xs font-black mt-1 ${waStatus==="open" ? "text-emerald-400" : "text-amber-400"}`}>{waStatus==="open" ? "● Terhubung BAILEYS ASLI" : "● " + waStatus}</div>
+                  <div className={`text-xs font-black mt-1 ${waStatus==="open" ? "text-emerald-400" : "text-amber-400"}`}>{waStatus==="open" ? " Terhubung BAILEYS ASLI" : " " + waStatus}</div>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-4">
@@ -1315,7 +1596,7 @@ export default function BIMXZApp(){
               </div>
               <div className="mt-3 p-3 rounded-xl bg-white/5 border border-white/10 text-left">
                 <div className="text-[11px] font-black text-white">KONTAK PENGEMBANG</div>
-                <div className="text-xs text-white/70 mt-1 font-medium">WA: +6283115955196<br/>Telegram: @b1mxzstore • Baileys 6.7.18 ASLI • 15 Server</div>
+                <div className="text-xs text-white/70 mt-1 font-medium">WA: +6283115955196<br/>Telegram: @b1mxzstore • Baileys 6.7.22 • 15 Server</div>
               </div>
             </div>
 
@@ -1331,10 +1612,10 @@ export default function BIMXZApp(){
                   </div>
                   {generatedKey && (
                     <div className="mt-3 p-3 rounded-xl bg-black border border-emerald-500/30">
-                      <div className="text-[11px] font-black text-emerald-400">🔑 APIKEY BARU — SALIN SEKARANG (hanya tampil sekali)</div>
+                      <div className="text-[11px] font-black text-emerald-400"> APIKEY BARU — SALIN SEKARANG (hanya tampil sekali)</div>
                       <div className="mt-1 p-2 rounded bg-white text-black font-mono text-xs break-all select-all">{generatedKey}</div>
                       <div className="flex gap-2 mt-2">
-                        <button onClick={()=>{ navigator.clipboard.writeText(generatedKey); alert("APIKEY disalin!"); }} className="h-8 px-3 rounded-full bg-emerald-500 text-white text-xs font-black">📋 Salin</button>
+                        <button onClick={()=>{ navigator.clipboard.writeText(generatedKey); alert("APIKEY disalin!"); }} className="h-8 px-3 rounded-full bg-emerald-500 text-white text-xs font-black"> Salin</button>
                         <button onClick={()=>setGeneratedKey(null)} className="h-8 px-3 rounded-full bg-white/10 border border-white/20 text-white text-xs font-bold">Sembunyikan</button>
                       </div>
                     </div>
@@ -1343,27 +1624,27 @@ export default function BIMXZApp(){
                 <div className="mt-4">
                   <div className="flex items-center justify-between">
                     <h4 className="text-xs font-black text-white tracking-widest">DAFTAR APIKEY ({apiKeysList.length})</h4>
-                    <button onClick={loadApiKeys} className="text-[11px] px-3 py-1.5 rounded-full bg-white text-black font-black">🔄 Refresh</button>
+                    <button onClick={loadApiKeys} className="text-[11px] px-3 py-1.5 rounded-full bg-white text-black font-black"> Refresh</button>
                   </div>
                   <div className="mt-2 space-y-2 max-h-[220px] overflow-y-auto pr-1">
                     {apiKeysList.length===0 ? <div className="text-xs text-white/40 text-center py-4">Belum ada APIKEY. Buat di atas.</div> : apiKeysList.map((k:any)=>(
                       <div key={k.id} className="rounded-xl bg-black/40 border border-white/10 p-3">
                         <div className="flex items-center gap-2">
-                          <span className="w-8 h-8 rounded-full bg-[#FF1A1A] flex items-center justify-center text-white text-xs font-black">🔑</span>
+                          <span className="w-8 h-8 rounded-full bg-[#FF1A1A] flex items-center justify-center text-white text-xs font-black"></span>
                           <div className="flex-1 min-w-0">
                             <div className="text-xs font-black text-white truncate">{k.name}</div>
                             <div className="text-[11px] font-mono text-white/60 truncate">{k.key.slice(0,38)}••••••••</div>
                             <div className="text-[10px] text-white/40">Dibuat: {new Date(k.createdAt).toLocaleString("id-ID")} • Last used: {k.lastUsed ? new Date(k.lastUsed).toLocaleString("id-ID") : "belum pernah"}</div>
                           </div>
-                          <button onClick={()=>deleteApiKey(k.id)} className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-black">✕</button>
+                          <button onClick={()=>deleteApiKey(k.id)} className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-black"></button>
                         </div>
-                        <button onClick={()=>{ navigator.clipboard.writeText(k.key); alert("APIKEY disalin: " + k.key.slice(0,30) + "..."); }} className="mt-2 w-full h-8 rounded-full bg-white/10 border border-white/15 text-white text-xs font-bold">📋 Salin Full Key</button>
+                        <button onClick={()=>{ navigator.clipboard.writeText(k.key); alert("APIKEY disalin: " + k.key.slice(0,30) + "..."); }} className="mt-2 w-full h-8 rounded-full bg-white/10 border border-white/15 text-white text-xs font-bold"> Salin Full Key</button>
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="mt-4 p-3 rounded-xl bg-black/40 border border-white/10">
-                  <div className="text-[11px] font-black text-white">🤖 TES BOT — BUAT AKUN OTOMATIS VIA APIKEY</div>
+                  <div className="text-[11px] font-black text-white"> TES BOT — BUAT AKUN OTOMATIS VIA APIKEY</div>
                   <p className="text-[11px] text-white/50 mt-1">Bot kamu kirim <b className="text-white">username, password, role</b> → sistem auto expiry 7/30/90/lifetime & auto hapus.</p>
                   <div className="mt-2 grid grid-cols-2 gap-2">
                     <input value={apiTestUsername} onChange={e=>setApiTestUsername(e.target.value)} placeholder="username bot" className="h-10 rounded-xl bg-black/60 border border-white/15 px-3 text-xs text-white placeholder:text-white/30" />
@@ -1376,10 +1657,10 @@ export default function BIMXZApp(){
                       <option value="OWNER">OWNER — 90 hari</option>
                       <option value="DEVELOPER">DEVELOPER — lifetime</option>
                     </select>
-                    <button onClick={testCreateViaApiKey} className="h-10 px-4 rounded-xl bg-emerald-500 text-white font-black text-xs">🚀 Buat via APIKEY</button>
+                    <button onClick={testCreateViaApiKey} className="h-10 px-4 rounded-xl bg-emerald-500 text-white font-black text-xs"> Buat via APIKEY</button>
                   </div>
                   <div className="mt-3 p-2 rounded-lg bg-white text-black">
-                    <div className="text-[10px] font-black">📄 DOKUMENTASI UNTUK BOT</div>
+                    <div className="text-[10px] font-black"> DOKUMENTASI UNTUK BOT</div>
                     <pre className="text-[10px] font-mono mt-1 whitespace-pre-wrap break-all">{`POST https://domain.com/api/apikey/create-user
 Header: x-api-key: bimzxbugx_api_xxx
 Body: {
@@ -1422,7 +1703,7 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
                 <div className="mt-6">
                   <div className="flex items-center justify-between">
                     <h4 className="text-xs font-black text-white tracking-widest">DAFTAR PENGGUNA</h4>
-                    <button onClick={loadUsers} className="text-[11px] px-3 py-1.5 rounded-full bg-white text-black font-black">🔄 Muat</button>
+                    <button onClick={loadUsers} className="text-[11px] px-3 py-1.5 rounded-full bg-white text-black font-black"> Muat</button>
                   </div>
                   <div className="mt-3 space-y-2 max-h-[300px] overflow-y-auto pr-1">
                     {devUserList.length===0 ? <div className="text-xs text-white/40 text-center py-6">Belum ada data. Tekan Muat.</div> : devUserList.map((u:any)=>(
@@ -1432,19 +1713,28 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
                           <div className="text-xs font-black text-white flex items-center gap-2">{u.username} <span className={`text-[9px] px-1.5 py-0.5 rounded-full border font-black ${roleBadgeColor(u.role)}`}>{u.role}</span></div>
                           <div className="text-[11px] text-white/40 truncate font-medium">Exp: {u.expiresAt ? new Date(u.expiresAt).toLocaleDateString("id-ID") : "∞"} • {u.isActive ? "Aktif" : "Nonaktif"}</div>
                         </div>
-                        {u.username!=="admin" && <button onClick={()=>deleteUser(u.id)} className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center hover:bg-white/80 font-black">🗑️</button>}
+                        {u.username!=="admin" && <button onClick={()=>deleteUser(u.id)} className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center hover:bg-white/80 font-black"></button>}
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="mt-6 pt-4 border-t border-white/10">
+                  <h4 className="text-xs font-black text-white tracking-widest">KONTROL KONEKSI WHATSAPP</h4>
+                  <p className="text-[11px] text-white/50 mt-1">Developer dapat menutup sementara Pairing atau QR. Pengaturan diperiksa backend, jadi tombol pengguna ikut terkunci.</p>
+                  <div className="grid grid-cols-2 gap-2 mt-3">
+                    <button onClick={async()=>{ const next=!pairingClosed; const r=await fetch("/api/settings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,key:"wa_pairing_closed",value:String(next)})}); const j=await r.json(); if(j.ok) setPairingClosed(next); else alert(j.message||"Gagal mengubah Pairing"); }} className={`h-11 rounded-xl font-black text-xs border ${pairingClosed?"bg-emerald-500 text-white border-white/20":"bg-[#FF1A1A] text-white border-white/20"}`}>{pairingClosed?"BUKA PAIRING":"TUTUP PAIR"}</button>
+                    <button onClick={async()=>{ const next=!qrClosed; const r=await fetch("/api/settings",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token,key:"wa_qr_closed",value:String(next)})}); const j=await r.json(); if(j.ok) setQrClosed(next); else alert(j.message||"Gagal mengubah QR"); }} className={`h-11 rounded-xl font-black text-xs border ${qrClosed?"bg-emerald-500 text-white border-white/20":"bg-[#FF1A1A] text-white border-white/20"}`}>{qrClosed?"BUKA QR":"TUTUP QR"}</button>
+                  </div>
+                  {(pairingClosed || qrClosed) && <div className="mt-2 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200 font-medium">{pairingClosed?"Pairing sedang ditutup karna adanya kendala, scan pakai QR untuk melanjutkan.":"QR sedang ditutup karna adanya kendala, gunakan pairing untuk melanjutkan."}</div>}
+                </div>
+                <div className="mt-6 pt-4 border-t border-white/10">
                   <h4 className="text-xs font-black text-white tracking-widest">LATAR BELAKANG APLIKASI</h4>
                   <p className="text-[11px] text-white/50 mt-1">Upload foto/video (maks 2GB) • 120fps loop</p>
                   <label className="mt-3 block w-full h-11 rounded-xl bg-white/5 border border-dashed border-white/20 flex items-center justify-center gap-2 text-xs font-black text-white/70 hover:bg-white/10 cursor-pointer">
-                    <span>📁</span> Pilih Foto/Video
+                    <span></span> Pilih Foto/Video
                     <input type="file" accept="image/*,video/*" onChange={handleBgUpload} className="hidden" />
                   </label>
-                  {bgSettings.url && <div className="mt-2 text-[11px] text-emerald-400 font-bold">✓ Latar: {bgSettings.type}</div>}
+                  {bgSettings.url && <div className="mt-2 text-[11px] text-emerald-400 font-bold"> Latar: {bgSettings.type}</div>}
                 </div>
               </div>
             )}
@@ -1487,35 +1777,35 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
             </div>
             <div className="flex gap-2 mt-3">
               <input value={chatInput} onChange={e=>setChatInput(e.target.value)} onKeyDown={e=>e.key==="Enter" && sendChat()} placeholder="Tulis pesan..." className="flex-1 h-[40px] rounded-xl bg-black/60 border border-white/15 px-4 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-[#FF1A1A]" maxLength={500} />
-              <button onClick={sendChat} className="w-[44px] h-[40px] rounded-xl bg-white text-black flex items-center justify-center font-black hover:bg-white/90">➤</button>
+              <button onClick={sendChat} className="w-[44px] h-[40px] rounded-xl bg-white text-black flex items-center justify-center font-black hover:bg-white/90"></button>
             </div>
             <button onClick={handleManualScroll} className="mt-2 w-full h-7 rounded-full bg-white/5 border border-white/10 text-[11px] text-white/50 hover:bg-white/10">↓ Scroll manual</button>
           </div>
         )}
 
         <div className="text-center py-2">
-          <p className="text-[11px] tracking-wide text-white/35 font-black">✨ BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! ✨</p>
-          <p className="text-[9px] tracking-widest text-white/20 mt-1">RED NEON • BAILEYS 6.7.18 ASLI • 15 SERVER • 2GB • JAM DIGITAL</p>
+          <p className="text-[11px] tracking-wide text-white/35 font-black"> BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! </p>
+          <p className="text-[9px] tracking-widest text-white/20 mt-1">RED NEON • BAILEYS 6.7.22 • 15 SERVER • 2GB • JAM DIGITAL</p>
         </div>
       </main>
 
       {showQR && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur" onClick={()=>setShowQR(false)}>
           <div className="glow-card rounded-[24px] p-6 w-full max-w-[360px] text-center relative overflow-hidden border-white/20" onClick={e=>e.stopPropagation()}>
-            <h3 className="font-black text-white text-lg tracking-wide">SCAN QR — BAILEYS ASLI</h3>
-            <p className="text-xs text-white/60 mt-1">Bukan simulasi • Langsung dari server WhatsApp • 6.7.18</p>
+            <h3 className="font-black text-white text-lg tracking-wide">SCAN QR — WHATSAPP</h3>
+            <p className="text-xs text-white/60 mt-1">QR sesi WhatsApp melalui Baileys 6.7.22</p>
             <div className="mt-4 bg-white rounded-xl p-4 flex items-center justify-center min-h-[240px] border border-white/20 relative">
               {qrLoading ? (
                 <div className="flex flex-col items-center gap-3">
                   <span className="w-8 h-8 border-2 border-black/20 border-t-black rounded-full animate-spin" />
-                  <span className="text-xs text-black/60 font-bold">Memuat QR ASLI dari WhatsApp...</span>
-                  <span className="text-[11px] text-black/40 text-center">Tunggu 2-5 detik, QR asli via Baileys. Di Vercel harus cepat scan (serverless).</span>
+                  <span className="text-xs text-black/60 font-bold">Memuat QR dari sesi WhatsApp...</span>
+                  <span className="text-[11px] text-black/40 text-center">Tunggu 2-5 detik, QR memiliki masa berlaku terbatas; scan segera setelah muncul.</span>
                 </div>
               ) : qrImage ? (
-                <img src={qrImage} alt="QR ASLI BAILEYS" className="w-[220px] h-[220px] object-contain" />
+                <img src={qrImage} alt="QR BAILEYS" className="w-[220px] h-[220px] object-contain" />
               ) : (
                 <div className="text-xs text-black/60 flex flex-col items-center gap-2">
-                  <span className="text-2xl">⚠️</span>
+                  <span className="text-2xl"></span>
                   QR belum siap. Tekan Refresh.
                 </div>
               )}
@@ -1526,7 +1816,7 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
                 setQrImage(null); setQrLoading(true);
                 const r=await fetch("/api/wa/qr"); const j=await r.json();
                 if(j.ok && j.qrImage){ setQrImage(j.qrImage); } setQrLoading(false);
-              }} className="flex-1 h-10 rounded-xl bg-[#FF1A1A] text-white font-black text-sm">🔄 Refresh QR ASLI</button>
+              }} className="flex-1 h-10 rounded-xl bg-[#FF1A1A] text-white font-black text-sm"> Refresh QR</button>
               <button onClick={()=>setShowQR(false)} className="flex-1 h-10 rounded-xl bg-white text-black font-black text-sm">TUTUP</button>
             </div>
             <div className="mt-2 text-[10px] text-white/30">Vercel: QR asli tapi ephemeral (/tmp). Untuk permanen gunakan VPS.</div>
@@ -1538,14 +1828,14 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur">
           <div className="glow-card rounded-[24px] p-6 w-full max-w-[360px] text-center relative overflow-hidden border-white/20">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[220px] h-[1px] bg-gradient-to-r from-transparent via-white to-transparent opacity-70" />
-            <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center text-3xl shadow-[0_0_30px_rgba(16,185,129,0.5)] border-2 border-white" style={{animation:"spinCheck 0.8s ease"}}>✓</div>
+            <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500 flex items-center justify-center text-3xl shadow-[0_0_30px_rgba(16,185,129,0.5)] border-2 border-white" style={{animation:"spinCheck 0.8s ease"}}></div>
             <h3 className="mt-4 font-black text-white text-lg tracking-wide">BERHASIL!</h3>
-            <p className="mt-2 text-sm text-white/85 leading-relaxed font-medium">✅ BIMXZBUGXZ V1 menyatakan bahwa pengiriman pesan Anda BERHASIL dan insyaallah akan bekerja.</p>
+            <p className="mt-2 text-sm text-white/85 leading-relaxed font-medium"> BIMXZBUGXZ V1 menyatakan bahwa pengiriman pesan Anda BERHASIL dan insyaallah akan bekerja.</p>
             <div className="mt-3 p-2.5 rounded-xl bg-[#FF1A1A]/10 border border-[#FF1A1A]/20">
-              <p className="text-[11px] text-white font-mono">{successInfo?.waConnected ? "Via Baileys 6.7.18 ASLI — 2GB Layer" : "Log tercatat • WA belum open"} • {senderMode} • {waMode}</p>
+              <p className="text-[11px] text-white font-mono">{successInfo?.waConnected ? "Via Baileys 6.7.22 — 2GB Layer" : "Log tercatat • WA belum open"} • {senderMode} • {waMode}</p>
               <p className="text-[11px] text-[#FF5A5A] font-bold mt-1">{selectedBugs.join(" + ")}</p>
             </div>
-            <p className="mt-3 text-[11px] text-white font-black tracking-wide">✨ BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! ✨</p>
+            <p className="mt-3 text-[11px] text-white font-black tracking-wide"> BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! </p>
             <button onClick={()=>setShowSuccess(false)} className="mt-4 w-full h-10 rounded-xl bg-white text-black font-black text-sm hover:bg-white/90">TUTUP</button>
           </div>
         </div>
@@ -1554,15 +1844,15 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
       <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[#050507]/92 backdrop-blur-xl border-t border-[#FF1A1A]/20">
         <div className="max-w-[760px] mx-auto px-2 h-[74px] flex items-center justify-around">
           {[
-            {id:"beranda", label:"Beranda", icon:"🏠"},
-            {id:"whatsapp", label:"WhatsApp", icon:"💥"},
-            {id:"film", label:"Film", icon:"🎬"},
-            {id:"tools", label:"Tools", icon:"🛠️"},
-            {id:"profil", label:"Profil", icon:"👤"},
+            {id:"beranda", label:"Beranda", icon:"⌂"},
+            {id:"whatsapp", label:"WhatsApp", icon:"◉"},
+            {id:"film", label:"Film", icon:"▣"},
+            {id:"tools", label:"Tools", icon:"♧"},
+            {id:"profil", label:"Profil", icon:"♙"},
           ].map(t=>(
-            <button key={t.id} onClick={()=>setActiveTab(t.id as any)} className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition ${activeTab===t.id ? "text-white" : "text-white/40"}`}>
-              <span className={`w-9 h-9 rounded-xl flex items-center justify-center text-[18px] transition border ${activeTab===t.id ? "bg-[#FF1A1A] border-white text-white shadow-[0_0_14px_rgba(255,26,26,0.6)]" : "bg-white/5 border-white/10"}`}>{t.icon}</span>
-              <span className={`text-[10px] font-black tracking-wide ${activeTab===t.id ? "text-white" : "text-white/50"}`}>{t.label}</span>
+            <button key={t.id} onClick={()=>setActiveTab(t.id as any)} className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition ${activeTab===t.id ? "text-[#FF1A1A]" : "text-white/70"}`}>
+              <span className={`w-9 h-9 rounded-xl flex items-center justify-center transition border text-[25px] leading-none ${activeTab===t.id ? "bg-[#FF1A1A]/10 border-[#FF1A1A] shadow-[0_0_14px_rgba(255,26,26,0.55)]" : "bg-transparent border-transparent"}`}>{t.icon}</span>
+              <span className={`text-[10px] font-black tracking-wide ${activeTab===t.id ? "text-[#FF1A1A]" : "text-white/70"}`}>{t.label}</span>
             </button>
           ))}
         </div>

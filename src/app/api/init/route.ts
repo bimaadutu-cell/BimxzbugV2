@@ -35,6 +35,8 @@ export async function GET(req: Request) {
     if (settingsCheck.length === 0) {
       await db.insert(appSettings).values([
         { key: "background_type", value: "none" },
+        { key: "wa_pairing_closed", value: "false" },
+        { key: "wa_qr_closed", value: "false" },
         { key: "background_url", value: "" },
         { key: "tmdb_key", value: "1ae110e6c988152ee842b46b77656d27" },
         { key: "rapid_key", value: "" },

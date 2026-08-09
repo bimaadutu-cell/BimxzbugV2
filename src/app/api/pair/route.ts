@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { ensureDb } from "@/lib/ensureDb";
+import { getWAStatus } from "@/lib/wa";
 
 export async function POST(req: Request) {
   try {
@@ -15,6 +16,8 @@ export async function POST(req: Request) {
     if (!user.isActive) return Response.json({ ok: false, message: "Akun nonaktif" }, { status: 403 });
     const cleaned = phone.replace(/\s/g, "");
     if (!/^\+\d{8,16}$/.test(cleaned)) return Response.json({ ok: false, message: "Format nomor harus +[kode negara][nomor] contoh +6281234567890" }, { status: 400 });
+    const wa = getWAStatus();
+    if (wa.status !== "open") return Response.json({ ok: false, message: "WhatsApp belum terhubung. Nomor hanya disimpan setelah Baileys melaporkan status open.", status: wa.status }, { status: 409 });
     await db.update(users).set({ pairedNumber: cleaned, pairedAt: new Date() }).where(eq(users.id, uid));
     return Response.json({ ok: true, pairedNumber: cleaned });
   } catch (e: any) {
