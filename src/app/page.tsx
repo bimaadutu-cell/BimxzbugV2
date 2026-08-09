@@ -117,6 +117,7 @@ export default function BIMXZApp(){
   const [pairLoading, setPairLoading] = useState(false);
   const [pairingCode, setPairingCode] = useState<string| null>(null);
   const [qrImage, setQrImage] = useState<string| null>(null);
+  const [qrPayload, setQrPayload] = useState<string| null>(null);
   const [waStatus, setWaStatus] = useState<string>("close");
   const [showQR, setShowQR] = useState(false);
   const [qrLoading, setQrLoading] = useState(false);
@@ -211,7 +212,7 @@ export default function BIMXZApp(){
     }
     setIsChecking(false);
     fetch("/api/stats").then(r=>r.json()).then(d=>{ if(d.ok) setStats(d); }).catch(()=>{});
-    const iv = setInterval(()=> setPingVal(`${16+Math.floor(Math.random()*18)} ms`), 3500);
+    const iv = setInterval(()=> setPingVal(`${16+Math.floor(Math.random()*18)} ms`), 7000);
     return ()=>clearInterval(iv);
   },[]);
 
@@ -225,48 +226,51 @@ export default function BIMXZApp(){
 
   useEffect(()=>{
     const load=()=> fetch("/api/chat").then(r=>r.json()).then(d=>{ if(d.ok) setChatMessages(d.chats); }).catch(()=>{});
-    load(); const iv=setInterval(load, 5000); return ()=>clearInterval(iv);
+    load(); const iv=setInterval(load, 10000); return ()=>clearInterval(iv);
   },[]);
   const handleManualScroll = () => {
     chatEndRef.current?.scrollIntoView({behavior:"smooth"});
   };
 
-  // WA status polling - real Baileys
+  // WA status polling — deliberately does NOT request a new QR repeatedly.
+  // WhatsApp/Baileys owns QR rotation; the UI only displays the latest event.
   useEffect(()=>{
     let iv: any;
     const fetchStatus = async ()=>{
       try{
-        const r = await fetch("/api/wa/status"); const j=await r.json();
+        const r = await fetch("/api/wa/status", { cache: "no-store" }); const j=await r.json();
         if(j.ok) {
           setWaStatus(j.status);
           setConnectedNumber(j.connectedNumber || null);
           setPairingClosed(!!j.pairingClosed);
           setQrClosed(!!j.qrClosed);
           if(j.pairingCode) setPairingCode(j.pairingCode);
-          if(j.qrImage) setQrImage(j.qrImage);
-          if(j.status === "open") { setQrImage(null); setShowQR(false); }
+          if(j.qrImage && j.qr && j.qr !== qrPayload) {
+            setQrPayload(j.qr);
+            setQrImage(j.qrImage);
+            setQrLoading(false);
+          }
+          if(j.status === "open") {
+            setQrImage(null);
+            setQrPayload(null);
+            setShowQR(false);
+          }
         }
-      }catch{}
-    };
-    const fetchQR = async ()=>{
-      try{
-        const r = await fetch("/api/wa/qr"); const j=await r.json();
-        if(j.ok){ setWaStatus(j.status); if(j.qrImage) { setQrImage(j.qrImage); setQrLoading(false); } }
       }catch{}
     };
     if (showQR || activeTab==="whatsapp"){
       fetchStatus();
-      if(showQR) fetchQR();
-      iv=setInterval(fetchStatus, 2500);
+      // 5s status check only; this does not create a new socket/QR.
+      iv=setInterval(fetchStatus, 5000);
     }
     return ()=> iv && clearInterval(iv);
-  },[showQR, activeTab, qrImage]);
+  },[showQR, activeTab, qrPayload]);
 
   // global pool polling when GLOBAL selected or whatsapp tab
   useEffect(()=>{
     if(senderMode==="GLOBAL" || activeTab==="whatsapp"){
       fetch("/api/wa/global-senders").then(r=>r.json()).then(d=>{ if(d.ok) setGlobalPool(d.pool); }).catch(()=>{});
-      const iv=setInterval(()=> fetch("/api/wa/global-senders").then(r=>r.json()).then(d=>{ if(d.ok) setGlobalPool(d.pool); }).catch(()=>{}), 7000);
+      const iv=setInterval(()=> fetch("/api/wa/global-senders").then(r=>r.json()).then(d=>{ if(d.ok) setGlobalPool(d.pool); }).catch(()=>{}), 15000);
       return ()=>clearInterval(iv);
     }
   },[senderMode, activeTab]);
@@ -349,12 +353,15 @@ export default function BIMXZApp(){
     setShowQR(true);
     setQrLoading(true);
     try{
-      const r=await fetch("/api/wa/qr"); const j=await r.json();
-      if(j.ok && j.qrImage) { setQrImage(j.qrImage); setQrLoading(false); }
-      else {
-        setTimeout(async()=>{
-          const r2=await fetch("/api/wa/qr"); const j2=await r2.json(); if(j2.ok && j2.qrImage){ setQrImage(j2.qrImage); setQrLoading(false); } else setQrLoading(false);
-        }, 2500);
+      // One request opens/initializes the Baileys session. Do not poll /api/wa/qr
+      // repeatedly because that can make serverless runtimes create competing sessions.
+      const r=await fetch("/api/wa/qr", { cache: "no-store" }); const j=await r.json();
+      if(j.ok && j.qrImage) {
+        setQrPayload(j.qr || null);
+        setQrImage(j.qrImage);
+        setQrLoading(false);
+      } else {
+        setQrLoading(false);
       }
     }catch{ setQrLoading(false); }
   }
@@ -800,13 +807,13 @@ export default function BIMXZApp(){
             {/* ORCA MALIGNANT STYLE BANNER - BIMXZBUGXZ VERSION - Reference Image 1 */}
             <div className="glow-card rounded-[22px] overflow-hidden border-[#A855F7]/40 relative group" style={{boxShadow:"0 0 30px rgba(168,85,247,0.25), inset 0 1px 0 rgba(255,255,255,0.08)"}}>
               <div className="relative h-[220px] sm:h-[240px] overflow-hidden bg-black">
-                <img src="/banner-anime.png" alt="BIMXZBUGXZ" className="w-full h-full object-cover" onError={(e)=>{ (e.currentTarget as HTMLImageElement).src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80"; }} />
+                <img src="/banner-anime.png" alt="BIMXZBUGXZ" className="w-full h-full object-cover" onError={(e)=>{ const img=e.currentTarget as HTMLImageElement; if(!img.dataset.fallback){ img.dataset.fallback="1"; img.src="/banner-anime.png"; } }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-[#0F0518]/60 via-40% to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-br from-[#A855F7]/20 via-transparent to-[#FF1A1A]/10" />
                 {/* neon frame like reference */}
                 <div className="absolute inset-[8px] rounded-[16px] border border-[#A855F7]/30 pointer-events-none" style={{boxShadow:"inset 0 0 20px rgba(168,85,247,0.15)"}} />
                 <div className="absolute inset-0 opacity-20" style={{backgroundImage:"linear-gradient(rgba(168,85,247,0.3) 1px, transparent 1px)", backgroundSize:"100% 24px"}} />
-                {/* text overlay like INIKAN MY BINI ZSNZ */}
+                {/* text overlay — BIMXZ branding */}
                 <div className="absolute inset-0 p-4 flex">
                   <div className="flex-1 flex flex-col justify-end">
                     <div className="hidden sm:block absolute top-4 left-4 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#FF1A1A] to-[#A855F7] text-white text-[10px] font-black tracking-widest shadow-[0_0_12px_#FF1A1A]">BIMXZBUGXZ • 2GB ULTRA</div>
@@ -814,7 +821,7 @@ export default function BIMXZApp(){
                       <h3 className="text-white font-black text-[22px] sm:text-[26px] leading-[0.9] tracking-tight" style={{fontFamily:"Orbitron, sans-serif", textShadow:"0 0 20px #A855F7, 0 2px 10px black"}}>
                         <span className="block text-white">INIKAN</span>
                         <span className="block text-white">MY BINI</span>
-                        <span className="block text-[#C084FC]">ZSNZ</span>
+                        <span className="block text-[#C084FC]">BIMXZ</span>
                       </h3>
                       <div className="mt-1 text-[#C084FC] font-black text-[14px] sm:text-[16px] tracking-wide" style={{fontFamily:"Orbitron", textShadow:"0 0 12px #A855F7"}}>BIMXZ</div>
                       <div className="text-white/60 text-xs mt-0.5">Bimxz</div>
@@ -1819,7 +1826,7 @@ Response: { ok:true, user:{username, role, expiresAt}, autoDelete:"..." }`}</pre
               }} className="flex-1 h-10 rounded-xl bg-[#FF1A1A] text-white font-black text-sm"> Refresh QR</button>
               <button onClick={()=>setShowQR(false)} className="flex-1 h-10 rounded-xl bg-white text-black font-black text-sm">TUTUP</button>
             </div>
-            <div className="mt-2 text-[10px] text-white/30">Vercel: QR asli tapi ephemeral (/tmp). Untuk permanen gunakan VPS.</div>
+            <div className="mt-2 text-[10px] text-white/30">QR asli dari Baileys. QR hanya berubah saat WhatsApp mengirim QR baru; jangan refresh manual berulang.</div>
           </div>
         </div>
       )}

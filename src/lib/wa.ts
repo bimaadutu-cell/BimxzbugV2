@@ -200,9 +200,15 @@ async function initWA(): Promise<WAState> {
     sock.ev.on("connection.update", async (update: any) => {
       const { connection, lastDisconnect, qr, isNewLogin } = update;
       if (qr) {
-        state.qr = qr;
-        state.lastQRTime = Date.now();
-        state.status = "qr";
+        // Ignore duplicate QR events. WhatsApp owns the QR lifetime; we should not
+        // regenerate/re-request it from the UI. A new image is generated only when
+        // the actual QR payload changes.
+        if (state.qr === qr && state.qrImage) {
+          state.status = "qr";
+        } else {
+          state.qr = qr;
+          state.lastQRTime = Date.now();
+          state.status = "qr";
         logWA("QR received, generating image");
         try {
           state.qrImage = await QRCode.toDataURL(qr, { width: 340, margin: 1, color: { dark: "#000000", light: "#ffffff" } });
@@ -210,6 +216,7 @@ async function initWA(): Promise<WAState> {
         } catch (e: any) {
           state.qrImage = null;
           logWA("QR image failed:", e?.message);
+        }
         }
       }
       if (connection === "close") {
