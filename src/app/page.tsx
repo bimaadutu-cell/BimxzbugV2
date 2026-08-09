@@ -265,7 +265,7 @@ export default function BIMXZApp(){
       // Fast status check: the server updates the state from Baileys connection.update.
       // 200ms is intentionally aggressive for near-instant UI feedback; real network
       // latency means a literal 0.02ms response cannot be guaranteed by HTTP.
-      iv=setInterval(fetchStatus, 200);
+      iv=setInterval(fetchStatus, 500);
     }
     return ()=> iv && clearInterval(iv);
   },[showQR, activeTab, qrPayload]);

@@ -17,13 +17,15 @@ type WAState = {
   reconnectAttempts: number;
   lastError: string | null;
   restartGeneration: number;
+  reconnectTimer: ReturnType<typeof setTimeout> | null;
+  connectedAt: number | null;
 };
 
 const globalForWA = globalThis as typeof globalThis & { __bimxWa?: WAState; __bimxWaInitLog?: string[] };
 
 function getState(): WAState {
   if (!globalForWA.__bimxWa) {
-    globalForWA.__bimxWa = { sock: null, qr: null, qrImage: null, status: "idle", pairingCode: null, phoneForCode: null, initPromise: null, lastQRTime: 0, reconnectAttempts: 0, lastError: null, restartGeneration: 0 };
+    globalForWA.__bimxWa = { sock: null, qr: null, qrImage: null, status: "idle", pairingCode: null, phoneForCode: null, initPromise: null, lastQRTime: 0, reconnectAttempts: 0, lastError: null, restartGeneration: 0, reconnectTimer: null, connectedAt: null };
   }
   if (!globalForWA.__bimxWaInitLog) globalForWA.__bimxWaInitLog = [];
   return globalForWA.__bimxWa!;
@@ -41,8 +43,9 @@ function logWA(...args: any[]) {
 }
 
 function getAuthFolder() {
-  // E2B is not Vercel but is production; persist to ./auth_info_bimx for e2b stability
-  // Vercel filesystem is read-only except /tmp
+  // Railway: set BAILEYS_AUTH_DIR to a Railway Volume mount (recommended).
+  // Vercel remains /tmp because its filesystem is ephemeral.
+  if (process.env.BAILEYS_AUTH_DIR) return path.resolve(process.env.BAILEYS_AUTH_DIR);
   const isVercel = !!process.env.VERCEL;
   if (isVercel && fs.existsSync("/tmp")) return path.join("/tmp", "auth_info_bimx");
   return path.join(process.cwd(), "auth_info_bimx");
@@ -126,8 +129,12 @@ async function persistToDB(folder: string) {
 
 async function initWA(): Promise<WAState> {
   const state = getState();
-  if (state.sock && state.status === "open") return state;
+  // IMPORTANT: keep exactly ONE live socket. The status endpoint can be polled
+  // very frequently; while the first socket is handshaking its status is
+  // "connecting", so creating another socket here would make WhatsApp close
+  // the previous connection (the main cause of the connect -> reconnect loop).
   if (state.initPromise) return state.initPromise;
+  if (state.sock && ["connecting", "qr", "pairing", "open"].includes(state.status)) return state;
 
   state.initPromise = (async () => {
     const authFolder = getAuthFolder();
@@ -158,9 +165,14 @@ async function initWA(): Promise<WAState> {
 
     let version: any;
     try {
-      const v = await fetchLatestBaileysVersion();
-      version = v.version;
-      logWA("Fetched WA version", version);
+      if (process.env.BAILEYS_VERSION) {
+        version = JSON.parse(process.env.BAILEYS_VERSION);
+        logWA("Using BAILEYS_VERSION env", version);
+      } else {
+        const v = await fetchLatestBaileysVersion();
+        version = v.version;
+        logWA("Fetched WA version", version);
+      }
     } catch (e: any) {
       version = [2, 3000, 1015901307];
       logWA("Using fallback version", version, "error:", e?.message);
@@ -175,14 +187,19 @@ async function initWA(): Promise<WAState> {
       },
       logger,
       printQRInTerminal: false,
-      browser: ["BIMXZBUGXZ", "Chrome", "1.0.0"],
+      browser: ["BIMZOFFICIAL", "Chrome", "1.0.0"],
       syncFullHistory: false,
       markOnlineOnConnect: false,
       generateHighQualityLinkPreview: false,
-      // Important for pairing code: enable mobile
+      connectTimeoutMs: 60_000,
+      defaultQueryTimeoutMs: 60_000,
+      keepAliveIntervalMs: 25_000,
+      // Pairing-code flow requires the web client mode.
       mobile: false,
     });
 
+    // Replace only after the new socket has actually been created.
+    // A stale socket's close event is ignored using socketGeneration below.
     state.sock = sock;
     const socketGeneration = state.restartGeneration;
     state.status = "connecting";
@@ -229,7 +246,7 @@ async function initWA(): Promise<WAState> {
 
         // Ignore close events from an older socket after a pairing retry.
         // Without this guard, the old socket can null out the newly-created socket.
-        if (state.restartGeneration !== socketGeneration) {
+        if (state.restartGeneration !== socketGeneration || state.sock !== sock) {
           logWA("Ignoring close event from stale socket generation", socketGeneration);
           return;
         }
@@ -259,7 +276,12 @@ async function initWA(): Promise<WAState> {
           state.reconnectAttempts++;
           const delay = Math.min(2000 * Math.pow(1.5, state.reconnectAttempts), 30000);
           logWA(`Reconnect attempt ${state.reconnectAttempts} in ${delay}ms`);
-          setTimeout(() => { initWA().catch((e) => logWA("Reconnect failed:", e?.message)); }, delay);
+          if (!state.reconnectTimer) {
+            state.reconnectTimer = setTimeout(() => {
+              state.reconnectTimer = null;
+              initWA().catch((e) => logWA("Reconnect failed:", e?.message));
+            }, delay);
+          }
         } else {
           // Any non-logout disconnect should be recoverable. Do not mark the session as
           // permanently broken after a handful of retries; Baileys can reconnect using
@@ -270,17 +292,24 @@ async function initWA(): Promise<WAState> {
           state.reconnectAttempts++;
           const delay = Math.min(1500 * Math.pow(1.5, Math.min(state.reconnectAttempts, 8)), 30000);
           logWA(`Reconnect ${state.reconnectAttempts} in ${Math.round(delay)}ms`);
-          setTimeout(() => { initWA().catch((e) => logWA("Reconnect failed:", e?.message)); }, delay);
+          if (!state.reconnectTimer) {
+            state.reconnectTimer = setTimeout(() => {
+              state.reconnectTimer = null;
+              initWA().catch((e) => logWA("Reconnect failed:", e?.message));
+            }, delay);
+          }
         }
         // persist close status
         persistToDB(authFolder).catch(()=>{});
       } else if (connection === "open") {
+        if (state.reconnectTimer) { clearTimeout(state.reconnectTimer); state.reconnectTimer = null; }
         state.status = "open";
         state.qr = null;
         state.qrImage = null;
         state.reconnectAttempts = 0;
+        state.connectedAt = Date.now();
         state.lastError = null;
-        logWA("Connection opened - WA CONNECTED ASLI");
+        logWA("Connection opened - WA CONNECTED ASLI", "number:", state.sock?.user?.id || "unknown");
         // persist open
         persistToDB(authFolder).catch(()=>{});
       } else if (update.pairingCode) {
@@ -294,7 +323,10 @@ async function initWA(): Promise<WAState> {
 
   try {
     const result = await state.initPromise;
-    state.initPromise = null;
+    // Do NOT clear initPromise while the socket is still connecting. The socket
+    // itself is the single-flight guard until connection.update closes/opens.
+    // Clearing it here previously allowed the 200ms status poll to create a
+    // second socket before the first handshake finished.
     return result;
   } catch (e: any) {
     state.initPromise = null;
@@ -321,6 +353,7 @@ export function getWAStatus() {
     engine: "Baileys 6.7.22",
     authFolder: getAuthFolder(),
     vercel: !!process.env.VERCEL,
+    connectedAt: s.connectedAt,
   };
 }
 
@@ -371,9 +404,10 @@ async function waitForPairingReady(state: WAState, timeoutMs = 8000) {
     // Baileys emits a QR/ref event once the socket has completed the initial
     // handshake. Calling requestPairingCode before that point is a common
     // cause of 428 "Connection Closed".
-    if (state.sock && (state.qr || state.status === "qr" || state.status === "connecting")) {
-      if (state.qr || Date.now() - started > 2500) return true;
-    }
+    if (state.sock && (state.qr || state.status === "qr")) return true;
+    // Pairing-code requests are allowed after the WA Web handshake has had
+    // time to start, but never after the socket has already closed.
+    if (state.sock && state.status === "connecting" && Date.now() - started > 3000) return true;
     if (state.status === "open") return false;
     if (state.status === "logged_out") return false;
     if (state.status === "close" || state.status === "error") return false;
@@ -497,7 +531,9 @@ export async function resetWA() {
   state.pairingCode = null;
   state.phoneForCode = null;
   state.initPromise = null;
+  if (state.reconnectTimer) { clearTimeout(state.reconnectTimer); state.reconnectTimer = null; }
   state.reconnectAttempts = 0;
+  state.connectedAt = null;
   state.lastError = null;
   const folder = getAuthFolder();
   try {
