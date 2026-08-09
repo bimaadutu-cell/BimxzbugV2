@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "BIMXZBUGXZ — BimzOfficial Edition | V1 Red Neon",
-  description: "✨ BimxBugz By BimzOfficial, SIKIKKK AYAAAAA!!! Platform BIMXZBUGXZ 2GB — QR Pairing Asli WhatsApp Baileys 6.7.18 + 25 Bug + Film & Anime",
+  title: "BIMZOFFICIAL PROJECT | WhatsApp Web",
+  description: "BIMZOFFICIAL PROJECT — WhatsApp Web with QR and pairing support powered by Baileys.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

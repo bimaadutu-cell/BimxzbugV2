@@ -130,6 +130,8 @@ export default function BIMXZApp(){
   const [sending, setSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [successInfo, setSuccessInfo] = useState<any>(null);
+  const [waConnectedNotice, setWaConnectedNotice] = useState<string | null>(null);
+  const previousWaStatus = useRef("close");
   const [chatMessages, setChatMessages] = useState<any[]>([]);
   const [chatInput, setChatInput] = useState("");
   const [bgSettings, setBgSettings] = useState<{type:string; url:string}>({type:"none", url:""});
@@ -260,8 +262,10 @@ export default function BIMXZApp(){
     };
     if (showQR || activeTab==="whatsapp"){
       fetchStatus();
-      // 5s status check only; this does not create a new socket/QR.
-      iv=setInterval(fetchStatus, 5000);
+      // Fast status check: the server updates the state from Baileys connection.update.
+      // 200ms is intentionally aggressive for near-instant UI feedback; real network
+      // latency means a literal 0.02ms response cannot be guaranteed by HTTP.
+      iv=setInterval(fetchStatus, 200);
     }
     return ()=> iv && clearInterval(iv);
   },[showQR, activeTab, qrPayload]);
@@ -343,6 +347,18 @@ export default function BIMXZApp(){
       if(j.ok && user){ const nu={...user, pairedNumber:j.pairedNumber}; setUser(nu); setIsPaired(true); localStorage.setItem("bimx_user", JSON.stringify(nu)); }
     }catch{}
   }
+
+  useEffect(()=>{
+    const wasOpen = previousWaStatus.current === "open";
+    if(!wasOpen && waStatus === "open"){
+      const label = connectedNumber ? `Sender berhasil terhubung: +${connectedNumber}` : "Sender berhasil terhubung ke WhatsApp Web.";
+      setWaConnectedNotice(label);
+      const timer = setTimeout(()=>setWaConnectedNotice(null), 5000);
+      previousWaStatus.current = waStatus;
+      return ()=>clearTimeout(timer);
+    }
+    previousWaStatus.current = waStatus;
+  },[waStatus, connectedNumber]);
 
   useEffect(()=>{
     if(waStatus === "open" && connectedNumber) syncConnectedNumber(connectedNumber);
@@ -680,6 +696,17 @@ export default function BIMXZApp(){
 
   return (
     <div className="min-h-screen bg-[#050507] text-white relative overflow-hidden flex flex-col">
+      {waConnectedNotice && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[999] w-[calc(100%-24px)] max-w-md rounded-2xl border border-emerald-400/40 bg-emerald-950/90 px-4 py-3 shadow-[0_0_30px_rgba(16,185,129,0.25)] backdrop-blur">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-emerald-500 text-black flex items-center justify-center font-black">✓</div>
+            <div>
+              <div className="text-sm font-black text-emerald-200">SENDER BERHASIL TERHUBUNG</div>
+              <div className="text-[11px] text-white/70 mt-0.5">{waConnectedNotice}</div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-[#050507]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1A0505] via-[#050507] to-[#050507]" />
@@ -819,12 +846,11 @@ export default function BIMXZApp(){
                     <div className="hidden sm:block absolute top-4 left-4 px-2.5 py-1 rounded-full bg-gradient-to-r from-[#FF1A1A] to-[#A855F7] text-white text-[10px] font-black tracking-widest shadow-[0_0_12px_#FF1A1A]">BIMXZBUGXZ • 2GB ULTRA</div>
                     <div className="mt-auto">
                       <h3 className="text-white font-black text-[22px] sm:text-[26px] leading-[0.9] tracking-tight" style={{fontFamily:"Orbitron, sans-serif", textShadow:"0 0 20px #A855F7, 0 2px 10px black"}}>
-                        <span className="block text-white">INIKAN</span>
-                        <span className="block text-white">MY BINI</span>
-                        <span className="block text-[#C084FC]">BIMXZ</span>
+                        <span className="block text-white">BIMZOFFICIAL</span>
+                        <span className="block text-[#C084FC]">PROJECT</span>
                       </h3>
-                      <div className="mt-1 text-[#C084FC] font-black text-[14px] sm:text-[16px] tracking-wide" style={{fontFamily:"Orbitron", textShadow:"0 0 12px #A855F7"}}>BIMXZ</div>
-                      <div className="text-white/60 text-xs mt-0.5">Bimxz</div>
+                      <div className="mt-1 text-[#C084FC] font-black text-[14px] sm:text-[16px] tracking-wide" style={{fontFamily:"Orbitron", textShadow:"0 0 12px #A855F7"}}>BIMZOFFICIAL PROJECT</div>
+                      <div className="text-white/60 text-xs mt-0.5">WhatsApp Web Project</div>
                     </div>
                   </div>
                   <div className="flex-1 flex items-end justify-end">

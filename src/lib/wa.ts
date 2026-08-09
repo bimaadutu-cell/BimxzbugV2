@@ -16,13 +16,14 @@ type WAState = {
   lastQRTime: number;
   reconnectAttempts: number;
   lastError: string | null;
+  restartGeneration: number;
 };
 
 const globalForWA = globalThis as typeof globalThis & { __bimxWa?: WAState; __bimxWaInitLog?: string[] };
 
 function getState(): WAState {
   if (!globalForWA.__bimxWa) {
-    globalForWA.__bimxWa = { sock: null, qr: null, qrImage: null, status: "idle", pairingCode: null, phoneForCode: null, initPromise: null, lastQRTime: 0, reconnectAttempts: 0, lastError: null };
+    globalForWA.__bimxWa = { sock: null, qr: null, qrImage: null, status: "idle", pairingCode: null, phoneForCode: null, initPromise: null, lastQRTime: 0, reconnectAttempts: 0, lastError: null, restartGeneration: 0 };
   }
   if (!globalForWA.__bimxWaInitLog) globalForWA.__bimxWaInitLog = [];
   return globalForWA.__bimxWa!;
@@ -183,6 +184,7 @@ async function initWA(): Promise<WAState> {
     });
 
     state.sock = sock;
+    const socketGeneration = state.restartGeneration;
     state.status = "connecting";
     state.reconnectAttempts = 0;
 
@@ -224,6 +226,13 @@ async function initWA(): Promise<WAState> {
         const errorMsg = (lastDisconnect?.error as any)?.message || String(lastDisconnect?.error || "");
         state.lastError = errorMsg;
         logWA("Connection closed, statusCode:", statusCode, "error:", errorMsg);
+
+        // Ignore close events from an older socket after a pairing retry.
+        // Without this guard, the old socket can null out the newly-created socket.
+        if (state.restartGeneration !== socketGeneration) {
+          logWA("Ignoring close event from stale socket generation", socketGeneration);
+          return;
+        }
 
         if (statusCode === DisconnectReason.loggedOut) {
           state.status = "logged_out";
@@ -356,62 +365,122 @@ export async function isWAFeatureClosed(key: "wa_pairing_closed" | "wa_qr_closed
   }
 }
 
+async function waitForPairingReady(state: WAState, timeoutMs = 8000) {
+  const started = Date.now();
+  while (Date.now() - started < timeoutMs) {
+    // Baileys emits a QR/ref event once the socket has completed the initial
+    // handshake. Calling requestPairingCode before that point is a common
+    // cause of 428 "Connection Closed".
+    if (state.sock && (state.qr || state.status === "qr" || state.status === "connecting")) {
+      if (state.qr || Date.now() - started > 2500) return true;
+    }
+    if (state.status === "open") return false;
+    if (state.status === "logged_out") return false;
+    if (state.status === "close" || state.status === "error") return false;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  return !!state.sock && state.status !== "close" && state.status !== "error" && state.status !== "open";
+}
+
+async function restartPairingSocket(state: WAState) {
+  state.restartGeneration++;
+  try { state.sock?.end?.(new Error("Restarting pairing socket")); } catch {}
+  state.sock = null;
+  state.initPromise = null;
+  state.qr = null;
+  state.qrImage = null;
+  state.status = "idle";
+  await new Promise((r) => setTimeout(r, 350));
+  return initWA();
+}
+
 export async function requestPairingCode(phoneNumber: string) {
   if (await isWAFeatureClosed("wa_pairing_closed")) throw new Error("Pairing sedang ditutup oleh developer. Gunakan QR untuk melanjutkan.");
-  const state = await initWA();
-  let attempts = 0;
-  while (!state.sock && attempts < 12) {
-    await new Promise((r) => setTimeout(r, 500));
-    attempts++;
-  }
-  const sock: any = state.sock;
-  if (!sock) {
-    logWA("Pairing failed: socket not ready");
-    throw new Error("Socket belum siap. Status: " + state.status + ". Coba refresh halaman, tunggu 5 detik (Baileys butuh init), lalu coba lagi. Jika masih, pakai QR Scan yang lebih stabil untuk Vercel.");
-  }
+
   const clean = normalizePhone(phoneNumber);
-  logWA("Request pairing for", clean, "current status", state.status);
-  if (clean.length < 9 || clean.length > 15) throw new Error("Nomor tidak valid. Gunakan format 628xxxxxxxxxx (tanpa +, tanpa 0 depan, 9-15 digit). Contoh: 6281234567890. Kamu kirim: " + phoneNumber + " → " + clean);
-  if (!sock.requestPairingCode) throw new Error("requestPairingCode tidak tersedia. Versi Baileys mungkin tidak support pairing di mode mobile:false. Gunakan QR Scan.");
-  if (state.status === "open") {
-    throw new Error("WhatsApp sudah terhubung (open). Tidak perlu pairing code lagi. Jika ingin ganti nomor, Reset WA dulu.");
+  if (clean.length < 9 || clean.length > 15) {
+    throw new Error("Nomor tidak valid. Gunakan format 628xxxxxxxxxx (tanpa +, tanpa 0 depan, 9-15 digit). Kamu kirim: " + phoneNumber + " → " + clean);
   }
-  // Must be in connecting/qr state
-  if (state.status === "idle" || state.status === "close") {
-    logWA("Waiting to reach connecting before pairing");
-    await new Promise(r => setTimeout(r, 1500));
-  }
-  logWA("Calling sock.requestPairingCode for", clean);
-  let code = "";
+
   let lastErr: any = null;
-  for (let i = 0; i < 4; i++) {
+
+  // Important: do not call requestPairingCode immediately after makeWASocket().
+  // The socket must have reached the WA Web handshake first.
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const state = await initWA();
+
+    if (state.status === "open") {
+      throw new Error("WhatsApp sudah terhubung (open). Tidak perlu pairing code lagi. Jika ingin ganti nomor, Reset WA dulu.");
+    }
+
+    const ready = await waitForPairingReady(state, 8000);
+    if (!ready) {
+      lastErr = new Error("Socket WhatsApp belum siap untuk pairing (status: " + state.status + ")");
+      if (attempt < 3) {
+        await restartPairingSocket(state);
+        await new Promise((r) => setTimeout(r, 750));
+        continue;
+      }
+      break;
+    }
+
+    const sock: any = state.sock;
+    if (!sock || typeof sock.requestPairingCode !== "function") {
+      lastErr = new Error("Socket pairing belum siap (status: " + state.status + ")");
+      if (attempt < 3) {
+        await restartPairingSocket(state);
+        await new Promise((r) => setTimeout(r, 750));
+        continue;
+      }
+      break;
+    }
+
+    state.phoneForCode = clean;
+    logWA(`Calling requestPairingCode for ${clean}, attempt ${attempt}/3, status=${state.status}, hasQR=${!!state.qr}`);
+
     try {
-      if (i > 0) await new Promise((r) => setTimeout(r, 1800));
-      logWA(`Pairing attempt ${i + 1}/4`);
-      code = await sock.requestPairingCode(clean);
-      logWA("Pairing code received:", code);
-      if (code) break;
+      const code = await sock.requestPairingCode(clean);
+      if (!code) throw new Error("WhatsApp tidak mengembalikan pairing code.");
+
+      const formatted = code.includes("-")
+        ? code
+        : code.length === 8
+          ? `${code.slice(0, 4)}-${code.slice(4)}`
+          : code;
+
+      state.pairingCode = formatted;
+      state.phoneForCode = clean;
+      state.status = "pairing";
+      state.lastError = null;
+      logWA("Pairing code received:", formatted, "for", clean);
+      return formatted;
     } catch (e: any) {
       lastErr = e;
       const msg = String(e?.message || e);
-      logWA(`Pairing attempt ${i+1} failed:`, msg);
-      if (msg.includes("already") || msg.includes("connected") || msg.includes("closed") || msg.includes("Conflict")) throw e;
+      logWA(`Pairing attempt ${attempt} failed:`, msg);
+
+      // 428/Connection Closed and 515/restart-required are recoverable socket
+      // states. Retry with a fresh socket instead of reusing a dead socket.
+      const recoverable =
+        msg.includes("Connection Closed") ||
+        msg.includes("Precondition Required") ||
+        msg.includes("Stream Errored") ||
+        msg.includes("restart required") ||
+        msg.includes("428") ||
+        msg.includes("515");
+
+      if (!recoverable || attempt >= 3) break;
+      await restartPairingSocket(state);
+      await new Promise((r) => setTimeout(r, 750));
     }
   }
-  if (!code) {
-    logWA("Pairing failed after retries, last err:", lastErr?.message);
-    throw lastErr || new Error("Gagal mendapatkan kode pairing. Penyebab umum: 1) Nomor salah format (harus 628xxx), 2) Nomor sudah terpakai di perangkat lain, 3) Vercel cold start — kode expired 20 detik, coba QR yang lebih stabil. Error: " + (lastErr?.message || "unknown"));
-  }
-  const formatted = code.includes("-") ? code : code.length === 8 ? `${code.slice(0, 4)}-${code.slice(4)}` : code;
-  state.pairingCode = formatted;
-  state.phoneForCode = clean;
-  state.status = "pairing";
-  logWA("Pairing code formatted:", formatted, "for", clean);
-  return formatted;
+
+  throw lastErr || new Error("Gagal mendapatkan kode pairing. Coba lagi atau gunakan QR.");
 }
 
 export async function resetWA() {
   const state = getState();
+  state.restartGeneration++;
   logWA("Reset WA requested - clearing auth");
   try {
     if (state.sock) {
