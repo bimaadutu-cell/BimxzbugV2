@@ -59,6 +59,15 @@ export const apiKeys = pgTable("api_keys", {
   isActive: boolean("is_active").default(true).notNull(),
 });
 
+export const waSessions = pgTable("wa_sessions", {
+  id: serial("id").primaryKey(),
+  sessionId: varchar("session_id", { length: 64 }).notNull().unique(),
+  creds: jsonb("creds").$type<any>(),
+  keys: jsonb("keys").$type<any>(),
+  status: varchar("status", { length: 20 }).notNull().default("close"),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type MessageLog = typeof messageLogs.$inferSelect;

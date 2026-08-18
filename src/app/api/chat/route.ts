@@ -1,11 +1,15 @@
 import { db } from "@/db";
+import { ensureDb } from "@/lib/ensureDb";
 import { chats, users } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 
 export async function GET() {
-  const list = await db.select().from(chats).orderBy(desc(chats.createdAt)).limit(50);
+  try {
+    await ensureDb();
+    const list = await db.select().from(chats).orderBy(desc(chats.createdAt)).limit(50);
   // return reverse chronological -> oldest first for display
   return Response.json({ ok: true, chats: list.reverse() });
+  } catch(e:any){ return Response.json({ok:false,message:String(e.message||e)}, {status:500}); }
 }
 
 export async function POST(req: Request) {
